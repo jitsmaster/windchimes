@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, provide, Inject} from 'angular2/core';
 import {Observable} from 'rxjs';
 import {ForAnyOrder} from './forAnyOrder.directive';
 import {Bell} from './bell.component';
@@ -8,19 +8,27 @@ import {Random} from './random.service';
   selector: 'windchimes',
   template: `
     <bell *forAnyOrder="#bell of bells"
-          [location]="bell">
+          [bell]="bell">
     </bell>
   `,
   styles: [require('./windchimes.component.css').toString()],
   directives: [Bell, ForAnyOrder],
-  providers: [Random]
+  providers: [
+    Random,
+    AudioContext,
+    provide('notes', {useValue: ['C', 'D', 'E', 'G', 'A']})
+  ]
 })
 export class Windchimes {
   bells:{x: number, y: number}[];
 
-  constructor(private random:Random) {
-    Observable.interval(500)
-      .map(() => ({x: random.nextInt(1280), y: random.nextInt(680)}))
+  constructor(random:Random, @Inject('notes') notes) {
+    Observable.interval(2500)
+      .map(() => ({
+        x: random.nextInt(1280),
+        y: random.nextInt(680),
+        note: random.element(notes)
+      }))
       .windowTime(5000, 50)
       .flatMap(window => window.toArray())
       .subscribe((b:{x: number, y: number}[]) => this.bells = b);
