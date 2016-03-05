@@ -1,7 +1,7 @@
 import {Component} from 'angular2/core';
+import {Observable} from 'rxjs';
 import {Bell} from './bell.component';
 import {Random} from './random.service';
-import {Location} from './location';
 
 @Component({
   selector: 'windchimes',
@@ -17,10 +17,10 @@ export class Windchimes {
   bells:{x: number, y: number}[];
 
   constructor(private random:Random) {
-    this.bells = [
-      {x: random.nextInt(1000), y: random.nextInt(500)},
-      {x: random.nextInt(1000), y: random.nextInt(500)},
-      {x: random.nextInt(1000), y: random.nextInt(500)}
-    ];
+    Observable.interval(1000)
+      .map(() => ({x: random.nextInt(1000), y: random.nextInt(500)}))
+      .windowCount(3, 1)
+      .mergeMap(window => window.toArray())
+      .subscribe((b:{x: number, y: number}[]) => this.bells = b);
   }
 }
