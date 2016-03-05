@@ -19,7 +19,7 @@ export class Bell implements OnInit {
   }
   getTransform() {
     const translate = `translate3d(${this.location.x}px, ${this.location.y}px, 0)`;
-    const scale = this.fade ? 'scale3d(300, 300, 300)' : 'scale3d(1, 1, 1)';
+    const scale = this.fade ? 'scale3d(400, 400, 400)' : 'scale3d(1, 1, 1)';
     return `${translate} ${scale}`;
   }
   getOpacity() {

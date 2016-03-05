@@ -1,26 +1,28 @@
 import {Component} from 'angular2/core';
 import {Observable} from 'rxjs';
+import {ForAnyOrder} from './forAnyOrder.directive';
 import {Bell} from './bell.component';
 import {Random} from './random.service';
 
 @Component({
   selector: 'windchimes',
   template: `
-    <bell *ngFor="#bell of bells" [location]="bell">
+    <bell *forAnyOrder="#bell of bells"
+          [location]="bell">
     </bell>
   `,
   styles: [require('./windchimes.component.css').toString()],
-  directives: [Bell],
+  directives: [Bell, ForAnyOrder],
   providers: [Random]
 })
 export class Windchimes {
   bells:{x: number, y: number}[];
 
   constructor(private random:Random) {
-    Observable.interval(1000)
-      .map(() => ({x: random.nextInt(1000), y: random.nextInt(500)}))
-      .windowCount(3, 1)
-      .mergeMap(window => window.toArray())
+    Observable.interval(500)
+      .map(() => ({x: random.nextInt(1280), y: random.nextInt(680)}))
+      .windowTime(5000, 200)
+      .flatMap(window => window.toArray())
       .subscribe((b:{x: number, y: number}[]) => this.bells = b);
   }
 }
