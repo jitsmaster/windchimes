@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from 'angular2/core';
-import {Location} from './location';
 
 @Component({
   selector: 'bell',
@@ -12,7 +11,7 @@ import {Location} from './location';
   styles: [require('./bell.component.css').toString()]
 })
 export class Bell implements OnInit {
-  @Input() location:Location;
+  @Input() location:{x: number, y: number};
   fade:boolean;
 
   ngOnInit() {
