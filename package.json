@@ -16,6 +16,9 @@
   "author": "Tero Parviainen <tero@teropa.info>",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "6.3.3",
+    "css-loader": "0.23.1",
+    "postcss-loader": "0.8.1",
     "ts-loader": "0.8.1",
     "typescript": "^1.8.7",
     "webpack": "1.12.14",
