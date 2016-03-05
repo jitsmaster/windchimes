@@ -3,7 +3,11 @@
     "target": "es5",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "angular2/*": ["../angular/dist/js/cjs/angular2/*"]
+    }
   },
   "exclude": [
     "node_modules",

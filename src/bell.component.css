@@ -3,14 +3,14 @@
   width: 2px;
   height: 2px;
   border-radius: 1px;
+  background-color: white;
 
   backface-visibility: hidden;
   transition: transform 5s ease-out, opacity 5s ease-out;
 }
 
-.E { background-color: #5BC0EB; }
 .C { background-color: #FDE74C; }
 .D { background-color: #9BC53D; }
-.E { background-color: #E55934; }
+.E { background-color: #5BC0EB; }
 .G { background-color: #FA7921; }
 .A { background-color: #9AB87A; }

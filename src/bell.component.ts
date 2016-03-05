@@ -1,4 +1,5 @@
 import {Component, Input, OnInit, OnDestroy} from 'angular2/core';
+import {Samples} from './samples.service';
 
 @Component({
   selector: 'bell',
@@ -13,34 +14,29 @@ import {Component, Input, OnInit, OnDestroy} from 'angular2/core';
 export class Bell implements OnInit, OnDestroy {
   @Input() bell:{x: number, y: number, note: string};
   fade:boolean;
-  oscillator:OscillatorNode;
-  gain:GainNode;
+  source:AudioBufferSourceNode;
 
-  constructor(private audioCtx:AudioContext) {
+  constructor(private samples:Samples,
+              private audioCtx:AudioContext) {
   }
 
   ngOnInit() {
     setTimeout(() => {
       this.fade = true;
-
-      this.oscillator = this.audioCtx.createOscillator();
-      this.oscillator.frequency.value = this.getNoteFrequency();
-
-      this.gain = this.audioCtx.createGain();
-      this.gain.gain.setValueAtTime(0.5, this.audioCtx.currentTime);
-      this.gain.gain.exponentialRampToValueAtTime(0.01, this.audioCtx.currentTime + 5);
-
-      this.oscillator.connect(this.gain);
-      this.gain.connect(this.audioCtx.destination);
-
-      this.oscillator.start();
-
+      if (this.samples.sampleCache.hasOwnProperty(this.bell.note)) {
+        this.source = this.audioCtx.createBufferSource();
+        this.source.buffer = this.samples.sampleCache[this.bell.note];
+        this.source.connect(this.audioCtx.destination);
+        this.source.start();
+      }
     }, 200);
   }
 
   ngOnDestroy() {
-    this.oscillator.stop();
-    this.oscillator.disconnect();
+    if (this.source) {
+      this.source.stop();
+      this.source.disconnect();
+    }
   }
 
   getTransform() {

@@ -3,6 +3,7 @@ import {Observable} from 'rxjs';
 import {ForAnyOrder} from './forAnyOrder.directive';
 import {Bell} from './bell.component';
 import {Random} from './random.service';
+import {Samples} from './samples.service';
 
 @Component({
   selector: 'windchimes',
@@ -15,6 +16,7 @@ import {Random} from './random.service';
   directives: [Bell, ForAnyOrder],
   providers: [
     Random,
+    Samples,
     AudioContext,
     provide('notes', {useValue: ['C', 'D', 'E', 'G', 'A']})
   ]
@@ -23,7 +25,7 @@ export class Windchimes {
   bells:{x: number, y: number}[];
 
   constructor(random:Random, @Inject('notes') notes) {
-    Observable.interval(1000)
+    Observable.interval(2000)
       .map(() => ({
         x: random.nextInt(1280),
         y: random.nextInt(680),
