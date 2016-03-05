@@ -1,2 +1,4 @@
-const msg:string = 'lol';
-console.log('hello world!', msg);
+import {bootstrap} from 'angular2/platform/browser';
+import {AppComponent} from './app.component';
+
+bootstrap(AppComponent);

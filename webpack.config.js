@@ -1,5 +1,8 @@
 module.exports = {
-  entry: ['./src/main.ts'],
+  entry: ['./src/polyfills.ts', './src/main.ts'],
+  resolve: {
+    extensions: ['', '.ts', '.js']
+  },
   module: {
     loaders: [
       {test: /\.ts$/, loader: 'ts-loader'}
