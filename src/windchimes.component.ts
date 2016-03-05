@@ -8,7 +8,7 @@ import {Location} from './location';
     <bell *ngFor="#bell of bells" [location]=bell>
     </bell>
   `,
-  styles: [require('./app.component.css').toString()],
+  styles: [require('./windchimes.component.css').toString()],
   directives: [Bell]
 })
 export class Windchimes {
