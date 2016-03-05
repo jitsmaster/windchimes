@@ -7,7 +7,7 @@ export class Random {
     return Math.floor(Math.random() * max);
   }
 
-  element<T>(array:T[]):T {
+  element<T>(array:T[]) {
     return array[this.nextInt(array.length)];
   }
 

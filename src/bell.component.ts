@@ -14,6 +14,7 @@ export class Bell implements OnInit, OnDestroy {
   @Input() bell:{x: number, y: number, note: string};
   fade:boolean;
   oscillator:OscillatorNode;
+  gain:GainNode;
 
   constructor(private audioCtx:AudioContext) {
   }
@@ -24,7 +25,14 @@ export class Bell implements OnInit, OnDestroy {
 
       this.oscillator = this.audioCtx.createOscillator();
       this.oscillator.frequency.value = this.getNoteFrequency();
-      this.oscillator.connect(this.audioCtx.destination);
+
+      this.gain = this.audioCtx.createGain();
+      this.gain.gain.setValueAtTime(0.5, this.audioCtx.currentTime);
+      this.gain.gain.exponentialRampToValueAtTime(0.01, this.audioCtx.currentTime + 5);
+
+      this.oscillator.connect(this.gain);
+      this.gain.connect(this.audioCtx.destination);
+
       this.oscillator.start();
 
     }, 200);

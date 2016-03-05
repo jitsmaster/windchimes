@@ -23,7 +23,7 @@ export class Windchimes {
   bells:{x: number, y: number}[];
 
   constructor(random:Random, @Inject('notes') notes) {
-    Observable.interval(2500)
+    Observable.interval(1000)
       .map(() => ({
         x: random.nextInt(1280),
         y: random.nextInt(680),
