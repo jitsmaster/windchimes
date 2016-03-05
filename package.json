@@ -1,0 +1,12 @@
+{
+  "name": "windchimes",
+  "version": "1.0.0",
+  "description": "An Angular 2 art experiment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["generativeart", "angular"],
+  "author": "Tero Parviainen <tero@teropa.info>",
+  "license": "ISC"
+}
