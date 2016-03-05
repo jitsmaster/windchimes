@@ -3,7 +3,7 @@ import {Component, Input, OnInit, OnDestroy} from 'angular2/core';
 @Component({
   selector: 'bell',
   template: `
-    <div class="bell"
+    <div class="bell {{bell.note}}"
          [style.transform]="getTransform()"
          [style.opacity]="getOpacity()">
     </div>
