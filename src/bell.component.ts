@@ -41,7 +41,7 @@ export class Bell implements OnInit, OnDestroy {
 
   getTransform() {
     const translate = `translate3d(${this.bell.x}px, ${this.bell.y}px, 0)`;
-    const scale = this.fade ? 'scale3d(400, 400, 400)' : 'scale3d(1, 1, 1)';
+    const scale = this.fade ? 'scale3d(100, 100, 100)' : 'scale3d(1, 1, 1)';
     return `${translate} ${scale}`;
   }
 
