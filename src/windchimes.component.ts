@@ -21,7 +21,7 @@ export class Windchimes {
   constructor(private random:Random) {
     Observable.interval(500)
       .map(() => ({x: random.nextInt(1280), y: random.nextInt(680)}))
-      .windowTime(5000, 200)
+      .windowTime(5000, 50)
       .flatMap(window => window.toArray())
       .subscribe((b:{x: number, y: number}[]) => this.bells = b);
   }
