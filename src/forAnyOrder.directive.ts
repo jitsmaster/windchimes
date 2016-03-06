@@ -10,7 +10,7 @@ import {
 } from 'angular2/core';
 
 @Directive({
-  selector: '[forAnyOrderOf]',
+  selector: '[forAnyOrder]',
   inputs: ['forAnyOrderOf']
 })
 export class ForAnyOrder implements DoCheck {

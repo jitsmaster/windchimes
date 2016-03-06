@@ -30,9 +30,8 @@ export class Windchimes implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.windSub = Observable.of(1)
-      .flatMap(x => Observable.of(x).delay(this.random.nextInt(50, 1000)) )
-      .repeat()
+    this.windSub = this.random.markovProcess(50, 1000)
+      .map((d) => { console.log(d); return d; })
       .map(() => ({
         x: this.random.nextInt(0, 1280),
         y: this.random.nextInt(0, 680),
