@@ -1,15 +1,37 @@
 import {Component, Input, OnInit, OnDestroy} from 'angular2/core';
+import {css} from 'angular2/src/animate/worker/animation_definition';
 import {Samples} from './samples.service';
 
 @Component({
   selector: 'bell',
   template: `
-    <div class="bell {{bell.note}}"
-         [style.transform]="getTransform()"
-         [style.opacity]="getOpacity()">
+    <div *ngIf="true"
+         class="bell {{bell.note}}"
+         [style.left]="bell.x + 'px'"
+         [style.top]="bell.y + 'px'">
     </div>
   `,
-  styles: [require('./bell.component.css').toString()]
+  styles: [require('./bell.component.css').toString()],
+  animations: {
+    'ng-enter': [
+      css('.first', '0s'),
+      css('.gone', '5s ease-out')
+    ]
+  },
+  animationStyles: {
+    '.first': [
+      ['all', {
+        opacity: '0.7',
+        transform: 'scale3d(1, 1, 1)'
+      }]
+    ],
+    '.gone': [
+      ['all', {
+        opacity: '0',
+        transform: 'scale3d(100, 100, 100)'
+      }]
+    ]
+  }
 })
 export class Bell implements OnInit, OnDestroy {
   @Input() bell:{x: number, y: number, note: string};
@@ -37,16 +59,6 @@ export class Bell implements OnInit, OnDestroy {
       this.source.stop();
       this.source.disconnect();
     }
-  }
-
-  getTransform() {
-    const translate = `translate3d(${this.bell.x}px, ${this.bell.y}px, 0)`;
-    const scale = this.fade ? 'scale3d(100, 100, 100)' : 'scale3d(1, 1, 1)';
-    return `${translate} ${scale}`;
-  }
-
-  getOpacity() {
-    return this.fade ? 0 : 0.7;
   }
 
   getNoteFrequency() {

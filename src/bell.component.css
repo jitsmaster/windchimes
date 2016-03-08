@@ -1,12 +1,10 @@
 .bell {
   display: block;
+  position: absolute;
   width: 2px;
   height: 2px;
   border-radius: 1px;
   background-color: white;
-
-  backface-visibility: hidden;
-  transition: transform 5s ease-out, opacity 5s ease-out;
 }
 
 .C { background-color: #FDE74C; }
