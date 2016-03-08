@@ -12,16 +12,19 @@ export class Random {
     return array[this.nextInt(0, array.length)];
   }
 
-  randomDelayOf(minDelay, maxDelay) {
-    const delay = this.nextInt(minDelay, maxDelay);
-    return Observable.of(delay)
-      .delay(delay);
-  }
-
   markovProcess(minDelay, maxDelay) {
-    return Observable.of(1)
-      .flatMap(x => this.randomDelayOf(minDelay, maxDelay) )
-      .repeat();
+    return Observable.create((observer) => {
+      let running = true;
+      let next = () => {
+        if (running) {
+          observer.next();
+          setTimeout(next, this.nextInt(minDelay, maxDelay));
+        }
+      };
+      next();
+
+      return () => running = false;
+    });
   }
 
 }
