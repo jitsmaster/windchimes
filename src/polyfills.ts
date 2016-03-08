@@ -1,5 +1,4 @@
-import 'es6-shim';
-import 'es6-promise';
+import 'babel-polyfill';
 import 'reflect-metadata';
 import 'zone.js/dist/zone-microtask';
 

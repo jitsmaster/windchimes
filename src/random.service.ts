@@ -27,4 +27,71 @@ export class Random {
     });
   }
 
+  randomWalk(startStep, minChange, maxChange) {
+    return Observable.create((observer) => {
+      let running = true;
+      let step = startStep;
+      let next = () => {
+        if (running) {
+          step += this.nextInt(minChange, maxChange);
+          observer.next();
+          setTimeout(next, step);
+        }
+      };
+      next();
+
+      return () => running = false;
+    });
+  }
+
+  constrainedRandomWalk(startStep, minStep, maxStep, minChange, maxChange) {
+    return Observable.create((observer) => {
+      let running = true;
+      let step = startStep;
+      (async () => {
+        while (running) {
+          step += this.nextInt(minChange, maxChange);
+          step = Math.min(step, maxStep);
+          step = Math.max(step, minStep);
+          observer.next();
+          await this.sleep(step);
+        }
+      })();
+      return () => running = false;
+    });
+  }
+
+  randomWalkInterp(min, max, stepsPerInterval) {
+    return Observable.create((observer) => {
+      let running     = true;
+      let current     = this.nextInt(min, max);
+      let next        = this.nextInt(min, max);
+      let step        = 0;
+      (async () => {
+        while (running) {
+          const diff         = next - current;
+          const stepFraction = step / stepsPerInterval;
+          const val          = current + stepFraction * diff;
+
+          console.log(current, next, step, val);
+
+          observer.next();
+          await this.sleep(val);
+
+          step++;
+          if (step === stepsPerInterval) {
+            current = next;
+            next = this.nextInt(min, max);
+            step = 0;
+          }
+        }
+      })();
+      return () => running = false;
+    });
+  }
+
+  private sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
 }

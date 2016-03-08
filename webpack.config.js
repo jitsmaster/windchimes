@@ -12,7 +12,10 @@ module.exports = {
   },
   module: {
     loaders: [
-      {test: /\.ts$/, loader: 'ts-loader'},
+      {
+        test: /\.ts$/,
+        loader: 'babel?presets[]=es2015!ts'
+      },
       {test: /\.css$/, loader: 'css-loader!postcss-loader'}
     ]
   },
