@@ -3,11 +3,11 @@ import {Injectable} from 'angular2/core';
 import {Http, ResponseBuffer} from 'angular2/http';
 
 const NOTES = {
-  C: require("file!./samples/C.mp3"),
-  D: require("file!./samples/D.mp3"),
-  E: require("file!./samples/E.mp3"),
-  G: require("file!./samples/G.mp3"),
-  A: require("file!./samples/A.mp3")
+  C: require("file!./samples/n_C5.mp3"),
+  D: require("file!./samples/n_D4.mp3"),
+  E: require("file!./samples/n_D5.mp3"),
+  G: require("file!./samples/n_F4.mp3"),
+  A: require("file!./samples/n_G4.mp3")
 };
 
 @Injectable()

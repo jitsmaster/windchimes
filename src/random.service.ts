@@ -134,12 +134,12 @@ export class Random {
             const amplitude = persistence ** i;
             total = total + this.interpolatedNoise(x * frequency) * amplitude;
           }
-          const probability = (total + 1) / 4;
+          const probability = (total + 1) / 5;
           const yes = (Math.random() < probability);
           if (yes) {
             observer.next();
           }
-          await this.sleep(this.nextInt(10, 100));
+          await this.sleep(100);
           x += 0.2;
           nextNoise();
         }
