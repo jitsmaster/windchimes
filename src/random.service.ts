@@ -12,6 +12,14 @@ export class Random {
     return array[this.nextInt(0, array.length)];
   }
 
+  sampler<T>(array:T[]) {
+    let previous:T;
+    return () => {
+      const options = array.slice(0).filter((x) => x !== previous)
+      return previous = this.element(options);
+    }
+  }
+
   markovProcess(minDelay, maxDelay) {
     return Observable.create((observer) => {
       let running = true;

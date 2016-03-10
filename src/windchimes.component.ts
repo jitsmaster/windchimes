@@ -30,11 +30,12 @@ export class Windchimes implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const noteSampler = this.random.sampler(this.notes);
     this.windSub = this.random.perlinNoise(1, 1000)
       .map(() => ({
         x: this.random.nextInt(0, 1280),
         y: this.random.nextInt(0, 680),
-        note: this.random.element(this.notes)
+        note: noteSampler()
       }))
       .windowTime(5000, 50)
       .flatMap(window => window.toArray())
