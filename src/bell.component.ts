@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, OnDestroy} from 'angular2/core';
+import {Component, Input, OnInit, OnDestroy, ChangeDetectionStrategy} from 'angular2/core';
 import {css} from 'angular2/src/animate/worker/animation_definition';
 import {Samples} from './samples.service';
 
@@ -31,7 +31,8 @@ import {Samples} from './samples.service';
         transform: 'scale3d(100, 100, 100)'
       }]
     ]
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.CheckOnce
 })
 export class Bell implements OnInit, OnDestroy {
   @Input() bell:{x: number, y: number, note: string};
