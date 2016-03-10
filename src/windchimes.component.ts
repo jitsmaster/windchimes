@@ -30,7 +30,7 @@ export class Windchimes implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.windSub = this.random.randomWalkInterp(10, 700, 7)
+    this.windSub = this.random.perlinNoise(1, 1000)
       .map(() => ({
         x: this.random.nextInt(0, 1280),
         y: this.random.nextInt(0, 680),

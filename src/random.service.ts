@@ -73,8 +73,6 @@ export class Random {
           const stepFraction = step / stepsPerInterval;
           const val          = current + stepFraction * diff;
 
-          console.log(current, next, step, val);
-
           observer.next();
           await this.sleep(val);
 
@@ -86,6 +84,59 @@ export class Random {
           }
         }
       })();
+      return () => running = false;
+    });
+  }
+
+  noise(x) {
+    x = (x << 13) ^ x;
+    return (1.0 - ((x * (x * x * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0);
+  }
+
+  linearInterpolate(a, b, x) {
+    return a * (1 - x) + b * x;
+  }
+
+  cosineInterpolate(a, b, x) {
+    const ft = x * Math.PI;
+    const f = (1 - Math.cos(ft)) * .5;
+    return a * (1 - f) + b * f;
+  }
+
+  interpolatedNoise(x) {
+    const xFloor = Math.floor(x);
+    const xFraction = x - xFloor;
+    const v1 = this.noise(xFloor);
+    const v2 = this.noise(xFloor + 1);
+    return this.cosineInterpolate(v1, v2, xFraction);
+  }
+
+  perlinNoise(min, max) {
+    const persistence     = 1/2;
+    const numberOfOctaves = 4;
+    return Observable.create((observer) => {
+      let running = true;
+
+      let x = Math.random();
+      let nextNoise = async () => {
+        if (running) {
+          let total = 0;
+          for (let i=0 ; i < numberOfOctaves - 1 ; i++) {
+            const frequency = 2 ** i;
+            const amplitude = persistence ** i;
+            total = total + this.interpolatedNoise(x * frequency) * amplitude;
+          }
+          const probability = (total + 1) / 4;
+          const yes = (Math.random() < probability);
+          if (yes) {
+            observer.next();
+          }
+          await this.sleep(this.nextInt(10, 100));
+          x += 0.2;
+          nextNoise();
+        }
+      };
+      nextNoise();
       return () => running = false;
     });
   }
