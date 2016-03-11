@@ -1,4 +1,4 @@
-import {Component, provide, Inject, OnInit} from 'angular2/core';
+import {Component, provide, Inject} from 'angular2/core';
 import {Observable, Subscription} from 'rxjs';
 import {ForAnyOrder} from './forAnyOrder.directive';
 import {Bell} from './bell.component';
@@ -21,19 +21,16 @@ import {Samples} from './samples.service';
     provide('notes', {useValue: ['C', 'D', 'E', 'G', 'A']})
   ]
 })
-export class Windchimes implements OnInit {
+export class Windchimes {
   chimes:Observable<{x: number, y: number}[]>;
 
-  constructor(private random:Random,
-              @Inject('notes') private notes) {
-  }
-
-  ngOnInit() {
-    const noteSampler = this.random.sampler(this.notes);
-    this.chimes = this.random.perlinNoise(1, 1000)
+  constructor(random:Random,
+              @Inject('notes') notes) {
+    const noteSampler = random.sampler(notes);
+    this.chimes = random.perlinNoise(1, 1000)
       .map(() => ({
-        x: this.random.nextInt(0, 1280),
-        y: this.random.nextInt(0, 680),
+        x: random.nextInt(0, 1280),
+        y: random.nextInt(0, 680),
         note: noteSampler()
       }))
       .windowTime(5000, 50)
