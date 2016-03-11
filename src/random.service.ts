@@ -119,7 +119,7 @@ export class Random {
     return this.cosineInterpolate(v1, v2, xFraction);
   }
 
-  perlinNoise(min, max) {
+  perlinNoise() {
     const persistence     = 1/2;
     const numberOfOctaves = 4;
     return Observable.create((observer) => {
