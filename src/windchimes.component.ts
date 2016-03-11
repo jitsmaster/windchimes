@@ -1,4 +1,4 @@
-import {Component, provide, Inject, OnInit, OnDestroy} from 'angular2/core';
+import {Component, provide, Inject, OnInit} from 'angular2/core';
 import {Observable, Subscription} from 'rxjs';
 import {ForAnyOrder} from './forAnyOrder.directive';
 import {Bell} from './bell.component';
@@ -8,8 +8,8 @@ import {Samples} from './samples.service';
 @Component({
   selector: 'windchimes',
   template: `
-    <bell *forAnyOrder="#bell of bells"
-          [bell]="bell">
+    <bell *forAnyOrder="#chime of chimes | async"
+          [bell]="chime">
     </bell>
   `,
   styles: [require('./windchimes.component.css').toString()],
@@ -21,9 +21,8 @@ import {Samples} from './samples.service';
     provide('notes', {useValue: ['C', 'D', 'E', 'G', 'A']})
   ]
 })
-export class Windchimes implements OnInit, OnDestroy {
-  bells:{x: number, y: number}[];
-  windSub:Subscription;
+export class Windchimes implements OnInit {
+  chimes:Observable<{x: number, y: number}[]>;
 
   constructor(private random:Random,
               @Inject('notes') private notes) {
@@ -31,18 +30,14 @@ export class Windchimes implements OnInit, OnDestroy {
 
   ngOnInit() {
     const noteSampler = this.random.sampler(this.notes);
-    this.windSub = this.random.perlinNoise(1, 1000)
+    this.chimes = this.random.perlinNoise(1, 1000)
       .map(() => ({
         x: this.random.nextInt(0, 1280),
         y: this.random.nextInt(0, 680),
         note: noteSampler()
       }))
       .windowTime(5000, 50)
-      .flatMap(window => window.toArray())
-      .subscribe((b:{x: number, y: number}[]) => this.bells = b);
+      .flatMap(window => window.toArray());
   }
 
-  ngOnDestroy() {
-    this.windSub.unsubscribe();
-  }
 }
