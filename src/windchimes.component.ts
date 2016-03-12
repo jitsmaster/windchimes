@@ -2,18 +2,22 @@ import {Component, provide, Inject} from 'angular2/core';
 import {Observable, Subscription} from 'rxjs';
 import {ForAnyOrder} from './forAnyOrder.directive';
 import {Bell} from './bell.component';
+import {InnerChime} from './inner-chime.component';
 import {Random} from './random.service';
 import {Samples} from './samples.service';
 
 @Component({
   selector: 'windchimes',
   template: `
-    <bell *forAnyOrder="#chime of chimes | async"
-          [bell]="chime">
-    </bell>
+    <div *forAnyOrder="#chime of chimes | async">
+      <bell [bell]="chime">
+      </bell>
+      <inner-chime [bell]="chime">
+      </inner-chime>
+    </div>
   `,
   styles: [require('./windchimes.component.css').toString()],
-  directives: [Bell, ForAnyOrder],
+  directives: [Bell, InnerChime, ForAnyOrder],
   providers: [
     Random,
     Samples,
@@ -33,7 +37,7 @@ export class Windchimes {
         y: random.nextInt(0, 680),
         note: noteSampler()
       }))
-      .windowTime(5000, 50)
+      .windowTime(5000, 100)
       .flatMap(window => window.toArray());
   }
 

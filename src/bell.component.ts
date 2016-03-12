@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, OnDestroy, ChangeDetectionStrategy} from 'angular2/core';
-import {css} from 'angular2/src/animate/worker/animation_definition';
+import {style, animate} from 'angular2/src/animate/worker/animation_definition';
 import {Samples} from './samples.service';
 
 @Component({
@@ -13,30 +13,15 @@ import {Samples} from './samples.service';
   `,
   styles: [require('./bell.component.css').toString()],
   animations: {
-    'ng-enter': [
-      css('.first', '0s'),
-      css('.gone', '5s ease-out')
-    ]
-  },
-  animationStyles: {
-    '.first': [
-      ['all', {
-        opacity: '0.7',
-        transform: 'scale3d(1, 1, 1)'
-      }]
-    ],
-    '.gone': [
-      ['all', {
-        opacity: '0',
-        transform: 'scale3d(100, 100, 100)'
-      }]
+    ngEnter: [
+      style('.first'),
+      animate('.gone', '5s ease-out')
     ]
   },
   changeDetection: ChangeDetectionStrategy.CheckOnce
 })
 export class Bell implements OnInit, OnDestroy {
   @Input() bell:{x: number, y: number, note: string};
-  fade:boolean;
   source:AudioBufferSourceNode;
 
   constructor(private samples:Samples,
@@ -45,7 +30,6 @@ export class Bell implements OnInit, OnDestroy {
 
   ngOnInit() {
     setTimeout(() => {
-      this.fade = true;
       if (this.samples.sampleCache.hasOwnProperty(this.bell.note)) {
         this.source = this.audioCtx.createBufferSource();
         this.source.buffer = this.samples.sampleCache[this.bell.note];
