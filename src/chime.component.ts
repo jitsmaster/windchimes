@@ -3,15 +3,15 @@ import {style, animate} from 'angular2/src/animate/worker/animation_definition'
 import {Samples} from './samples.service';
 
 @Component({
-  selector: 'bell',
+  selector: 'chime',
   template: `
     <div *ngIf="true"
-         class="bell {{bell.note}}"
-         [style.left]="bell.x + 'px'"
-         [style.top]="bell.y + 'px'">
+         class="chime {{chime.note}}"
+         [style.left]="chime.x + 'px'"
+         [style.top]="chime.y + 'px'">
     </div>
   `,
-  styles: [require('./bell.component.css').toString()],
+  styles: [require('./chime.component.css').toString()],
   animations: {
     ngEnter: [
       style('.first'),
@@ -20,8 +20,8 @@ import {Samples} from './samples.service';
   },
   changeDetection: ChangeDetectionStrategy.CheckOnce
 })
-export class Bell implements OnInit, OnDestroy {
-  @Input() bell:{x: number, y: number, note: string};
+export class Chime implements OnInit, OnDestroy {
+  @Input() chime:{x: number, y: number, note: string};
   source:AudioBufferSourceNode;
 
   constructor(private samples:Samples,
@@ -30,9 +30,9 @@ export class Bell implements OnInit, OnDestroy {
 
   ngOnInit() {
     setTimeout(() => {
-      if (this.samples.sampleCache.hasOwnProperty(this.bell.note)) {
+      if (this.samples.sampleCache.hasOwnProperty(this.chime.note)) {
         this.source = this.audioCtx.createBufferSource();
-        this.source.buffer = this.samples.sampleCache[this.bell.note];
+        this.source.buffer = this.samples.sampleCache[this.chime.note];
         this.source.connect(this.audioCtx.destination);
         this.source.start();
       }
@@ -47,7 +47,7 @@ export class Bell implements OnInit, OnDestroy {
   }
 
   getNoteFrequency() {
-    switch (this.bell.note) {
+    switch (this.chime.note) {
       case 'C':
         return 261.63;
       case 'D':

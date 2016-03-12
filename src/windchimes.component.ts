@@ -1,7 +1,7 @@
 import {Component, provide, Inject} from 'angular2/core';
 import {Observable, Subscription} from 'rxjs';
 import {ForAnyOrder} from './forAnyOrder.directive';
-import {Bell} from './bell.component';
+import {Chime} from './chime.component';
 import {InnerChime} from './inner-chime.component';
 import {Random} from './random.service';
 import {Samples} from './samples.service';
@@ -10,14 +10,14 @@ import {Samples} from './samples.service';
   selector: 'windchimes',
   template: `
     <div *forAnyOrder="#chime of chimes | async">
-      <bell [bell]="chime">
-      </bell>
-      <inner-chime [bell]="chime">
+      <chime [chime]="chime">
+      </chime>
+      <inner-chime [chime]="chime">
       </inner-chime>
     </div>
   `,
   styles: [require('./windchimes.component.css').toString()],
-  directives: [Bell, InnerChime, ForAnyOrder],
+  directives: [Chime, InnerChime, ForAnyOrder],
   providers: [
     Random,
     Samples,

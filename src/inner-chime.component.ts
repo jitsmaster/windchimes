@@ -6,9 +6,9 @@ import {Samples} from './samples.service';
   selector: 'inner-chime',
   template: `
     <div *ngIf="true"
-         class="inner-chime {{bell.note}}"
-         [style.left]="bell.x + 'px'"
-         [style.top]="bell.y + 'px'">
+         class="inner-chime {{chime.note}}"
+         [style.left]="chime.x + 'px'"
+         [style.top]="chime.y + 'px'">
     </div>
   `,
   styles: [require('./inner-chime.component.css').toString()],
@@ -22,7 +22,7 @@ import {Samples} from './samples.service';
   changeDetection: ChangeDetectionStrategy.CheckOnce
 })
 export class InnerChime {
-  @Input() bell:{x: number, y: number, note: string};
+  @Input() chime:{x: number, y: number, note: string};
 
   constructor() {
   }
