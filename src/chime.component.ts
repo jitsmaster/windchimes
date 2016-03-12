@@ -15,7 +15,7 @@ import {Samples} from './samples.service';
   animations: {
     ngEnter: [
       style('.first'),
-      animate('.gone', '5s ease-out')
+      animate('.gone', '5s 0.1s ease-out')
     ]
   },
   changeDetection: ChangeDetectionStrategy.CheckOnce
