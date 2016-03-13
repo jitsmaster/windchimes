@@ -22,7 +22,7 @@ import {Samples} from './samples.service';
     Random,
     Samples,
     AudioContext,
-    provide('notes', {useValue: ['C', 'D', 'E', 'G', 'A']})
+    provide('notes', {useValue: ['C4', 'G4', 'C5', 'D5', 'E5']})
   ]
 })
 export class Windchimes {
