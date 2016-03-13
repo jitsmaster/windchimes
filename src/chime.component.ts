@@ -30,20 +30,18 @@ export class Chime implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      if (this.samples.sampleCache.hasOwnProperty(this.chime.note)) {
-        this.source = this.audioCtx.createBufferSource();
-        this.source.buffer = this.samples.sampleCache[this.chime.note];
+    this.samples.sampleCache[this.chime.note].first().subscribe(sample => {
+      this.source = this.audioCtx.createBufferSource();
+      this.source.buffer = sample;
 
-        this.pan = this.audioCtx.createStereoPanner();
-        this.pan.pan.value = (this.chime.x / 1280) * 2 - 1;
+      this.pan = this.audioCtx.createStereoPanner();
+      this.pan.pan.value = (this.chime.x / 1280) * 2 - 1;
 
-        this.source.connect(this.pan);
-        this.pan.connect(this.audioCtx.destination);
+      this.source.connect(this.pan);
+      this.pan.connect(this.audioCtx.destination);
 
-        this.source.start();
-      }
-    }, 200);
+      this.source.start();
+    });
   }
 
   ngOnDestroy() {

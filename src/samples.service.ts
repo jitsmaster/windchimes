@@ -1,4 +1,4 @@
-import {Observable} from 'rxjs/Observable';
+import {Observable, ReplaySubject} from 'rxjs';
 import {Injectable} from 'angular2/core';
 import {Http, ResponseBuffer} from 'angular2/http';
 
@@ -12,22 +12,26 @@ const NOTES = {
 
 @Injectable()
 export class Samples {
-  sampleCache:{[s: string]: AudioBuffer} = {};
+  sampleCache = {};
 
   constructor(private http:Http, audioCtx:AudioContext) {
     for (const note of Object.keys(NOTES)) {
-      this.getSample(NOTES[note]).subscribe(blob => {
-        audioCtx.decodeAudioData(blob, (buf) => {
-          this.sampleCache[note] = buf;
-        });
-      });
+      const sub = new ReplaySubject(1);
+      this.sampleCache[note] = sub;
+      this.getSample(audioCtx, NOTES[note])
+        .subscribe(sub);
     }
   }
 
-  getSample(path:string) {
+  getSample(audioCtx:AudioContext, path:string) {
     return this.http.get(path, {
       buffer: ResponseBuffer.ArrayBuffer
-    }).map((r) => r.arrayBuffer());
+    }).map((r) => r.arrayBuffer())
+      .flatMap(blob => {
+        return Observable.create(obs => {
+          audioCtx.decodeAudioData(blob, (data) => obs.next(data));
+        });
+      });
   }
 
 }
