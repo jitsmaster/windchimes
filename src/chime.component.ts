@@ -23,6 +23,7 @@ import {Samples} from './samples.service';
 export class Chime implements OnInit, OnDestroy {
   @Input() chime:{x: number, y: number, note: string};
   source:AudioBufferSourceNode;
+  pan:StereoPannerNode;
 
   constructor(private samples:Samples,
               private audioCtx:AudioContext) {
@@ -33,7 +34,13 @@ export class Chime implements OnInit, OnDestroy {
       if (this.samples.sampleCache.hasOwnProperty(this.chime.note)) {
         this.source = this.audioCtx.createBufferSource();
         this.source.buffer = this.samples.sampleCache[this.chime.note];
-        this.source.connect(this.audioCtx.destination);
+
+        this.pan = this.audioCtx.createStereoPanner();
+        this.pan.pan.value = (this.chime.x / 1280) * 2 - 1;
+
+        this.source.connect(this.pan);
+        this.pan.connect(this.audioCtx.destination);
+
         this.source.start();
       }
     }, 200);
@@ -43,6 +50,7 @@ export class Chime implements OnInit, OnDestroy {
     if (this.source) {
       this.source.stop();
       this.source.disconnect();
+      this.pan.disconnect();
     }
   }
 
