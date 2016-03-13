@@ -1,4 +1,4 @@
-import {Component, Inject} from 'angular2/core';
+import {Component} from 'angular2/core';
 import {Observable, Subscription} from 'rxjs';
 import {ForAnyOrder} from './forAnyOrder.directive';
 import {Chime} from './chime.component';
@@ -6,7 +6,7 @@ import {InnerChime} from './inner-chime.component';
 import {Random} from './random.service';
 
 @Component({
-  selector: 'windchimes',
+  selector: 'windchimes-remote',
   template: `
     <div *forAnyOrder="#chime of chimes | async">
       <chime [chime]="chime">
@@ -18,18 +18,18 @@ import {Random} from './random.service';
   styles: [require('./windchimes.component.css').toString()],
   directives: [Chime, InnerChime, ForAnyOrder]
 })
-export class Windchimes {
+export class WindchimesRemote {
   chimes:Observable<{x: number, y: number}[]>;
 
-  constructor(random:Random,
-              @Inject('notes') notes) {
-    const noteSampler = random.sampler(notes);
-    this.chimes = random.perlinNoise(5000)
-      .map(() => ({
-        x: random.nextInt(0, 1280),
-        y: random.nextInt(0, 680),
-        note: noteSampler()
-      }))
+  constructor(random:Random) {
+    this.chimes = random.remote()
+      .map((note) => {
+        console.log(note);
+        return {
+        x: 640,
+        y: 340,
+        note: note
+      }})
       .windowTime(5000, 100)
       .flatMap(window => window.toArray());
   }

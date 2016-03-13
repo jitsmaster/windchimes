@@ -1,5 +1,6 @@
 import {Injectable} from 'angular2/core';
 import {Observable} from 'rxjs';
+import * as io from 'socket.io-client';
 
 @Injectable()
 export class Random {
@@ -146,6 +147,14 @@ export class Random {
       };
       nextNoise();
       return () => running = false;
+    });
+  }
+
+  remote() {
+    const socket = io.connect('http://localhost:8081/');
+    return Observable.create((observer) => {
+      socket.on('chime', (note) => observer.next(note));
+      return () => socket.close();
     });
   }
 
