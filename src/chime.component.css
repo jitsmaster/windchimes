@@ -8,6 +8,12 @@
   border-style: solid;
   border-radius: 5px;
 }
+.chime.remote {
+  width: 14px;
+  height: 14px;
+  border-radius: 7px;
+  border-width: 2px;
+}
 
 .C4 { border-color: #Fa2315; }
 .G4 { border-color: #a723a5; }

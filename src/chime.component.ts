@@ -7,6 +7,7 @@ import {Samples} from './samples.service';
   template: `
     <div *ngIf="true"
          class="chime {{chime.note}}"
+         [class.remote]="remote"
          [style.left]="chime.x + 'px'"
          [style.top]="chime.y + 'px'">
     </div>
@@ -22,6 +23,7 @@ import {Samples} from './samples.service';
 })
 export class Chime implements OnInit, OnDestroy {
   @Input() chime:{x: number, y: number, note: string};
+  @Input() remote:boolean;
   source:AudioBufferSourceNode;
   pan:StereoPannerNode;
 

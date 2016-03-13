@@ -9,9 +9,9 @@ import {Random} from './random.service';
   selector: 'windchimes-remote',
   template: `
     <div *forAnyOrder="#chime of chimes | async">
-      <chime [chime]="chime">
+      <chime [chime]="chime" [remote]=true>
       </chime>
-      <inner-chime [chime]="chime">
+      <inner-chime [chime]="chime" [remote]=true>
       </inner-chime>
     </div>
   `,
