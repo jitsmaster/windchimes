@@ -31,7 +31,7 @@ export class Windchimes {
   constructor(random:Random,
               @Inject('notes') notes) {
     const noteSampler = random.sampler(notes);
-    this.chimes = random.perlinNoise()
+    this.chimes = random.perlinNoise(5000)
       .map(() => ({
         x: random.nextInt(0, 1280),
         y: random.nextInt(0, 680),
