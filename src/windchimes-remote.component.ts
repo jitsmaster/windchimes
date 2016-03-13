@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, Inject, Input} from 'angular2/core';
 import {Observable, Subscription} from 'rxjs';
 import {ForAnyOrder} from './forAnyOrder.directive';
 import {Chime} from './chime.component';
@@ -21,15 +21,13 @@ import {Random} from './random.service';
 export class WindchimesRemote {
   chimes:Observable<{x: number, y: number}[]>;
 
-  constructor(random:Random) {
+  constructor(random:Random, @Inject('size') size) {
     this.chimes = random.remote()
-      .map((note) => {
-        console.log(note);
-        return {
-        x: 640,
-        y: 340,
+      .map((note) => ({
+        x: size.width / 2,
+        y: size.height / 2,
         note: note
-      }})
+      }))
       .windowTime(5000, 100)
       .flatMap(window => window.toArray());
   }
