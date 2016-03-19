@@ -4,10 +4,9 @@
   box-sizing: border-box;
   width: 10px;
   height: 10px;
-  border-width: 0.5px;
+  border-width: 2px;
   border-style: solid;
   border-radius: 5px;
-  border-color: red;
 }
 .chime.remote {
   width: 14px;
@@ -15,13 +14,13 @@
   border-radius: 7px;
   border-width: 2px;
 }
-/*
+
 .C4 { border-color: #Fa2315; }
 .G4 { border-color: #a723a5; }
 .C5 { border-color: #266D75; }
 .D5 { border-color: #40BCC9; }
 .E5 { border-color: #8CF4FF; }
-*/
+
 .first {
   opacity: 0.7;
   transform: scale3d(1, 1, 1);
