@@ -1,29 +1,24 @@
 .inner-chime {
   display: block;
   position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
+  width: 600px;
+  height: 600px;
+  border-radius: 300px;
   background-image: radial-gradient(
     circle farthest-side,
     rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.1) 15%,
     rgba(255, 255, 255, 0) 100%
   );
-}
-.inner-chime.remote {
-  width: 14px;
-  height: 14px;
-  border-radius: 7px;
 }
 
 .first {
   opacity: 1;
-  transform: scale3d(0.2, 0.2, 0.2)
+  transform: scale3d(0.1, 0.1, 0.1)
 }
 .expanded {
   opacity: 1;
-  transform: scale3d(60, 60, 60);
+  transform: scale3d(1, 1, 1);
 }
 .gone {
   opacity: 0;

@@ -8,8 +8,8 @@ import {Samples} from './samples.service';
     <div *ngIf="true"
          class="inner-chime {{chime.note}}"
          [class.remote]="remote"
-         [style.left]="chime.x + 'px'"
-         [style.top]="chime.y + 'px'">
+         [style.left]="(chime.x - 300) + 'px'"
+         [style.top]="(chime.y - 300) + 'px'">
     </div>
   `,
   styles: [require('./inner-chime.component.css').toString()],
