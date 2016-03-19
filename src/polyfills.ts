@@ -5,4 +5,6 @@ import 'reflect-metadata';
 import 'zone';
 import 'long-stack-trace-zone';
 
+require('stereo-panner-node').polyfill();
+
 require('rxjs/Rx');

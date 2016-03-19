@@ -1,5 +1,5 @@
 import {Observable, ReplaySubject} from 'rxjs';
-import {Injectable} from 'angular2/core';
+import {Injectable, Inject} from 'angular2/core';
 import {Http, ResponseBuffer} from 'angular2/http';
 
 const NOTES = {
@@ -14,7 +14,7 @@ const NOTES = {
 export class Samples {
   sampleCache = {};
 
-  constructor(private http:Http, audioCtx:AudioContext) {
+  constructor(private http:Http, @Inject('audioContext') audioCtx) {
     for (const note of Object.keys(NOTES)) {
       const sub = new ReplaySubject(1);
       this.sampleCache[note] = sub;

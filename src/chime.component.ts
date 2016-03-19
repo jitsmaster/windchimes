@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, OnDestroy, ChangeDetectionStrategy} from 'angular2/core';
+import {Component, Inject, Input, OnInit, OnDestroy, ChangeDetectionStrategy} from 'angular2/core';
 import {style, animate} from 'angular2/src/animate/worker/animation_definition';
 import {Samples} from './samples.service';
 
@@ -28,7 +28,7 @@ export class Chime implements OnInit, OnDestroy {
   pan:StereoPannerNode;
 
   constructor(private samples:Samples,
-              private audioCtx:AudioContext) {
+              @Inject('audioContext') private audioCtx) {
   }
 
   ngOnInit() {

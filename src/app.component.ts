@@ -16,7 +16,7 @@ import {Samples} from './samples.service';
   providers: [
     Random,
     Samples,
-    AudioContext,
+    provide('audioContext', {useValue: new (window['AudioContext'] || window['webkitAudioContext'])}),
     provide('size', {useValue: {width: 1280, height: 780}}),
     provide('notes', {useValue: ['C4', 'G4', 'C5', 'D5', 'E5']})
   ]
