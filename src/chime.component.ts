@@ -22,7 +22,7 @@ import {Samples} from './samples.service';
   changeDetection: ChangeDetectionStrategy.CheckOnce
 })
 export class Chime implements OnInit, OnDestroy {
-  @Input() chime:{x: number, y: number, note: string};
+  @Input() chime:{x: number, y: number, note: string, state: string};
   @Input() remote:boolean;
   source:AudioBufferSourceNode;
   pan:StereoPannerNode;
@@ -32,18 +32,20 @@ export class Chime implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.samples.sampleCache[this.chime.note].first().subscribe(sample => {
-      this.source = this.audioCtx.createBufferSource();
-      this.source.buffer = sample;
+    if (this.chime.state === 'chiming') {
+      this.samples.sampleCache[this.chime.note].first().subscribe(sample => {
+        this.source = this.audioCtx.createBufferSource();
+        this.source.buffer = sample;
 
-      this.pan = this.audioCtx.createStereoPanner();
-      this.pan.pan.value = (this.chime.x / 1280) * 2 - 1;
+        this.pan = this.audioCtx.createStereoPanner();
+        this.pan.pan.value = (this.chime.x / 1280) * 2 - 1;
 
-      this.source.connect(this.pan);
-      this.pan.connect(this.audioCtx.destination);
+        this.source.connect(this.pan);
+        this.pan.connect(this.audioCtx.destination);
 
-      this.source.start();
-    });
+        this.source.start();
+      });
+    }
   }
 
   ngOnDestroy() {

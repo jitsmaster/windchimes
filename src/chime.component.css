@@ -14,6 +14,7 @@
 .C5 { border-color: #DAD8A7; }
 .D5 { border-color: #7FC7AF; }
 .E5 { border-color: #3FB8AF; }
+.done { border: 0; }
 
 .first {
   opacity: 1;

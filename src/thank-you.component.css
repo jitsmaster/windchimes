@@ -1,0 +1,29 @@
+.ty {
+  position: relative;
+  width: 500px;
+  height: 180px;
+  left: -250px;
+  top: -160px;
+  color: white;
+  font-family: 'Italianno', cursive;
+  font-size: 7em;
+  text-align: center;
+}
+.ty:before,
+.ty:after {
+  position: absolute;
+  content: "";
+  left: 250px;
+  top: 180px;
+  width: 100px;
+  height: 160px;
+  background: red;
+  border-radius: 50px 50px 0 0;
+  transform: rotate(-45deg);
+  transform-origin: 0 100%;
+}
+.ty:after {
+  left: 150px;
+  transform: rotate(45deg);
+  transform-origin :100% 100%;
+}

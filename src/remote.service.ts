@@ -4,7 +4,8 @@ import * as io from 'socket.io-client';
 
 export interface ControlState {
   clientCount:number,
-  delay:number
+  delay:number,
+  state:string
 }
 
 @Injectable()
@@ -13,9 +14,9 @@ export class Remote {
   private controlSocket:SocketIOClient.Socket;
 
   chimes() {
-    const socket = io.connect('http://localhost:8081/chimes');
+    const socket = io.connect('http://chimes-eu.teropa.info/chimes');
     return Observable.create((observer) => {
-      socket.on('chime', (note) => observer.next(note));
+      socket.on('chime', (chime) => observer.next(chime));
       return () => socket.close();
     });
   }
@@ -30,13 +31,21 @@ export class Remote {
     this.getControlSocket().emit('adjustRate', delta);
   }
 
-  resetRate(delta:number) {
+  resetRate() {
     this.getControlSocket().emit('resetRate');
+  }
+
+  done() {
+    this.getControlSocket().emit('done');
+  }
+
+  start() {
+    this.getControlSocket().emit('start');
   }
 
   private getControlSocket() {
     if (!this.controlSocket) {
-      this.controlSocket = io.connect('http://localhost:8081/ctrl');
+      this.controlSocket = io.connect('http://chimes-eu.teropa.info/ctrl');
     }
     return this.controlSocket;
   }

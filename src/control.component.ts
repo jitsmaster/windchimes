@@ -5,6 +5,11 @@ import {Remote, ControlState} from './remote.service';
 @Component({
   selector: 'control',
   template: `
+    <h1>
+      {{state?.state}}
+      <button *ngIf="isChiming()" (click)="done()">Done</button>
+      <button *ngIf="!isChiming()" (click)="start()">Start</button>
+    </h1>
     <p>
       Connected clients: {{state?.clientCount}}
     </p>
@@ -16,6 +21,8 @@ import {Remote, ControlState} from './remote.service';
       <button (click)="adjustDelay(-10)">-10</button>
       <button (click)="resetDelay()">Reset</button>
     </p>
+    <p>
+
   `
 })
 export class Control implements OnInit, OnDestroy {
@@ -32,6 +39,18 @@ export class Control implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  isChiming() {
+    return this.state && this.state.state === 'chiming';
+  }
+
+  done() {
+    this.rmt.done();
+  }
+
+  start() {
+    this.rmt.start();
   }
 
   adjustDelay(amt:number) {
