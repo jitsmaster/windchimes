@@ -1,9 +1,12 @@
 import {Injectable} from 'angular2/core';
 import {Observable} from 'rxjs';
 import * as io from 'socket.io-client';
+import {Remote} from './remote.service';
 
 @Injectable()
 export class Random {
+
+  constructor(private rmt:Remote) { }
 
   nextInt(min, max) {
     return min + Math.floor(Math.random() * (max - min));
@@ -151,11 +154,7 @@ export class Random {
   }
 
   remote() {
-    const socket = io.connect('http://chimes-eu.teropa.info/chimes');
-    return Observable.create((observer) => {
-      socket.on('chime', (note) => observer.next(note));
-      return () => socket.close();
-    });
+    return this.rmt.chimes();
   }
 
   private sleep(ms) {
