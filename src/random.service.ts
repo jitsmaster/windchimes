@@ -141,7 +141,7 @@ export class Random {
           if (yes) {
             observer.next();
           }
-          await this.sleep(100);
+          await this.sleep(200);
           x += 0.2;
         }
       };
@@ -151,7 +151,7 @@ export class Random {
   }
 
   remote() {
-    const socket = io.connect('http://localhost:8081/');
+    const socket = io.connect('http://chimes-eu.teropa.info/chimes');
     return Observable.create((observer) => {
       socket.on('chime', (note) => observer.next(note));
       return () => socket.close();

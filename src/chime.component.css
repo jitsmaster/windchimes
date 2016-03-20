@@ -4,19 +4,19 @@
   box-sizing: border-box;
   width: 600px;
   height: 600px;
-  border-width: 100px;
+  border-width: 200px;
   border-style: solid;
   border-radius: 300px;
 }
 
-.C4 { border-color: #Fa2315; }
-.G4 { border-color: #a723a5; }
-.C5 { border-color: #266D75; }
-.D5 { border-color: #40BCC9; }
-.E5 { border-color: #8CF4FF; }
+.C4 { border-color: #FF3D7F; }
+.G4 { border-color: #FF9E9D; }
+.C5 { border-color: #DAD8A7; }
+.D5 { border-color: #7FC7AF; }
+.E5 { border-color: #3FB8AF; }
 
 .first {
-  opacity: 0.7;
+  opacity: 1;
   transform: scale3d(0.015, 0.015, 0.015);
 }
 .gone {
