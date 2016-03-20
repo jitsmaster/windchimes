@@ -1,0 +1,3139 @@
+Our QuickStart goal is to build and run a super-simple Angular 2 application in TypeScript.
+
+Download the code
+
+In a hurray? Download the QuickStart source and start coding
+
+See it run
+
+Try this live example which loads the sample app in plunker and displays a simple message:
+
+Output of QuickStart app
+Learn
+
+Of course we don't build apps to run in plunker. The following steps establish a development environment for the documentation samples that also can be the foundation for our real world applications. At a high level, we will
+
+set up the development environment
+write the app's Angular root component
+write main.ts which tells Angular to display the root component
+write the host web page index.html
+
+We'll see many code blocks as we pursue this agenda. They're all easy to copy and paste:
+
+
+Click the glyph on the right to copy code snippets to the clipboard
+HIDE EXPLANATIONS
+Explanations describe the concepts and reasons behind the instructions. Explanations have a thin border on the left like this block of text.
+
+Click Hide Explanations to show only the instructions. Click it again to see everything again.
+
+Development Environment
+
+We need to set up our development environment:
+
+install node and npm
+create an application project folder
+add a tsconfig.json to guide the TypeScript compiler
+add a typings.json that identifies missing TypeScript definition files
+add a package.json that defines the packages and scripts we need
+install the npm packages and typings files
+Install node and npm if not already on your machine.
+
+Create a new project folder
+
+
+mkdir angular2-quickstart
+cd    angular2-quickstart
+
+Add a tsconfig.json file to the project folder and copy/paste the following:
+
+This tsconfig.json file guides the TypeScript compiler. Learn more about it in the TypeScript Configuration chapter.
+
+Add a typings.json file to the project folder and copy/paste the following:
+
+Many JavaScript libraries extend the JavaScript environment with features and syntax that the TypeScript compiler doesn't recognize natively. We teach it about these capabilities with TypeScript type definition files — d.ts files — which we identify in a typings.json file.
+
+We go a little deeper into typings in the TypeScript Configuration chapter.
+
+Add a package.json file to the project folder and copy/paste the following:
+
+Adding the libraries we need with npm
+
+Angular application developers rely on the npm package manager to install the libraries their apps require. The Angular team recommends the starter-set of packages specified in the dependencies and devDependencies sections. See the npm packages chapter for details.
+
+Helpful scripts
+
+We've included a number of npm scripts in our suggested package.json to handle common development tasks:
+
+We execute most npm scripts in the following way: npm run + script-name. Some commands (such as start don't require the run keyword).
+
+Here's what these scripts do:
+
+npm start - runs the compiler and a server at the same time, both in "watch mode"
+
+npm run tsc - runs the TypeScript compiler once
+
+npm run tsc:w - runs the TypeScript compiler in watch mode; the process keeps running, awaiting changes to TypeScript files and re-compiling when it sees them
+
+npm run lite - runs the lite-server, a light-weight, static file server with excellent support for Angular apps that use routing
+
+npm run typings - runs the typings tool
+
+npm run postinstall - called by npm automatically after it successfully completes package installation. This script installs the TypeScript definition files defined in typings.json
+
+Install these packages by entering the following npm command in a terminal window (command window in Windows):
+
+Scary error messages in red may appear during install. The install typically recovers from these errors and finishes successfully.
+
+npm errors and warnings
+
+All is well if there are no console messages starting with npm ERR! at the end of npm install. There might be a few npm WARN messages along the way — and that is perfectly fine.
+
+We often see an npm WARN message after a series of gyp ERR! messages. Ignore them. A package may try to re-compile itself using node-gyp. If the re-compile fails, the package recovers (typically with a pre-built version) and everything works.
+
+Just make sure there are no npm ERR! messages at the end of npm install.
+
+We're all set. Let's write some code.
+
+
+
+Our First Angular Component
+
+Let's create a folder to hold our application and add a super-simple Angular component.
+
+Create an app sub-folder off the root directory and make it the current directory
+
+
+mkdir app
+cd    app
+Add a component file named app.component.ts and paste the following lines:
+
+
+AppComponent is the root of the application
+
+Every Angular app has at least one root component, conventionally named AppComponent, that hosts the client user experience.
+
+Components are the basic building blocks of Angular applications. A component controls a portion of the screen — a view — through its associated template.
+
+This QuickStart has only one, extremely simple component. But it has the essential structure of every component we'll ever write:
+
+One or more import statements to reference the things we need.
+
+A @Component decorator that tells Angular what template to use and how to create the component.
+
+A component class that controls the appearance and behavior of a view through its template.
+
+
+Import
+
+Angular apps are modular. They consist of many files each dedicated to a purpose.
+
+Angular itself is modular. It is a collection of library modules each made up of several, related features that we'll use to build our application.
+
+When we need something from a module, we import it. Here we import the Angular Component decorator function from the main Angular library module because we need it to define our component.
+Component is a decorator function that takes a metadata object. The metadata tell Angular how to create and use this component.
+
+We apply this function to the component class by prefixing the function with the @ symbol and invoking it with the metadata object just above the class:
+
+This particular metadata object has two fields, a selector and a template.
+
+The selector specifies a simple CSS selector for an HTML element that represents the component.
+
+The element for this component is named my-app. Angular creates and displays an instance of our AppComponent wherever it encounters a my-app element in the host HTML.
+
+The template specifies the component's companion template, written in an enhanced form of HTML that tells Angular how to render this component's view.
+
+Our template is a single line of HTML announcing "My First Angular App".
+
+A more advanced template could contain data bindings to component properties and might identify other application components which have their own templates. These templates might identify yet other components. In this way an Angular application becomes a tree of components.
+
+
+Component class
+
+At the bottom of the file is an empty, do-nothing class named AppComponent.
+When we're ready to build a substantive application, we can expand this class with properties and application logic. Our AppComponent class is empty because we don't need it to do anything in this QuickStart.
+
+We export AppComponent so that we can import it elsewhere in our application, as we'll see when we create main.ts.
+
+
+Show it with main.ts
+
+Now we need something to tell Angular to load the root component
+
+Add a new file , main.ts, to the app/ folder as follows:
+We import the two things we need to launch the application:
+
+Angular's browser bootstrap function
+The application root component, AppComponent.
+Then we call bootstrap with AppComponent.
+
+Bootstrapping is platform-specific
+
+Notice that we import the bootstrap function from angular2/platform/browser, not angular2/core.
+
+Bootstrapping isn't core because there isn't a single way to bootstrap the app. True, most applications that run in a browser call the bootstrap function from this library.
+
+But it is possible to load a component in a different environment. We might load it on a mobile device with Apache Cordova or NativeScript. We might wish to render the first page of our application on the server to improve launch performance or facilitate SEO.
+
+These targets require a different kind of bootstrap function that we'd import from a different library.
+
+Why create a separate main.ts file?
+
+The main.ts file is tiny. This is just a QuickStart. We could have folded its few lines into the app.component file and spared ourselves some complexity.
+
+We'd rather demonstrate the proper way to structure an Angular application. App bootstrapping is a separate concern from presenting a view. Mixing concerns creates difficulties down the road. We might launch the AppComponent in multiple environments with different bootstrappers. Testing the component is much easier if it doesn't also try to run the entire application. Let's make the small extra effort to do it the right way.
+
+Add the index.html
+
+The index.html is the web page that hosts the application
+
+Navigate to the project root folder.
+
+Create an index.html file in this root folder and paste the following lines:
+
+
+There are three noteworthy sections of HTML
+
+The JavaScript libraries
+
+Configuration of SystemJS where we also import and run the main file that we just wrote.
+
+The <my-app> tag in the <body> which is where our app lives!
+
+Libraries
+
+We loaded the following scripts
+
+We began with Internet Explorer polyfills. IE requires polyfills to run an application that relies on ES2015 promises and dynamic module loading. Most applications need those capabilities and most applications should run in Internet Explorer.
+
+Next are the polyfills for Angular2, angular2-polyfills.js.
+
+Then the SystemJS library for module loading, followed by the Reactive Extensions RxJS library.
+
+Our QuickStart doesn't use the Reactive Extensions but any substantial application will want them when working with observables. We added the library here in QuickStart so we don't forget later.
+
+Finally, we loaded the web development version of Angular 2 itself.
+
+We'll make different choices as we gain experience and become more concerned about production qualities such as load times and memory footprint.
+
+SystemJS Configuration
+
+The QuickStart uses SystemJS to load application and library modules. There are alternatives that work just fine including the well-regarded webpack. SystemJS happens to be a good choice but we want to be clear that it was a choice and not a preference.
+
+All module loaders require configuration and all loader configuration becomes complicated rather quickly as soon as the file structure diversifies and we start thinking about building for production and performance.
+
+We suggest becoming well-versed in the loader of your choice. Learn more about SystemJS configuration here.
+
+With those cautions in mind, what are we doing in this QuickStart configuration?
+
+The packages node tells SystemJS what to do when it sees a request for a module from the app/ folder.
+
+Our QuickStart makes such requests when one of its application TypeScript files has an import statement like this:
+
+
+Notice that the module name (after from) does not mention a filename extension. The packages: configuration tells SystemJS to default the extension to 'js', a JavaScript file.
+
+That makes sense because we transpile TypeScript to JavaScript before running the application.
+
+Transpiling in the browser
+
+In the live example on plunker we transpile (AKA compile) to JavaScript in the browser on the fly. That's fine for a demo. That's not our preference for development or production.
+
+We recommend transpiling (AKA compiling) to JavaScript during a build phase before running the application for several reasons including:
+
+We see compiler warnings and errors that are hidden from us in the browser.
+
+Pre-compilation simpifies the module loading process and it's much easier to diagnose problems when this is a separate, external step.
+
+Pre-compilation means a faster user experience because the browser doesn't waste time compiling.
+
+We iterate development faster because we only re-compile changed files. We notice the difference as soon as the app grows beyond a handful of files.
+
+Pre-compilation fits into a continuous integration process of build, test, deploy.
+
+The System.import call tells SystemJS to import the main file (main.js ... after transpiling main.ts, remember?). main is where we tell Angular to launch the application. We also catch and log launch errors to the console.
+
+All other modules are loaded upon request either by an import statement or by Angular itself.
+
+When Angular calls the bootstrap function in main.ts, it reads the AppComponent metadata, finds the my-app selector, locates an element tag named my-app, and loads our application between those tags.
+
+Add some style
+
+Styles aren't essential but they're nice and the index.html assumes we have a stylesheet called styles.css.
+
+Create a styles.css in the root folder and start styling, perhaps with this set
+
+Compile and run!
+
+Open a terminal window and enter this command:
+
+
+npm start
+That command runs two parallel node processes
+
+The TypeScript compiler in watch mode
+A static server called lite-server that loads index.html in a browser and refreshes the browser when application files change
+In a few moments, a browser tab should open and display
+
+Congratulations! We are in business.
+
+Make some changes
+
+Try changing the message to "My SECOND Angular 2 app".
+
+The TypeScript compiler and lite-server are watching. They should detect the change, recompile the TypeScript into JavaScript, refresh the browser, and display the revised message.
+
+It's a nifty way to develop an application!
+
+We close the terminal window when we're done to terminate both the compiler and the server.
+
+Final structure
+
+Our final project folder structure looks like this:
+
+Wrap Up
+
+Our first application doesn't do much. It's basically "Hello, World" for Angular 2.
+
+We kept it simple in our first pass: we wrote a little Angular component, we added some JavaScript libraries to index.html, and launched with a static file server. That's about all we'd expect to do for a "Hello, World" app.
+
+We have greater ambitions.
+
+The good news is that the overhead of setup is (mostly) behind us. We'll probably only touch the package.json to update libraries. We'll likely open index.html only if we need to add a library or some css stylesheets.
+
+We're about to take the next step and build a small application that demonstrates the great things we can build with Angular 2.
+
+Join us on the Tour of Heroes Tutorial!
+
+Angular 2 is a framework to help us build client applications in HTML and JavaScript.
+
+The framework consists of several cooperating libraries, some of them core and some optional.
+
+We write applications by composing HTML *templates* with Angularized-markup,
+writing *component* classes to manage those templates, adding application logic in *services*,
+and handing the top root component to Angular's *bootstrapper*.
+
+Angular takes over, presenting our application content in a browser and responding to user interactions
+according to the instructions we provided.
+
+Of course there is more to it than this. We'll learn the details when we dive into the guide chapters.
+Let's get the big picture first.
+
+
+The architecture diagram identifies the eight main building blocks of an Angular 2 application:
+
+Learn these eight and we're on our way.
+
+Angular apps are modular.
+
+In general we assemble our application from many **modules**.
+
+A typical module is a cohesive block of code dedicated to a single purpose.
+A module **exports** something of value in that code, typically one thing such as a class.
+
+Modules are optional
+We highly recommend modular design. TypeScript has great support for ES2015 module syntax and our chapters assume we're taking a modular
+approach using that syntax. That's why we list *Module* among the basic building blocks.
+
+ Angular itself doesn't require a modular approach nor this particular syntax. Don't use it if you don't want it.
+ Each chapter has plenty to offer after you steer clear of the `import` and `export` statements.
+
+Find setup and organization clues in the JavaScript track (select it from the combo-box at the top of this page)
+which demonstrates Angular 2 development with plain old JavaScript and no module system.
+
+Perhaps the first module we meet is a module that exports a *component* class.
+The component is one of the basic Angular blocks, we write a lot of them,
+and we'll talk about components in the next segment. For the moment it is enough to know that a
+component class is the kind of thing we'd export from a module.
+
+Most applications have an `AppComponent`. By convention, we'll find it in a file named `app.component.ts`.
+Look inside such a file and we'll see an `export` statement like this one.
+
+The `export` statement tells TypeScript that this is a module whose
+`AppComponent` class is public and accessible to other modules of the application.
+
+When we need a reference to the `AppComponent`, we **import** it like this:
+
+The `import` statement tells the system it can get an `AppComponent` from a module named `app.component`
+located in a neighboring file.
+The **module name** (AKA module id) is often the same as the filename without its extension.
+
+Library Modules
+
+Some modules are libraries of other modules.
+
+Angular itself ships as a collection of library modules called "barrels".
+Each Angular library is actually a public façade over several logically related private modules.
+
+The `angular2/core` library is the primary Angular library module from which we get most of what we need.
+
+There are other important Angular library modules too such as `angular2/common`, `angular2/router`, and `angular2/http`.
+
+ Learn more about how Angular organizes and distributes modules
+ in "Modules, barrels and bundles".
+We import what we need from an Angular library module in much the same way.
+For example, we import the Angular **`Component` *function*** from the *angular2/core* module like this:
+
+Compare that syntax to our previous import of `AppComponent`.
+
+Notice the difference?
+In the first case, when importing from an Angular library module,
+the import statement refers to the bare module name, `angular2/core`, *without a path prefix*.
+
+When we import from one of *our* own files, we prefix the module name with the file path.
+In this example we specify  a relative file path (./). That means the
+source module is in the same folder (./) as the module importing it.
+We could path up and around the application folder structure if the source module were somewhere else.
+
+We import and export in the ECMAScript 2015 (ES2015) module syntax.
+Learn more about that syntax here
+and many other places on the web.
+
+The infrastructure *behind* module loading and importing is an important subject.
+But it's a subject outside the scope of this introduction to Angular.
+While we're focused on our application, *import* and *export*
+is about all we need to know.
+
+The key take-aways are:
+* Angular apps are composed of modules.
+* Modules export things &mdash; classes, function, values &mdash; that other modules import.
+* We prefer to write our application as a collection of modules, each module exporting one thing.
+
+The first module we write will most likely export a component.
+
+The Component
+
+A **Component** controls a patch of screen real estate that we could call a *view*.
+The shell at the application root with navigation links, that list of heroes, the hero editor ...
+they're all views controlled by Components.
+
+We define a Component's application logic - what it does to support the view - inside a class.
+The class interacts with the view through an API of properties and methods.
+
+A `HeroListComponent`, for example, might have a `heroes` property that returns an array of heroes
+that it acquired from a service.
+It might have a `selectHero()` method that sets a `selectedHero` property when the user clicks on a hero from that list.
+It might be a class like this:
+
+Angular creates, updates, and destroys components as the user moves through the application.
+The developer can take action at each moment in this lifecycle through optional Lifecycle Hooks.
+
+We're not showing those hooks in this example
+but we are making a mental note to find out about them later.
+
+We may wonder who is calling that constructor? Who provides the service parameter?
+For the moment, have faith that Angular will call the constructor and deliver an
+appropriate `HeroService` when we need it.
+
+The Template
+
+We define a Component's view with its companion **template**. A template is a form of HTML
+that tells Angular how to render the Component.
+
+A template looks like regular HTML much of the time ... and then it gets a bit strange. Here is a
+template for our `HeroList` component.
+
+
+These are examples of Angular's template syntax.
+We will grow accustomed to that syntax and may even learn to love it.
+We'll begin to explain it in a moment.
+
+Before we do, focus attention on the last line.
+The `<hero-detail>` tag is a custom element representing the `HeroDetailComponent`.
+
+The `HeroDetailComponent` is a *different* component than the `HeroListComponent` we've been reviewing.
+The `HeroDetailComponent` (code not shown) presents facts about a particular hero, the
+hero that the user selects from the list presented by the `HeroListComponent`.
+The `HeroDetailComponent` is a **child** of the `HeroListComponent`.
+
+
+Notice how `<hero-detail>` rests comfortably among the HTML elements we already know.
+We can mix ... and will mix ... our custom components with native HTML in the same layouts.
+
+And in this manner we can and will compose complex component trees to build out our richly featured application.
+
+Angular Metadata
+
+Looking back at the `HeroListComponent`, we see that it's just a class.
+There is no evidence of a framework, no "Angular" in it at all.
+
+In fact, it really is *just a class*. It's not a component until we *tell Angular about it*.
+
+We tell Angular that `HeroListComponent` is a component by attaching **metadata** to the class.
+
+The easy way to attach metadata in TypeScript is with a **decorator**.
+Here's some metadata for `HeroListComponent`:
+
+Here we see the `@Component` decorator which (no surprise) identifies the class
+immediately below it as a Component class.
+
+A decorator is a function. Decorators often have a configuration parameter.
+The `@Component` decorator takes a required configuration object with the
+information Angular needs to create and present the component and its view.
+
+
+* `selector` - a css selector that tells Angular to create and insert an instance of this component
+where it finds a `<hero-list>` tag in *parent* HTML.
+If the template of the application shell (a Component) contained
+
+Angular inserts an instance of the `HeroListComponent` view between those tags.
+
+* `templateUrl` - the address of this component's template which we showed above.
+
+* `directives` - an array of the Components or Directives that *this* template requires.
+We saw in the last line of our template that we expect Angular to insert a `HeroDetailComponent`
+in the space indicated by `<hero-detail>` tags.
+Angular will do so only if we mention the `HeroDetailComponent` in this `directives` array.
+
+* `providers` - an array of **dependency injection providers** for services that the component requires.
+This is one way to tell Angular that our component's constructor requires a `HeroService`
+so it can get the list of heroes to display. We'll get to dependency injection in a moment.
+
+The `@Component` function takes the configuration object and turns it into metadata that it attaches
+to the component class definition. Angular discovers this metadata at runtime and thus knows how to do "the right thing".
+
+The template, metadata, and component together describe the view.
+
+We apply other metadata decorators in a similar fashion to guide Angular behavior.
+The `@Injectable`, `@Input`, `@Output`, `@RouterConfig` are a few of the more popular decorators
+we'll master as our Angular knowledge grows.
+
+The architectural take-away is that we must add metadata to our code
+so that Angular knows what to do.
+
+## Data Binding
+Without a framework, we would be responsible for pushing data values into the HTML controls and turning user responses
+into actions and value updates. Writing such push/pull logic by hand is tedious, error-prone and a nightmare to
+read as the experienced jQuery programmer can attest.
+
+Angular supports **data binding**,
+a mechanism for coordinating parts of a template with parts of a component.
+We add binding markup to the template HTML to tell Angular how to connect both sides.
+
+There are four forms of data binding syntax. Each form has a direction - to the DOM, from the DOM, or in both directions -
+as indicated by the arrows in the diagram.
+
+We saw three forms of data binding in our example template:
+
+  displays the component's `hero.name` property value within the `<div>` tags.
+
+* The `[hero]` property binding passes the `selectedHero` from
+the parent `HeroListComponent` to the `hero` property of the child `HeroDetailComponent`.
+
+* The `(click)` event binding calls the Component's `selectHero` method when the user clicks
+on a hero's name
+
+**Two-way data binding** is an important fourth form
+that combines property and event binding in a single notation using the `ngModel` directive.
+We didn't have a two-way binding in the `HeroListComponent` template;
+here's an example from the `HeroDetailComponent` template (not shown):
+
+In two-way binding, a data property value flows to the input box from the component as with property binding.
+The user's changes also flow back to the component, resetting the property to the latest value,
+as with event binding.
+
+Angular processes *all* data bindings once per JavaScript event cycle,
+depth-first from the root of the application component tree.
+
+We don't know all the details yet
+but it's clear from these examples that data binding plays an important role in communication
+between a template and its component ...
+  ... ***and*** between parent and child components
+
+The Directive
+
+Our Angular templates are *dynamic*. When Angular renders them, it transforms the DOM
+according to the instructions given by a **directive**.
+
+A directive is a class with directive metadata. In TypeScript we'd apply the `@Directive` decorator
+to attach metadata to the class.
+
+We already met one form of directive: the component. A component is a *directive-with-a-template*
+and the `@Component` decorator is actually a `@Directive` decorator extended with template-oriented features.
+
+  While the **component is technically a directive**,
+  it is so distinctive and central to Angular applications that we chose
+  to separate the component from the directive in our architectural overview.
+
+  There are two *other* kinds of directives as well that we call "structural" and "attribute" directives.
+
+  They tend to appear within an element tag like attributes,
+  sometimes by name but more often as the target of an assignment or a binding.
+
+  **Structural** directives alter layout by adding, removing, and replacing elements in DOM.
+
+  We see two built-in structural directives at play in our example template:
+
+
+**Attribute** directives alter the appearance or behavior of an existing element.
+In templates they look like regular HTML attributes, hence the name.
+
+The `ngModel` directive, which implements two-way data binding, is an example of an attribute directive.
+
+It modifies the behavior of an existing element (typically an `<input>`)
+by setting its display value property and responding to change events.
+
+Angular ships with a few other directives that either alter the layout structure
+or modify aspects of DOM elements and components
+
+And of course we can write our own directives.
+
+The Service
+
+"Service" is a broad category encompassing any value, function or feature that our application needs.
+
+Almost anything can be a service.
+A service is typically a class with a narrow, well-defined purpose. It should do something specific and do it well.
+
+Examples include:
+* logging service
+* data service
+* message bus
+* tax calculator
+* application configuration
+
+There is nothing specifically *Angular* about services. Angular itself has no definition of a *service*.
+There is no *ServiceBase* class.
+
+Yet services are fundamental to any Angular application.
+
+Here's an example of a service class that logs to the browser console
+
+Here's a `HeroService` that fetches heroes and returns them in a resolved promise.
+The `HeroService` depends on the `LoggerService` and another `BackendService` that handles the server communication grunt work.
+
+Services are everywhere.
+
+Our components are big consumers of services. They depend upon services to handle most chores.
+They don't fetch data from the server, they don't validate user input, they don't log directly to the console.
+They delegate such tasks to services.
+
+A component's job is to enable the user experience and nothing more. It mediates between the view (rendered by the template)
+and the application logic (which often includes some notion of a "model").  A good component presents
+properties and methods for data binding. It delegates everything non-trivial to services.
+
+Angular doesn't *enforce* these principles.
+It won't complain if we write a "kitchen sink" component with 3000 lines.
+
+Angular does help us *follow* these principles by making it easy to factor our
+application logic into services and make those services available to components through *dependency injection*.
+
+Dependency Injection
+"Dependency Injection" is a way to supply a new instance of a class
+with the fully-formed dependencies it requires. Most dependencies are services.
+Angular uses dependency injection to provide new components with the services they need.
+
+In TypeScript, Angular can tell which services a component needs by looking at the types of its constructor parameters.
+For example, the constructor of our `HeroListComponent` needs the `HeroService`:
+
+When Angular creates a component, it first asks an **Injector** for
+the services that the component requires.
+
+An `Injector` maintains a container of service instances that it has previously created.
+If a requested service instance is not in the container, the injector makes one and adds it to the container
+before returning the service to Angular.
+When all requested services have been resolved and returned,
+Angular can call the component's constructor with those services as arguments.
+This is what we mean by *dependency injection*.
+
+The process of `HeroService` injection looks a bit like this:
+
+If the `Injector` doesn't have a `HeroService`, how does it know how to make one?
+
+In brief, we must have previously registered a **provider** of the `HeroService` with the `Injector`.
+A provider is something that can create or return a service, typically  the service class itself.
+
+We can register providers at any level of the application component tree.
+We often do so at the root when we bootstrap the application so that
+the same instance of a service is available everywhere.
+
+Alternatively, we might register at a component level ...
+... in which case we get a new instance of the
+service with each new instance of that component.
+
+We've vastly over-simplified dependency injection for this overview.
+We can learn the full story in the Dependency Injection chapter.
+
+The points to remember are:
+* dependency injection is wired into the framework and used everywhere.<br><br>
+* the `Injector` is the main mechanism.
+  * an injector maintains a *container* of service instances that it created.
+  * an injector can create a new service instance using a *provider*.
+* a *provider* is a recipe for creating a service.
+
+* we register *providers* with injectors.
+
+We've learned just a bit about the eight main building blocks of an Angular application
+That's a foundation for everything else in an Angular application
+and it's more than enough to get going.
+But it doesn't include everything we'll need or want to know.
+
+## The Other Stuff
+
+Here is a brief, alphabetical list of other important Angular features and services.
+Most of them are covered in this Developers Guide (or soon will be):
+
+>**Animations** - A forthcoming animation library makes it easy for developers to animate component behavior
+without deep knowledge of animation techniques or css.
+
+>**Bootstrap** - A method to configure and launch the root application component.
+
+>**Change Detection** - Learn how Angular decides that a component property value has changed and
+when to update the screen.
+Learn how it uses **zones** to intercept asynchronous activity and run its change detection strategies.
+
+>**With the Component Router service, users can navigate a multi-screen application
+in a familiar web browsing style using URLs.
+
+>**Events** - The DOM raises events. So can components and services. Angular offers mechanisms for
+publishing and subscribing to events including an implementation of the RxJS Observable proposal.
+
+>**Forms** - Support complex data entry scenarios with HTML-based validation and dirty checking.
+
+>**HTTP** - Communicate with a server to get data, save data, and invoke server-side actions with this Angular HTTP client.
+
+>**Lifecycle Hooks** - We can tap into key moments in the lifetime of a component, from its creation to its destruction,
+by implementing the "Lifecycle Hook" interfaces.
+
+>**Pipes** - Services that transform values for display.
+We can put pipes in our templates to improve the user experience. For example,
+this `currency` pipe expression,
+
+>**Testing** - Angular provides a testing library for "unit testing" our application parts as they
+interact with the Angular framework.
+
+
+
+An **Attribute** directive changes the appearance or behavior of a DOM element.
+
+In this chapter we will
+* write an attribute directive to change the background color
+* apply the attribute directive to an element in a template
+* respond to user-initiated events
+* pass values into the directive using data binding
+
+## Directives overview
+
+There are three kinds of directives in Angular:
+1. Components
+1. Structural directives
+1. Attribute directives
+
+The *Component* is really a directive with a template.
+It's the most common of the three directives and we write lots of them as we build our application.
+
+The *Structural* directive changes the DOM layout by adding and removing DOM elements.
+NgForand NgIf are two familiar examples.
+
+The *Attribute* directive changes the appearance or behavior of an element.
+The built-in NgStyle directive, for example,
+can change several element styles at the same time.
+
+We are going to write our own attribute directive to set an element's background color
+when the user hovers over that element.
+
+We don't need *any* directive to simply set the background color.
+We can set it with the special Style Binding like this:
+
+That wouldn't be nearly as much fun as creating our own directive.
+
+Besides, we're not just *setting* the color; we'll be *changing* the color
+in response to a user action, a mouse hover.
+
+## Build a simple attribute directive
+An attribute directive minimally requires building a controller class annotated with a
+`Directive` decorator. The `Directive` decorator specifies the selector identifying
+the attribute associated with the directive.
+The controller class implements the desired directive behavior.
+
+Let's build a small illustrative example together.
+
+### Our first draft
+Create a new project folder (`attribute-directives`) and follow the steps in the QuickStart.
+
+Add a new file to the `app` folder called `highlight.directive.ts` and add the following code:
+
+We begin by importing some symbols from the Angular library.
+We need the `Directive` symbol for the `@Directive` decorator.
+We need the `ElementRef` to inject into the directive's constructor
+so we can access the DOM element.
+We don't need `Input` immediately but we will need it later in the chapter.
+
+Then we define the directive metadata in a configuration object passed
+as an argument to the `@Directive` decorator function.
+A `@Directive` decorator for an attribute directive requires a css selector to identify
+the HTML in the template that is associated with our directive.
+The css selector for an attribute
+is the attribute name in square brackets.
+
+Our directive's selector is `[myHighlight]`.
+Angular will locate all elements in the template that have an attribute named `myHighlight`.
+
+### Why not call it "highlight"?
+*highlight* is a nicer name than *myHighlight* and, technically, it would work if we called it that.
+
+However, we recommend picking a selector name with a prefix to ensure
+that it cannot conflict with any standard HTML attribute, now or in the future.
+There is also less risk of colliding with a third-party directive name when we give ours a prefix.
+
+We do **not** prefix our `highlight` directive name with **`ng`**.
+That prefix belongs to Angular and
+we don't want to confuse our directives with their directives.
+
+We need a prefix of our own, preferably short, and `my` will do for now.
+
+After the `@Directive` metadata comes the directive's controller class which we are exporting
+to make it accessible to other components.
+The directive's controller class contains the logic for the directive.
+
+Angular creates a new instance of the directive's controller class for
+each matching element, injecting an Angular `ElementRef`
+into the constructor.
+
+`ElementRef` is a service that grants us direct access to the DOM element
+through its `nativeElement` property.
+That's all we need to set the element's background color using the browser DOM API.
+
+## Apply the attribute directive
+The `AppComponent` in this sample is a test harness for our `HighlightDirective`.
+Let's give it a new template that
+applies the directive as an attribute to a `span` element.
+In Angular terms, the `<span>` element will be the attribute **host**.
+
+We'll put the template in its own `app.component.html` file that looks like this:
+A separate template file is clearly overkill for a 2-line template.
+Hang in there; we're going to expand it later.
+Meanwhile, we'll revise the `AppComponent` to reference this template.
+
+We've added an `import` statement to fetch the 'Highlight' directive and
+added that class to a `directives` array in the component metadata so that Angular
+will recognize our directive when it encounters `myHighlight` in the template.
+
+We run the app and see that our directive highlights the span text.
+
+#### Why isn't my directive working?
+
+Did you remember to set the `directives` array? It is easy to forget!
+
+Open the console in the browser tools and look for an error like this:
+EXCEPTION: Template parse errors:
+  Can't bind to 'myHighlight' since it isn't a known native property
+Angular detects that we're trying to bind to *something* but it doesn't know what.
+We have to tell it by listing `HighlightDirective` in the `directives` metadata array.
+Let's recap what happened.
+
+Angular found the `myHighlight` attribute on the `<span>` element. It created
+an instance of the `HighlightDirective` class,
+injecting a reference to the element into the constructor
+where we set the `<span>` element's background style to yellow.
+
+## Respond to user action
+
+We are not satisfied to simply set an element color.
+Our directive should set the color in response to a user action.
+Specifically, we want to set the color when the user mouses over the element.
+
+We'll need to
+1. detect when the user mouses into and out of the element
+1. respond to those actions by setting and clearing the highlight color.
+
+Start with event detection.
+We add a `host` property to the directive metadata and give it a configuration object
+that specifies two mouse events and the directive methods to call when they are raised.
+
+The `host` property refers to the DOM element that hosts our attribute directive, the `<span>` in our case.
+
+We could have attached an event listener to the native element (`el.nativeElement`) with
+plain old JavaScript.
+There are at least three problems with that approach:
+
+1. We have to write the listeners correctly.
+1. We must *detach* our listener when the directive is destroyed to avoid memory leaks.
+1. We'd be talking to DOM API directly which, we learned, is something to avoid.
+
+Let's roll with the `host` property.
+
+Now we implement those two mouse event handlers:
+
+Notice that they delegate to a helper method to set the color.
+
+We no longer need the constructor body but
+we still want the injected `ElementRef`.
+We revise the constructor signature to capture the injected `ElementRef` in a private variable
+and clear the body.
+
+Here's the updated directive:
+We run the app and confirm that the background color appears as we move the mouse over the `span` and
+disappears as we move out.
+
+## Configure the directive with binding
+
+Currently the highlight color is hard-coded within the directive. That's inflexible.
+We should set the highlight color externally with a binding like this:
+
+We'll extend our directive class with a bindable **input** `highlightColor` property and use it when we highlight text.
+
+Here is the final version of the class:
+
+The new `highlightColor` property is called an "input" property because data flows from the binding expression into our directive.
+Notice that we call the `@Input()` decorator function while defining the property.
+
+This `@Input` decorator adds metadata to the class that makes the `highlightColor` property  available for property binding
+under the `myHighlight` alias.
+We must add this input metadata or Angular will reject the binding.
+See the appendix below to learn why.
+
+The developer who uses our directive expects to bind to the attribute name, `myHighlight`.
+The directive property name is `highlightColor`. That's a disconnect.
+
+We can resolve the discrepancy by renaming the property to `myHighlight` and define it as follows:
+
+Maybe we don't want that property name inside the directive perhaps because it
+doesn't express our intention well.
+We can **alias** the `highlightColor` property with the attribute name by
+passing `myHighlight` into the `@Input` decorator:
+
+Now that we're getting the highlight color as an input, we modify the `onMouseEnter()` method to use
+it instead of the hard-coded color name.
+We also define a red default color as a fallback in case
+the user neglects to bind with a color.
+
+Now we'll update our `AppComponent` template to let
+users pick the highlight color and bind their choice to our directive.
+
+Here is the updated template:
+
+### Where is the templated *color* property?
+
+The eagle-eyed may notice that the radio button click handlers in the template set a `color` property
+and we are binding that `color` to the directive.
+We should expect to find a `color` on the host `AppComponent`.
+
+**We never defined a color property for the host *AppComponent***!
+And yet this code works. Where is the template `color` value going?
+
+Browser debugging reveals that Angular dynamically added a `color` property
+to the runtime instance of the `AppComponent`.
+
+This is *convenient* behavior but it is also *implicit* behavior that could be confusing.
+While it's cool that this technique works, we recommend adding the `color` property to the `AppComponent`.
+
+Here is our second version of the directive in action.
+
+## Bind to a second property
+Our directive only has a single, customizable property. What if we had ***two properties***?
+
+Let's let the template developer set the default color, the color that prevails until the user picks a highlight color.
+We'll add a second **input** property to `HighlightDirective` called `defaultColor`:
+
+The `defaultColor` property has a setter that overrides the hard-coded default color, "red".
+We don't need a getter.
+
+How do we bind to it? We already "burned" the `myHighlight` attribute name as a binding target.
+
+Remember that a *component is a directive too*.
+We can add as many component property bindings as we need by stringing them along in the template
+as in this example that sets the `a`, `b`, `c` properties to the string literals 'a', 'b', and 'c'.
+We do the same thing with an attribute directive.
+Here we're binding the user's color choice to the `myHighlight` attribute as we did before.
+We're *also* binding the literal string, 'violet', to the `defaultColor`.
+
+Here is the final version of the directive in action.
+
+Now we know how to
+- build a simple **attribute directive** to attach behavior to an HTML element,
+- use that directive in a template,
+- respond to **events** to change behavior based on an event,
+- and use **binding** to pass values to the attribute directive.
+
+The final source:
+
+### Appendix: Input properties
+
+Earlier we declared the `highlightColor` property to be an ***input*** property of our
+`HighlightDirective`
+
+We've seen properties in bindings before.
+We never had to declare them as anything. Why now?
+
+Angular makes a subtle but important distinction between binding **sources** and **targets**.
+
+In all previous bindings, the directive or component property was a binding ***source***.
+A property is a *source* if it appears in the template expression to the ***right*** of the equals (=).
+
+A property is a *target* when it appears in **square brackets** ([ ]) to the **left** of the equals (=) ...
+as it is does when we bind to the `myHighlight` property of the `HighlightDirective`,
+
+The 'color' in `[myHighlight]="color"` is a binding ***source***.
+A source property doesn't require a declaration.
+
+The 'myHighlight' in `[myHighlight]="color"` *is* a binding ***target***.
+We must declare it as an *input* property.
+Angular rejects the binding with a clear error if we don't.
+
+Angular treats a *target* property differently for a good reason.
+A component or directive in target position needs protection.
+
+Imagine that our `HighlightDirective` did truly wonderous things.
+We graciously made a gift of it to the world.
+
+To our surprise, some people &mdash; perhaps naively &mdash;
+started binding to *every* property of our directive.
+Not just the one or two properties we expected them to target. *Every* property.
+That could really mess up our directive in ways we didn't anticipate and have no desire to support.
+
+The *input* declaration ensures that consumers of our directive can only bind to
+the properties of our public API ... nothing else.
+
+**Dependency injection** is an important application design pattern.
+Angular has its own dependency injection framework, and
+we really can't build an Angular application without it.
+It's used so widely that almost everyone just calls it _DI_.
+
+In this chapter we'll learn what DI is and why we want it.
+Then we'll learn how to use it in an Angular app.
+
+## Why dependency injection?
+
+Let's start with the following code.
+
+Our `Car` creates everything it needs inside its constructor.
+What's the problem?
+
+The problem is that our `Car` class is brittle, inflexible, and hard to test.
+
+Our `Car` needs an engine and tires. Instead of asking for them,
+the `Car` constructor creates its own copies by "new-ing" them from
+the very specific classes, `Engine` and `Tires`.
+
+What if the `Engine` class evolves and its constructor requires a parameter?
+Our `Car` is broken and stays broken until we rewrite it along the lines of
+`this.engine = new Engine(theNewParameter)`.
+We didn't care about `Engine` constructor parameters when we first wrote `Car`.
+We don't really care about them now.
+But we'll *have* to start caring because
+when the definion of `Engine` changes, our `Car` class must change.
+That makes `Car` brittle.
+
+What if we want to put a different brand of tires on our `Car`? Too bad.
+We're locked into whatever brand the `Tires` class creates. That makes our `Car` inflexible.
+
+Right now each new car gets its own engine. It can't share an engine with other cars.
+While that makes sense for an automobile engine,
+we can think of other dependencies that should be shared, such as the onboard
+wireless connection to the manufacturer's service center. Our `Car` lacks the flexibility
+to share services that have been created previously for other consumers.
+
+When we write tests for our `Car` we're at the mercy of its hidden dependencies.
+Is it even possible to create a new `Engine` in a test environment?
+What does `Engine`itself depend upon? What does that dependency depend on?
+Will a new instance of `Engine` make an asynchronous call to the server?
+We certainly don't want that going on during our tests.
+
+What if our `Car` should flash a warning signal when tire pressure is low?
+How do we confirm that it actually does flash a warning
+if we can't swap in low-pressure tires during the test?
+
+We have no control over the car's hidden dependencies.
+When we can't control the dependencies, a class become difficult to test.
+
+How can we make `Car` more robust, flexible, and testable?
+
+That's super easy. We probably already know what to do. We change our `Car` constructor to a version with DI:
+
+See what happened? We moved the definition of the dependencies to the constructor.
+Our `Car` class no longer creates an engine or tires.
+It just consumes them.
+
+We also leverage TypeScript's constructor syntax for declaring parameters and properties simultaneously.
+Now we create a car by passing the engine and tires to the constructor.
+
+How cool is that?
+The definition of the engine and tire dependencies are decoupled from the `Car` class itself.
+We can pass in any kind of engine or tires we like, as long as they
+conform to the general API requirements of an engine or tires.
+
+If someone extends the `Engine` class, that is not `Car`'s problem.
+
+The _consumer_ of `Car` has the problem. The consumer must update the car creation code to
+something like this:
+
+The critical point is this: `Car` itself did not have to change.
+We'll take care of the consumer's problem soon enough.
+
+The `Car` class is much easier to test because we are in complete control
+of its dependencies.
+We can pass mocks to the constructor that do exactly what we want them to do
+during each test:
+
+**We just learned what dependency injection is**.
+
+It's a coding pattern in which a class receives its dependencies from external
+sources rather than creating them itself.
+
+Cool! But what about that poor consumer?
+Anyone who wants a `Car` must now
+create all three parts: the `Car`, `Engine`, and `Tires`.
+The `Car` class shed its problems at the consumer's expense.
+We need something that takes care of assembling these parts for us.
+
+We could write a giant class to do that:
+
+It's not so bad now with only three creation methods.
+But maintaining it will be hairy as the application grows.
+This factory is going to become a huge spiderweb of
+interdependent factory methods!
+
+Wouldn't it be nice if we could simply list the things we want to build without
+having to define which dependency gets injected into what?
+
+This is where the dependency injection framework comes into play.
+Imagine the framework had something called an _injector_.
+We register some classes with this injector, and it figures out how to create them.
+
+When we need a `Car`, we simply ask the injector to get it for us and we're good to go.
+
+Everyone wins. The `Car` knows nothing about creating an `Engine` or `Tires`.
+The consumer knows nothing about creating a `Car`.
+We don't have a gigantic factory class to maintain.
+Both `Car` and consumer simply ask for what they need and the injector delivers.
+
+This is what a **dependency injection framework** is all about.
+
+Now that we know what dependency injection is and appreciate its benefits,
+let's see how it is implemented in Angular.
+
+## Angular dependency injection
+
+Angular ships with its own dependency injection framework. This framework can also be used
+as a standalone module by other applications and frameworks.
+
+That sounds nice. What does it do for us when building components in Angular?
+Let's see, one step at a time.
+
+We'll begin with a simplified version of the `HeroesComponent`
+that we built in the The Tour of Heroes.
+
+The `HeroesComponent` is the root component of the *Heroes* feature area.
+It governs all the child components of this area.
+Our stripped down version has only one child, `HeroListComponent`,
+which displays a list of heroes.
+
+Do we really need so many files? Of course not!
+We're going *beyond* the strictly necessary
+in order to illustrate patterns that work well in real applications.
+
+Right now `HeroListComponent` gets heroes from `HEROES`, an in-memory collection
+defined in another file and imported by this component.
+That may suffice in the early stages of development, but it's far from ideal.
+As soon as we try to test this component or want to get our heroes data from a remote server,
+we'll have to change the implementation of `heroes` and
+fix every other use of the `HEROES` mock data.
+
+Let's make a service that hides how we get hero data.
+
+Write this service in its own file. See this note to understand why.
+
+Our `HeroService` exposes a `getHeroes` method that returns
+the same mock data as before, but none of its consumers need to know that.
+
+We aren't even pretending this is a real service.
+If we were actually getting data from a remote server, the API would have to be asynchronous,
+perhaps returning
+ES2015 promises.
+We'd also have to rewrite the way components consume our service.
+This is important in general, but not to our current story.
+
+A service is nothing more than a class in Angular 2.
+It remains nothing more than a class until we register it with an Angular injector.
+
+### Configuring the injector
+
+We don't have to create an Angular injector.
+Angular creates an application-wide injector for us during the bootstrap process.
+
+We do have to configure the injector by registering the **providers**
+that create the services our application requires.
+We'll explain what providers are later in this chapter.
+Before we do, let's see an example of provider registration during bootstrapping:
+
+The injector now knows about our `HeroService`.
+An instance of our `HeroService` will be available for injection across our entire application.
+
+Of course we can't help wondering about that comment telling us not to do it this way.
+It *will* work. It's just not a best practice.
+The bootstrap provider option is intended for configuring and overriding Angular's own
+preregistered services, such as its routing support.
+
+The preferred approach is to register application providers in application components.
+Because the `HeroService` is used within the *Heroes* feature area &mdash;
+and nowhere else &mdash; the ideal place to register it is in the top-level `HeroesComponent`.
+
+### Registering providers in a component
+Here's a revised `HeroesComponent` that registers the `HeroService`.
+
+Look closely at the `providers` part of the `@Component` metadata:
+
+An instance of the `HeroService` is now available for injection in this `HeroesComponent`
+and all of its child components.
+
+The `HeroesComponent` itself doesn't happen to need the `HeroService`.
+But its child `HeroListComponent` does, so we head there next.
+
+The `HeroListComponent` should get heroes from the injected `HeroService`.
+Per the dependency injection pattern, the component must ask for the service in its constructor, as we explained
+earlier.
+It's a small change:
+
+### Focus on the constructor
+
+  Adding a parameter to the constructor isn't all that's happening here.
+
+We're writing in TypeScript and have followed the parameter name with a type annotation, `:HeroService`.
+The class is also decorated with the `@Component` decorator (scroll up to confirm that fact).
+
+When the TypeScript compiler evaluates this class, it sees the `@Component` decorator and adds class metadata
+into the generated JavaScript code. Within that metadata lurks the information that
+associates the `heroService` parameter with the `HeroService` class.
+
+That's how the Angular injector knows to inject an instance of the `HeroService` when it
+creates a new `HeroListComponent`.
+
+### Creating the injector (implicitly)
+When we introduced the idea of an injector above, we showed how to create
+an injector and use it to create a new `Car`.
+
+We won't find code like that in the Tour of Heroes or any of our other samples.
+We *could* write code with an explicit injector if we *had* to, but we rarely do.
+Angular takes care of creating and calling injectors
+when it creates components for us &mdash; whether through HTML markup, as in `<hero-list></hero-list>`,
+or after navigating to a component with the router.
+If we let Angular do its job, we'll enjoy the benefits of automated dependency injection.
+
+Dependencies are singletons within the scope of an injector.
+In our example, a single `HeroService` instance is shared among the
+`HeroesComponent` and its `HeroListComponent` children.
+
+However, Angular DI is an hierarchical injection
+system, which means that nested injectors can create their own service instances.
+Learn more about that in the Hierarchical Injectors chapter.
+
+### Testing the component
+We emphasized earlier that designing a class for dependency injection makes the class easier to test.
+Listing dependencies as constructor parameters may be all we need to test application parts effectively.
+
+For example, we can create a new `HeroListComponent` with a mock service that we can manipulate
+under test:
+
+Learn more in Testing.
+
+### When the service needs a service
+Our `HeroService` is very simple. It doesn't have any dependencies of its own.
+
+
+What if it had a dependency? What if it reported its activities through a logging service?
+We'd apply the same *constructor injection* pattern,
+adding a constructor that takes a `Logger` parameter.
+
+Here is the revision compared to the original.
+
+The constructor now asks for an injected instance of a `Logger` and stores it in a private property called `_logger`.
+We call that property within our `getHeroes` method when anyone asks for heroes.
+
+Notice the `@Injectable()` decoration above the service class.
+We haven't seen `@Injectable()` before.
+As it happens, we could have added it to our first version of `HeroService`.
+We didn't bother because we didn't need it then.
+
+We need it now... now that our service has an injected dependency.
+We need it because Angular requires constructor parameter metadata in order to inject a `Logger`.
+As we mentioned earlier, **TypeScript only generates metadata for classes that have a decorator.**
+
+Always add @Injectable()
+We recommend adding `@Injectable()` to every service class, even those that don't have dependencies
+and, therefore, do not technically require it. Here's why:
+
+The `HeroesComponent` has an injected dependency too. Why don't we add `@Injectable()` to the `HeroesComponent`?
+
+We *can* add it if we really want to. It isn't necessary because the `HeroesComponent` is already decorated with `@Component`.
+TypeScript generates metadata for *any* class with a decorator, and *any* decorator will do.
+
+**Always include the parentheses!** Always call `@Injectable()`.
+Our application will fail mysteriously if we forget the parentheses.
+
+## Creating and registering a logger service
+We're injecting a logger into our `HeroService` in two steps:
+1. Create the logger service.
+1. Register it with the application.
+
+The logger service implementation is no big deal.
+
+We're likely to need the same logger service everywhere in our application,
+so we put it at the root level of the application in the `app/` folder, and
+we register it in the `providers` array of the metadata for our application root component, `AppComponent`.
+If we forget to register the logger, Angular throws an exception when it first looks for the logger:
+EXCEPTION: No provider for Logger! (HeroListComponent -> HeroService -> Logger)
+
+That's Angular telling us that the dependency injector couldn't find the *provider* for the logger.
+It needed that provider to create a `Logger` to inject into a new
+`HeroService`, which it needed to
+create and inject into a new `HeroListComponent`.
+
+The chain of creations started with the `Logger` provider. The *provider* is the subject of our next section.
+
+But wait!  What if the logger is optional?
+
+### Optional dependencies
+
+Our `HeroService` currently requires a `Logger`. What if we could get by without a logger?
+We'd use it if we had it, ignore it if we didn't. We can do that.
+
+First import the `@Optional()` decorator.
+
+Then rewrite the constructor with `@Optional()` decorator preceding the private `_logger` parameter.
+That tells the injector that `_logger` is optional.
+
+Be prepared for a null logger. If we don't register one somewhere up the line,
+the injector will inject `null`. We have a method that logs.
+What can we do to avoid a null reference exception?
+
+We could substitute a *do-nothing* logger stub so that calling methods continue to work:
+
+Obviously we'd take a more sophisticated approach if the logger were optional
+in multiple locations.
+
+But enough about optional loggers. In our sample application, the `Logger` is required.
+We must register a `Logger` with the application injector using *providers*,
+as we learn in the next section.
+
+## Injector providers
+
+A provider *provides* the concrete, runtime version of a dependency value.
+The injector relies on **providers** to create instances of the services
+that the injector injects into components and other services.
+
+We must register a service *provider* with the injector, or it won't know how to create the service.
+
+Earlier we registered the `Logger` service in the `providers` array of the metadata for the `AppComponent` like this:
+
+The `providers` array appears to hold a service class.
+In reality it holds an instance of the Provider class that can create that service.
+
+There are many ways to *provide* something that looks and behaves like a `Logger`.
+The `Logger` class itself is an obvious and natural provider &mdash; it has the right shape and it's designed to be created.
+But it's not the only way.
+
+We can configure the injector with alternative providers that can deliver an object that behaves like a `Logger`.
+We could provide a substitute class. We could provide a logger-like object.
+We could give it a provider that calls a logger factory function.
+Any of these approaches might be a good choice under the right circumstances.
+
+What matters is that the injector has a provider to go to when it needs a `Logger`.
+
+### The *provide* function
+
+We wrote the `providers` array like this:
+
+This is actually a short-hand expression for a provider registration that creates a new instance of the
+
+In both approaches &mdash; `Provider` class and `provide` function &mdash;
+we supply two arguments.
+
+The first is the token that serves as the key for both locating a dependency value
+and registering the provider.
+
+The second is a provider definition object,
+which we can think of as a *recipe* for creating the dependency value.
+There are many ways to create dependency values... and many ways to write a recipe.
+
+### Alternative class providers
+
+Occasionally we'll ask a different class to provide the service.
+The following code tells the injector
+to return a `BetterLogger` when something asks for the `Logger`.
+
+### Class provider with dependencies
+Maybe an `EvenBetterLogger` could display the user name in the log message.
+This logger gets the user from the injected `UserService`,
+which happens also to be injected at the application level.
+
+Configure it like we did `BetterLogger`.
+
+### Aliased class providers
+
+Suppose an old component depends upon an `OldLogger` class.
+`OldLogger` has the same interface as the `NewLogger`, but for some reason
+we can't update the old component to use it.
+
+When the *old* component logs a message with `OldLogger`,
+we want the singleton instance of `NewLogger` to handle it instead.
+
+The dependency injector should inject that singleton instance
+when a component asks for either the new or the the old logger.
+The `OldLogger` should be an alias for `NewLogger`.
+
+We certainly do not want two different `NewLogger` instances in our app.
+Unfortunately, that's what we get if we try to alias `OldLogger` to `NewLogger` with `useClass`.
+
+The solution: Alias with the `useExisting` option.
+
+### Value providers
+
+Sometimes it's easier to provide a ready-made object rather than ask the injector to create it from a class.
+
+Then we register a provider with the `useValue` option,
+which makes this object play the logger role.
+
+### Factory providers
+
+Sometimes we need to create the dependent value dynamically,
+based on information we won't have until the last possible moment.
+Maybe the information changes repeatedly in the course of the browser session.
+
+Suppose also that the injectable service has no independent access to the source of this information.
+
+This situation calls for a **factory provider**.
+
+Let's illustrate by adding a new business requirement:
+The HeroService must hide *secret* heroes from normal users.
+Only authorized users should see secret heroes.
+
+Like the `EvenBetterLogger`, the `HeroService` needs a fact about the user.
+It needs to know if the user is authorized to see secret heroes.
+That authorization can change during the course of a single application session,
+as when we log in a different user.
+
+Unlike `EvenBetterLogger`, we can't inject the `UserService` into the `HeroService`.
+The `HeroService` won't have direct access to the user information to decide
+who is authorized and who is not.
+
+Why? We don't know either. Stuff like this happens.
+Instead the `HeroService` constructor takes a boolean flag to control display of secret heroes.
+
+We can inject the `Logger`, but we can't inject the  boolean `isAuthorized`.
+We'll have to take over the creation of new instances of this `HeroService` with a factory provider.
+
+A factory provider needs a factory function:
+
+Although the `HeroService` has no access to the `UserService`, our factory function does.
+
+We inject both the `Logger` and the `UserService` into the factory provider and let the injector pass them along to the factory function:
+
+  The `useFactory` field tells Angular that the provider is a factory function
+  whose implementation is the `heroServiceFactory`.
+
+  The `deps` property is an array of provider tokens.
+  The `Logger` and `UserService` classes serve as tokens for their own class providers.
+  The injector resolves these tokens and injects the corresponding services into the matching factory function parameters.
+
+Notice that we captured the factory provider in an exported variable, `heroServiceProvider`.
+This extra step makes the factory provider reusable.
+We can register our `HeroService` with this variable wherever we need it.
+
+In our sample, we need it only in the `HeroesComponent`,
+where it replaces the previous `HeroService` registration in the metadata `providers` array.
+Here we see the new and the old implementation side-by-side:
+
+## Dependency injection tokens
+
+When we register a provider with an injector, we associate that provider with a dependency injection token.
+The injector maintains an internal *token-provider* map that it references when
+asked for a dependency. The token is the key to the map.
+
+In all previous examples, the dependency value has been a class *instance*, and
+the class *type* served as its own lookup key.
+Here we get a `HeroService` directly from the injector by supplying the `HeroService` type as the token:
+
+We have similar good fortune when we write a constructor that requires an injected class-based dependency.
+We define a constructor parameter with the `HeroService` class type,
+and Angular knows to inject the
+service associated with that `HeroService` class token:
+
+This is especially convenient when we consider that most dependency values are provided by classes.
+
+### Non-class dependencies
+
+What if the dependency value isn't a class?
+Sometimes the thing we want to inject is a string, a function, or an object.
+
+Applications often define configuration objects with lots of small facts like the title of the application or the address of a web API endpoint.
+These configuration objects aren't always instances of a class. They tend to be object hashes like this one:
+
+We'd like to make this `config` object available for injection.
+We know we can register an object with a value provider.
+But what do we use for the token?
+We don't have a class to serve as a token. There is no `Config` class.
+
+### Interfaces aren't valid tokens
+
+The `CONFIG` constant has an interface, `Config`. Unfortunately, we
+cannot use an interface as a token:
+
+That seems strange if we're used to dependency injection in strongly typed languages, where
+an interface is the preferred dependency lookup key.
+
+It's not Angular's fault. An interface is a TypeScript design-time artifact. JavaScript doesn't have interfaces.
+The TypeScript interface disappears from the generated JavaScript.
+There is no interface type information left for Angular to find at runtime.
+
+### String tokens
+Fortunately, we can register any dependency provider with a string token.
+
+Now we inject the configuration object into any constructor that needs it, with
+the help of an `@Inject` decorator that tells Angular how to find the configuration dependency value.
+Although it plays no role in dependency injection,
+the `Config` interface supports strong typing of the configuration object within the class.
+
+### OpaqueToken
+Alternatively, we could define and use an OpaqueToken
+rather than rely on magic strings that may collide with other developers' string choices.
+
+The definition looks like this:
+
+Substitute `APP_CONFIG` for the magic string when registering the provider and defining the constructor parameter:
+
+Here's how we provide and inject the configuration object in our top-level `AppComponent`.
+
+Angular itself uses `OpaqueToken` objects to register all of its own non-class dependencies. For example,
+HTTP_PROVIDERS
+is the `OpaqueToken` associated with an array of providers for persisting data with the Angular `Http` client.
+
+Internally, the `Provider` turns both the string and the class type into an `OpaqueToken`
+and keys its *token-provider* map with that.
+
+
+We learned the basics of Angular dependency injection in this chapter.
+We can register various kinds of providers,
+and we know how to ask for an injected object (such as a service) by
+adding a parameter to a constructor.
+
+Angular dependency injection is more capable than we've described.
+We can learn more about its advanced features, beginning with its support for
+nested injectors, in the
+
+### Appendix: Working with injectors directly
+We rarely work directly with an injector.
+Here's an `InjectorComponent` that does.
+
+The `Injector` is itself an injectable service.
+
+In this example, Angular injects the component's own `Injector` into the component's constructor.
+The component then asks the injected injector for the services it wants.
+
+Note that the services themselves are not injected into the component.
+They are retrieved by calling `injector.get`.
+
+The `get` method throws an error if it can't resolve the requested service.
+We can call `getOptional` instead, which we do in one case
+to retrieve a service (`ROUS`) that isn't registered with this or any ancestor injector.
+
+The technique we just described is an example of the
+service locator pattern.
+
+We **avoid** this technique unless we genuinely need it.
+It encourages a careless grab-bag approach such as we see here.
+It's difficult to explain, understand, and test.
+We can't know by inspecting the constructor what this class requires or what it will do.
+It could acquire services from any ancestor component, not just its own.
+We're forced to spelunk the implementation to discover what it does.
+
+Framework developers may take this approach when they
+must acquire services generically and dynamically.
+
+### Appendix: Why we recommend one class per file
+
+Having multiple classes in the same file is confusing and best avoided.
+Developers expect one class per file. Keep them happy.
+
+If we scorn this advice and, say,
+combine our `HeroService` class with the `HeroesComponent` in the same file,
+**define the component last!**
+If we define the component before the service,
+we'll get a runtime null reference error.
+
+We actually can define the component first with the help of the `forwardRef()` method as explained
+in this blog post.
+But why flirt with trouble?
+Avoid the problem altogether by defining components and services in separate files.
+
+We typically display data in Angular by binding controls in an HTML template
+to properties of an Angular component.
+
+In this chapter, we'll create a component with a list of heroes. Each hero has a name.
+We'll display the list of hero names and
+conditionally show a selected hero in a detail area below the list.
+
+The final UI looks like this:
+
+
+## Showing component properties with interpolation
+The easiest way to display a component property
+is to bind the property name through interpolation.
+With interpolation, we put the property name in the view template, enclosed in double curly braces: `{{myHero}}`.
+
+Let's build a small illustrative example together.
+
+Create a new project folder (`displaying-data`) and follow the steps in the QuickStart.
+
+Then modify the `app.component.ts` file by changing the template and the body of the component.
+When we're done, it should look like this:
+
+We added two properties to the formerly empty component: `title` and `myHero`.
+
+Our revised template displays the two component properties using double curly brace
+interpolation:
+
+The template is a multi-line string within ECMAScript 2015 backticks (\`).
+The backtick (\`) &mdash; which is *not* the same character as a single
+quote (') &mdash; has many nice features. The feature we're exploiting here
+is the ability to compose the string over several lines, which makes for
+much more readable HTML.
+
+Angular automatically pulls the value of the `title` and `myHero` properties from the component and
+inserts those values into the browser. Angular updates the display
+when these properties change.
+
+More precisely, the redisplay occurs after some kind of asynchronous event related to
+the view such as a keystroke, a timer completion, or an async `XHR` response.
+We don't have those in this sample.
+But then the properties aren't changing on their own either. For the moment we must operate on faith.
+
+Notice that we haven't called **new** to create an instance of the `AppComponent` class.
+Angular is creating an instance for us. How?
+
+Notice the CSS `selector` in the `@Component` decorator that specifies an element named "my-app".
+Remember back in QuickStart that we added the `<my-app>` element to the body of our `index.html`
+
+When we bootstrap with the `AppComponent` class (see `main.ts`), Angular looks for a `<my-app>`
+in the `index.html`, finds it, instantiates an instance of `AppComponent`, and renders it
+inside the `<my-app>` tag.
+
+We're ready to see changes in a running app by firing up the npm script that both compiles and serves our applications
+while watching for changes.
+
+We should see the title and hero name:
+
+Let's review some of the choices we made and consider alternatives.
+
+## Template inline or template file?
+
+We can store our component's template in one of two places.
+We can define it *inline* using the `template` property, as we do here.
+Or we can define the template in a separate HTML file and link to it in
+the component metadata using the `@Component` decorator's `templateUrl` property.
+
+The choice between inline and separate HTML is a matter of taste,
+circumstances, and organization policy.
+Here we're using inline HTML because the template is small, and the demo
+is simpler without the HTML file.
+
+In either style, the template data bindings have the same access to the component's properties.
+
+## Constructor or variable initialization?
+
+We initialized our component properties using variable assignment.
+This is a wonderfully concise and compact technique.
+
+Some folks prefer to declare the properties and initialize them within a constructor like this:
+
+That's fine too. The choice is a matter of taste and organization policy.
+We'll adopt the more terse "variable assignment" style in this chapter simply because
+there will be less code to read.
+
+
+## Showing an array property with NgFor
+
+We want to display a list of heroes. We begin by adding a mock heroes name array to the component,
+just above `myHero`, and redefine `myHero` to be the first name in the array.
+
+Now we use the Angular `NgFor` "repeater" directive in the template to display
+each item in the `heroes` list.
+
+Our presentation is the familiar HTML unordered list with `<ul>` and `<li>` tags. Let's focus on the `<li>` tag.
+
+We added a somewhat mysterious `*ngFor` to the `<li>` element.
+That's the Angular "repeater" directive.
+Its presence on the `<li>` tag marks that `<li>` element (and its children) as the "repeater template".
+
+Don't forget the leading asterisk (\*) in `*ngFor`. It is an essential part of the syntax.
+Learn more about this and `NgFor` in the Template Syntax chapter.
+
+
+Notice the `#hero` in the `NgFor` double-quoted instruction.
+The `#hero` is a local template variable declaration.
+The `#` prefix declares a local variable name named `hero`.
+
+Angular duplicates the `<li>` for each item in the list, setting the `hero` variable
+to the item (the hero) in the current iteration. Angular uses that variable as the
+context for the interpolation in the double curly braces.
+
+
+We happened to give `NgFor` an array to display.
+In fact, `NgFor` can repeat items for any iterable
+object.
+
+Assuming we're still running under the `npm start` command,
+we should see heroes appearing in an unordered list.
+
+## Creating a class for the data
+
+We are defining our data directly inside our component.
+That's fine for a demo but certainly isn't a best practice. It's not even a good practice.
+Although we won't do anything about that in this chapter, we'll make a mental note to fix this down the road.
+
+At the moment, we're binding to an array of strings. We do that occasionally in real applications, but
+most of the time we're displaying objects &mdash; potentially instances of classes.
+
+Let's turn our array of hero names into an array of `Hero` objects. For that we'll need a `Hero` class.
+
+Create a new file in the `app/` folder called `hero.ts` with the following short bit of code.
+
+We've defined a class with a constructor and two properties: `id` and `name`.
+
+It might not look like we have properties, but we do. We're taking
+advantage of a TypeScript shortcut in our declaration of the constructor parameters.
+
+Consider the first parameter:
+
+That brief syntax does a lot:
+* declares a constructor parameter and its type
+* declares a public property of the same name
+* initializes that property with the corresponding argument when we "new" an instance of the class
+
+Let's redefine the `heroes` property in our component to return an array of these Hero objects
+and also set the `myHero` property with the first of these mock heroes.
+
+We'll have to update the template.
+At the moment it displays the entire `hero` object, which used to be a string value.
+Let's fix that so we interpolate the `hero.name` property.
+
+Our display looks the same, but now we know much better what a hero really is.
+
+## Conditional display with NgIf
+
+Sometimes the app should display a view or a portion of a view only under specific circumstances.
+
+In our example, we'd like to display a message if we have a large number of heroes &mdash; say, more than 3.
+
+The Angular `NgIf` directive inserts or removes an element based on a truthy/falsey condition.
+We can see it in action by adding the following paragraph at the bottom of the template:
+
+Don't forget the leading asterisk (\*) in `*ngIf`. It is an essential part of the syntax.
+Learn more about this and `NgIf` in the Template Syntax chapter.
+
+The template expression inside the double quotes
+looks much like JavaScript and it _is_ much like JavaScript.
+When the component's list of heroes has more than 3 items, Angular adds the paragraph to the DOM and the message appears.
+
+Angular isn't showing and hiding the message. It is adding and removing the paragraph element from the DOM.
+That hardly matters here. It would matter a great deal from a performance perspective if
+we were conditionally including or excluding a big chunk of HTML with many data bindings.
+
+Try it out. Because the array has four items, the message should appear.
+Go back into `app.component.ts` and delete or comment out one of the elements from the hero array.
+The browser should refresh automatically and the message should disappear.
+
+Now we know how to use:
+- **interpolation** with double curly braces to display a component property
+- **`NgFor`** to display a list of items
+- a TypeScript class to shape the **model data** for our component and display properties of that model
+- **`NgIf`** to conditionally display a chunk of HTML based on a boolean expression
+
+Here's our final code:
+
+
+Farewell to this land's cheerless marches
+Hemmed in like a boar between arches
+Her very Lowness with her head in a sling
+I'm truly sorry but it sounds like a wonderful thing
+
+I say Charles don't you ever crave
+To appear on the front of the Daily Mail
+Dressed in your Mother's bridal veil?
+
+And so I checked all the registered historical facts
+And I was shocked into shame to discover
+How I'm the 18th pale descendent
+Of some old queen or other
+
+Oh has the world changed, or have I changed?
+Oh has the world changed, or have I changed?
+Some nine year old tough who peddles drugs
+I swear to God, I swear I never even knew what drugs were
+
+So I broke into the Palace
+With a sponge and a rusty spanner
+She said: "Eh, I know you, and you cannot sing"
+I said: "that's nothing - you should hear me play piano"
+
+We can go for a walk where it's quiet and dry
+And talk about precious things
+But when you are tied to your mother's apron
+No-one talks about castration
+
+We can go for a walk where it's quiet and dry
+And talk about precious things
+Like love and law and poverty
+These are the things that kill me
+
+We can go for a walk where it's quiet and dry
+And talk about precious things
+But the rain that flattens my hair
+These are the things that kill me
+
+Passed the pub that saps your body
+And the church who'll snatch your money
+The Queen is dead, boys
+And it's so lonely on a limb
+
+Pass the pub that wrecks your body
+And the church, all they want is your money
+The Queen is dead, boys
+And it's so lonely on a limb
+
+Life is very long, when you're lonely
+
+Frankly, Mr Shankly, this position I've held
+It pays my way and it corrodes my soul
+I want to leave you will not miss me
+I want to go down in musical history
+
+Frankly, Mr Shankly, I'm a sickening wreck
+I've got the 21st century breathing down my neck
+I must move fast, you understand me
+I want to go down in celluloid history Mr Shankly
+
+Fame, fame, fatal fame
+It can play hideous tricks on the brain
+But still I rather be famous
+Than righteous or holy, any day, any day, any day
+
+But sometimes I'd feel more fulfilled
+Making Christmas cards with the mentally ill
+I want to live and I want to love
+I want to catch something that I might be ashamed of
+
+Frankly, Mr Shankly, this position I've held
+It pays my way and it corrodes my soul
+Oh, I didn't realise that you wrote poetry
+I didn't realise you wrote such bloody awful poetry Mr Shankly
+
+Frankly, Mr Shankly, since you ask
+You are a flatulent pain the arse
+I do not mean to be so rude
+But still, I must speak frankly, Mr Shankly, give us money
+
+Oh mother, I can feel the soil falling over my head
+And as I climb into an empty bed
+Oh well, enough said
+I know it's over still I cling
+I don't know where else I can go, mother
+
+Oh mother, I can feel the soil falling over my head
+See, the sea wants to take me
+The knife wants to slit me
+Do you think you can help me?
+
+Sad veiled bride, please be happy
+Handsome groom, give her room
+Loud, loutish lover, treat her kindly
+Although she needs you more than she loves you
+
+And I know it's over
+Still I cling
+I don't know where else I can go
+It's over, it's over, it's over
+
+I know it's over
+And it never really began
+But in my heart it was so real
+And you even spoke to me and said:
+
+"If you're so funny
+Then why are you on your own tonight?
+And if you're so clever
+Then why are you on your own tonight?
+If you're so very entertaining
+Then why are you on your own tonight?
+If you're so very good looking
+Why do you sleep alone tonight?
+I know because tonight is just like any other night
+That's why you're on your own tonight
+With your triumphs and your charms
+While they are in each other's arms"
+
+It's so easy to laugh
+It's so easy to hate
+It takes strength to be gentle and kind
+It's over, over, over
+
+It's so easy to laugh
+It's so easy to hate
+It takes guts to be gentle and kind
+It's over, over, over
+
+Love is natural and real
+But not for you, my love
+Not tonight my love
+Love is natural and real
+But not for such as you and I, my love
+
+Oh Mother, I can feel the soil falling over my head
+
+When you walk without ease
+On these streets where you were raised
+I had a really bad dream
+It lasted 20 years, 7 months, and 27 days
+
+And I know that, I know that
+I never had no one ever
+
+Now I'm outside your house
+I'm alone
+And I'm outside your house
+I hate to intrude
+
+I know I'm alone
+I'm alone, I'm alone, I'm alone
+
+And I never, never had no one ever
+I never had no one ever
+
+
+A dreaded sunny day
+So I meet you at the cemetery gates
+Keats and Yeats are on your side
+
+A dreaded sunny day
+So I meet you at the cemetery gates
+Keats and Yeats are on your side
+While Wilde is on mine
+
+So we go inside and we gravely read the stones
+All those people all those lives
+Where are they now?
+With the loves and hates
+And passions just like mine
+They were born
+And then they lived and then they died
+Seems so unfair
+And I want to cry
+
+You say: "ere thrice the sun done salutation to the dawn"
+And you claim these words as your own
+But I've read well, and I've heard them said
+A hundred times, maybe less, maybe more
+
+If you must write prose and poems
+The words you use should be your own
+Don't plagiarise or take "on loans"
+There's always someone, somewhere
+With a big nose, who knows
+And who trips you up and laughs
+When you fall
+Who'll trip you up and laugh
+When you fall
+
+You say: "ere long done do does did"
+Words which could only be your own
+And then you then produce the text
+From whence was ripped some dizzy whore, 1804
+
+A dreaded sunny day
+So let's go where we're happy
+And I meet you at the cemetery gates
+Oh Keats and Yeats are on your side
+
+A dreaded sunny day
+So let's go where we're wanted
+And I meet you at the cemetery gates
+Keats and Yeats are on your side
+But you lose because Wilde is on mine
+
+Sweetness, sweetness I was only joking
+When I said I'd like to
+Smash every tooth in your head
+
+Sweetness, sweetness I was only joking
+When I said by rights you should be
+Bludgeoned in your bed
+
+And now I know how Joan of Arc felt
+Now I know how Joan of Arc felt
+As the flames rose to her Roman nose
+And her Walkman started to melt
+
+Bigmouth, bigmouth
+Bigmouth strikes again
+And I've got no right to take my place
+With the human race
+
+And now I know how Joan of Arc felt
+Now I know of Joan of Arc felt
+As the flames rose to her Roman nose
+And her hearing aid started to melt
+
+Bigmouth, bigmouth
+Bigmouth strikes again
+And I've got no right to take my place
+With the human race
+
+
+The boy with the thorn in his side
+Behind the hatred there lies
+A murderous desire for love
+
+How can they look into my eyes
+And still they don't believe me
+How can they hear me say those words
+And still they don't believe me
+And if they don't believe me now
+Will they ever believe me?
+And if they don't believe me now
+Will they ever believe me?
+
+The boy with the thorn in his side
+Behind the hatred there lies
+A plundering desire for love
+
+How can they see the love in our eyes
+And still they don't believe us
+And after all this time
+They don't want to believe us
+And if they don't believe us now
+Will they ever believe us?
+And when you want to live
+How do you start?
+Where do you go?
+Who do you know?
+
+
+I was minding mind business
+Lifting some lead off
+The roof of the Holy Name church
+It was worthwhile living a laughable life
+Just to set my eyes on a blistering sight
+Of a vicar in a tutu
+He's not strange
+He just wants to live his life this way
+
+A scanty bit of a thing
+With a decorative ring
+That wouldn't cover the head of a child
+As Rose collects the money in the canister
+Who comes sliding down the banister
+The vicar in a tutu
+He's not strange
+He just wants to live his life this way
+
+The monkish monsignor
+With a head full of plaster
+Said "my man, get your vile soul dry-cleaned"
+As Rose counts the money in the canister
+As natural as rain
+He dances again
+My God
+Vicar in a tutu, oh yeah
+
+The next day in the pulpit
+With freedom and ease
+Combating ignorance, dust and disease
+As Rose counts the money in the canister
+As natural as rain he dances again
+And again and again
+The fabric of a tutu
+Any man could get used to
+And I am a living sign
+
+
+Take me out tonight
+Where there's music and there's people
+Who are young and alive
+Driving in your car
+I never never want to go home
+Because I haven't got one anymore
+
+Take me out tonight
+Because I want to see people
+And I want to see life
+Driving in your car
+Oh please don't drop me home
+Because it's not my home, it's their home
+And I'm welcome no more
+
+And if a double-decker bus
+Crashes in to us
+To die by your side
+Is such a heavenly way to die
+And if a ten ton truck
+Kills the both of us
+To die by your side
+Well the pleasure, the privilege is mine
+
+Take me out tonight
+Take me anywhere, I don't care
+I don't care, I don't care
+And in the darkened underpass
+I thought Oh God, my chance has come at last
+But then a strange fear gripped me
+And I just couldn't ask
+
+Take me out tonight
+Oh take me anywhere, I don't care
+I don't care, I don't care
+Driving in your car
+I never never want to go home
+Because I haven't got one
+No, I haven't got one
+
+And if a double-decker bus
+Crashes in to us
+To die by your side
+Is such a heavenly way to die
+And if a ten ton truck
+Kills the both of us
+To die by your side
+Well the pleasure, the privilege is mine
+
+Oh, there is a light and it never goes out
+There is a light and it never goes out
+From the ice-age to the dole-age
+There is but one concern
+I have just discovered
+
+Some girls are bigger than others
+Some girls are bigger than others
+Some girls mothers are bigger than other girls mothers
+
+As Antony said to Cleopatra
+As he opened a crate of ale
+Oh I say
+
+Some girls are bigger than others
+Some girls are bigger than others
+Some girls mothers are bigger than other girls mothers
+
+"Send me the pillow
+The one that you dream on"
+
+"Send me the pillow
+The one that you dream on"
+
+And I'll send you mine
+
+I am the son
+and the heir
+of a shyness that is criminally vulgar
+I am the son and heir
+of nothing in particular
+
+You shut your mouth
+how can you say
+I go about things the wrong way
+I am human and I need to be loved
+just like everybody else does
+
+I am the son
+and the heir
+of a shyness that is criminally vulgar
+I am the son and the heir
+of nothing in particular
+
+You shut your mouth
+how can you say
+I go about things the wrong way
+I am human and I need to be loved
+just like everybody else does
+
+There's a club if you'd like to go
+you could meet somebody who really loves you
+so you go, and you stand on your own
+and you leave on your own
+and you go home, and you cry
+and you want to die
+
+When you say it's gonna happen "now"
+well, when exactly do you mean?
+see I've already waited too long
+and all my hope is gone
+
+You shut your mouth
+how can you say
+I go about things the wrong way
+I am human and I need to be loved
+just like everybody else does
+
+Punctured bicycle
+on a hillside desolate
+will Nature make a man of me yet?
+
+When in this charming car
+this charming man
+
+Why pamper life's complexities
+when the leather runs smooth on the passenger seat?
+
+I would go out tonight
+but I haven't got a stitch to wear
+this man said "It's gruesome
+that someone so handsome should care"
+
+A jumped-up pantry boy
+who never knew his place
+he said "return the rings"
+he knows so much about these things
+he knows so much about these things
+
+I would go out tonight
+but I haven't got a stitch to wear
+this man said "It's gruesome
+that someone so handsome should care"
+
+This charming man
+this charming man
+
+A jumped-up pantry boy
+who never knew his place
+he said "return the ring"
+he knows so much about these things
+
+
+Were you and he Lovers?
+and would you say so if you were?
+on a forecourt
+on a Friday
+passing my way
+Were you and he Lovers?
+and if you were, then say that you were!
+on a groundsheet
+under canvas
+with your tent-flap
+open wide
+A note upon his desk:
+"P.S. Bring Me Home And Have Me!"
+Leather elbows on a tweed coat
+- Oh! -
+Is THAT the best you can do?
+So came his reply:
+"...but on the desk is where I want you!"
+So I ask (even though I know):
+were you and he Lovers?
+
+An afternoon nostalgia
+television show
+you spoke in silhouette
+(but they couldn't name you)
+although the panel were
+very polite to you
+but I remembered you
+from Friday nights 1969
+ATV - you murdered every line
+too old to be a child star
+too young to take leads
+four seasons passed
+and they AXED you
+nervously juvenile
+(WON'T SMILE!)
+What became of you?
+did that swift eclipse torture you?
+a star at eighteen
+and then-suddenly gone
+down to a few lines
+in the back page of a teenage annual
+oh but I remembered you
+I looked up to you
+
+
+Trudging slowly over wet sand
+Back to the bench
+Where your clothes were stolen
+
+This is the coastal town
+That they forgot to close down
+Armageddon—come, Armageddon! Come, Armageddon! Come!
+
+Everyday is like Sunday
+Everyday is silent and grey
+
+Hide on the promenade
+Etch a postcard,
+"How I dearly wish I was not here."
+
+In the seaside town
+...that they forgot to bomb
+Come! Come! Come—nuclear bomb!
+
+Everyday is like Sunday
+Everyday is silent and grey
+
+Trudging back over pebbles and sand
+And a strange dust lands on your hands
+And on your face, on your face, on your face, on your face
+
+Everyday is like Sunday
+"Win Yourself A Cheap Tray"
+Share some greased tea with me
+Everyday is silent and grey
+
+No no no
+he does not want to depress you
+oh no no no no no
+he only wants to impress you
+Bengali in platform
+she only wants to embrace your culture
+and to be your friend forever
+Bengali, Bengali
+oh shelve your Western plans
+and understand that life is hard enough when you belong here
+A silver-studded rim that glistens
+and an ankle-star that...blinds me
+a lemon sole so very high
+which only reminds me, to tell you
+so I break the news gently
+I break the news to you gently
+"Shelve your plans"
+Bengali, Bengali
+its the touchy march of time
+that blinds you
+don't blame me
+don't hate me
+just because I'm the one to tell you
+that life is hard enough when you belong here
+life is hard enough when you belong here
+shelve your western plans
+life is hard enough when you belong here
+
+Angel, Angel
+don't take your life tonight
+I know they take
+and that they take in turn
+and they give you nothing real
+for yourself in return
+and when they've used you
+and they've broken you
+and wasted all your money
+and cast your shell aside
+and when they've bought you
+and they've sold you
+and they've billed you for the pleasure
+and they've made your parents cry
+I will be here
+BELIEVE ME
+I will be here
+...believe me
+Angel, don't take your life
+some people have got no pride
+they do not understand
+the Urgency of life
+but I love you more than life
+I love you more than life
+I love you more than life
+I love you more than life
+
+
+The last night on Maudlin Street
+goodbye house
+goodbye stairs
+I was born here
+I was raised here, and
+...I took some stick here
+love at first sight
+may sound trite
+but it's true, you know
+I could list the details
+of everything you ever wore
+or said, or how you stood that day
+and as we spend the last night
+on Maudlin Street, I say
+"goodbye house-forever!"
+I never stole a happy hour
+around here
+Where the world's ugliest boy
+became what you see
+here I am - the ugliest man
+Its the last night on Maudlin Street
+and truly I do love you
+oh, truly I do love you
+When I sleep with that picture of
+you framed beside my bed
+oh, it's childish and it's silly
+but I think it's you in my room
+by the bed (...yes, I told you it was silly...)
+and I know
+I took strange pills
+but I never meant to hurt you
+oh truly I love you
+I came home late one night
+everyone had gone to bed
+nobody stays up for you
+when you have sixteen stitches
+all around your head
+the last buss I missed to Maudlin Street
+so, he drove me home in the Van
+complaining: "Women only like me for my mind..."
+don't leave your torch behind
+power-cuts ahead
+as we crept through the park
+but no I cannot steal a pair of jeans
+off a clothesline for you
+but you...without clothes
+oh I could not keep a straight face
+me - without clothes?
+well a nation turns its back and gags...
+I'm packed
+I am moving house
+a half-life disappears today
+every slag waves me on
+(secretly wishing me gone
+well, I will be soon
+oh - I will be soon)
+There were bad times on Maudlin Street
+when they took you away in a police car
+dear Inspector - don't you know?
+don't you care?
+don't you know - about Love?
+Your gran died
+and your mother died
+on Maudlin Street
+in pain and ashamed
+with never time to say
+those special things
+I took the keys from Maudlin Street
+well, it's only bricks and mortar!
+and...truly I do love you
+wherever you are
+wherever you are
+
+
+Why do you come here
+why do you hang around
+I'm so sorry
+I'm so sorry
+Why do you come here
+when you know it makes
+things hard for me
+when you know, oh
+why do you come?
+Why do you telephone?
+and why send me silly notes?
+I'm so sorry
+I'm so sorry
+why do you come here
+when you know it makes
+thing hard for me
+when you know, oh
+why do you come?
+You had to sneak into my room
+'just' to read my diary
+was it just to see all the things
+you knew I'd written about you?
+and...so many illustrations
+I'm so very sickened
+oh, I am so sickened NOW
+
+The strange logic of your clumsiest line
+stayed emblazoned on my mind
+break up the family
+and lets begin to live our lives
+I went to see all my friends tonight
+it wasn't Youth, it wasn't even Life
+born Old, sadly wise
+resigned (well, we were)
+to ending our lives
+I'm so glad to grow older
+to move away from those awful times
+I want to see all my friends tonight
+Yes you found love but you weren't
+at peace with your life
+home late, full of Hate
+despise the ties that bind
+oh I'm so glad to grow older
+to move away from those younger years
+now I'm in love for the first time
+and I don't feel bad
+Let me see all my old friends
+let me put my arm around them
+because I really do love them
+now, does that sound mad?
+Captain of games, solid framed
+I stood on the touchline
+hailstones, driven home
+in his car - no breaks? I don't mind
+I'm just so glad to grow older
+to move away from those darker years
+I'm in love for the first time
+and I don't feel bad
+so wish me luck my friends
+goodbye
+
+
+Here is London
+here is London
+is it home of the free,
+or what?
+can you squeeze me
+into an empty page of your diary
+and psychologically save me
+I've got faith in you
+I sense the power
+in the fingers
+within an hour the power
+can totally destroy me
+or it could same my life
+here is London
+'home of the brash, outrageous
+and free'
+you are repressed
+but you're remarkably dressed
+is it Real?
+but you're far to busy
+busy scissors
+busy clippers
+hair dresser on fire
+all around Sloane Square
+and you're far too busy
+to see me
+"busy,busy"
+hairdresser on fire
+was a client over-cautious
+he made you nervous
+and when he said
+"I'm gonna sue you"
+I really felt for you
+so can you squeeze me
+into an empty page of your diary
+and supernaturally change me
+CHANGE ME, CHANGE ME
+
+
+Ordinary boys, happy knowing nothing
+happy being no one, but themselves
+Ordinary girls, supermarket clothes
+who think it's very clever to be cruel to you
+for you were so different
+you stood all alone
+and you knew
+that it had to be so
+avoiding ordinary boys
+happy going nowhere, just around here
+in their rattling cars
+and ordinary girls
+never seeing further
+than the cold, small streets
+that trap them
+but you were so different
+you had to say no
+when those empty fools
+tried to change you, and claim you
+for the lair of their ordinary world
+where they feel so lucky
+so lucky, so lucky
+with their lives laid out before them
+they're so lucky, so lucky
+so lucky, so lucky
+
+I don't mind
+I don't mind if you forget me
+having learned my lesson
+I never left an impression on anyone
+so now you send me your hardened 'regards'
+when once you'd send me 'love'
+sincerely I must tell you
+your mild 'best wishes'
+they make me suspicious
+but I don't mind
+I don't mind if you forget me
+having learned my lesson
+I never left
+an impression on anyone
+the pressure to change, to move on
+was strange
+and very strong
+so this is why I tell you
+I really do understand
+BYE BYE
+I don't mind if you forget me
+no no no no no no no
+REJECTION IS ONE THING
+BUT REJECTION FROM A FOOL
+IS CRUEL
+REJECTION IS ONE THING
+BUT REJECTION FROM A FOOL
+IS CRUEL
+and I don't mind if you forget me
+I don't mind if your forget me
+
+urther into the fog I fall
+well, I was just
+following you!
+when you said:
+"Do as I do and scrap your fey ways"
+(dial-a-cliche)
+"grow up, be a man, and close your mealy-mouth!"
+(dial-a-cliche)
+But the person underneath
+where does he go?
+does he slide by the wayside?
+or...does he just die?
+when you find that you've organized
+your feelings, for people
+who didn't like you then
+and certainly don't like you now
+yet still you say:
+"Do as I do and scrap your fey ways"
+(dial-a-cliche)
+"grow up, be a man, and close your mealy-mouth!"
+(dial-a-cliche)
+"the Safe way is the only way!
+there's always time to change, son!"
+yes well I've changed
+but I'm in pain!
+dial-a-chiche
+The kind people
+have a wonderful dream
+Margaret on the guillotine
+because people like you
+make me feel so tired
+when will you die?
+when will you die?
+when will you die?
+when will you die?
+when will you die?
+because people like you
+make me feel so old inside
+please die
+and kind people
+do not shelter this dream
+make it real
+make the dream real
+make the dream real
+make it real
+
+It's time the tale were told
+of how you took a child
+and you made him old
+
+It's time the tale were told
+of how you took a child
+and you made him old
+you made him old
+
+Reel around the fountain
+slap me on the patio
+I'll take it now
+
+Fifteen minutes with you
+well, I wouldn't say no
+oh people said
+that you were virtually dead
+and they were so wrong!
+
+Fifteen minutes with you
+I wouldn't say no
+oh people said
+that you were easily led
+and they were half-right
+
+It's time the tale were told
+of how you took a child
+and you made him old
+
+It's time the tale were told
+of how you took a child
+and you made him old
+you made him old
+
+Reel around the fountain
+slap me on the patio
+I'll take it now
+
+Fifteen minutes with you
+I wouldn't say no
+oh people see no worth in you
+oh but I do
+
+Fifteen minutes with you
+oh I wouldn't say no
+oh people see no worth in you
+but I do
+
+I dreamt about you last night
+and I fell out of bed twice
+you can pin and mount me
+like a butterfly
+
+But take me to the haven of your bed
+was something that you never said
+two lumps, please
+you're the bee's knees
+but so am I
+
+Meet me at the fountain
+shove me on the patio
+I'll take it slowly
+
+Fifteen minutes with you
+oh I wouldn't say no
+people see no worth in you
+oh but I do
+
+As merry as the days were long
+I am right and you were long
+back at the old grey school
+I would win and you would lose
+
+But you've got everything now
+you've got everything now
+and what a terrible mess I've made of my life
+oh what a mess I've made of my life
+
+No, I've never had a job
+because I've never wanted one
+I've seen you smile
+but I've never really heard you laugh
+so who is rich and who is poor?
+I cannot say...
+
+You are your Mother's only son
+and you're a desperate one
+but I don't want a lover
+I just want to be seen
+in the back of your car
+
+A friendship sadly lost?
+well, this is true
+and yet, it's false
+but did I ever tell you, by the way
+I never did like your face
+
+But you've got everything now
+you've got everything now
+and what a terrible mess I've made of my life
+oh what a mess I've made of my life
+
+No, I've never had a job
+because I'm too shy
+I've seen you smile
+but I've never really heard you laugh
+so who is rich and who is poor?
+I cannot say...
+
+You are your Mother's only son
+and you're a desperate one
+but I don't want a lover
+I just want to be tied
+to the back of your car
+to the back of your car
+to the back of your car
+to the back of your car
+
+So, goodbye
+Please stay with your own kind
+And I'll stay with mine
+
+There's something against us
+It's not time
+It's not time
+So, goodbye, goodbye, goodbye, goodbye
+
+I know I need hardly say
+How much I love your casual way
+Oh, but please put your tongue away
+A little higher and we're well away
+The dark nights are drawing in
+And your humour is as black as them
+I look at yours, you laugh at mine
+And "love" is just a miserable lie
+You have destroyed my flower-like life
+Not once - twice
+You have corrupt my innocent mind
+Not once - twice
+I know the wind-swept mystical air
+It means: I'd like to see your underwear
+I recognise that mystical air
+It means: I'd like to seize your underwear
+What do we get for our trouble and pain?
+Just a rented room in Whalley Range
+What do we get for our trouble and pain?
+...Whalley Range!
+Into the depths of the criminal world
+I followed her...
+
+I need advice, I need advice
+I need advice, I need advice
+Nobody ever looks at me twice
+Nobody ever looks at me twice
+
+I'm just a country-mile behind
+The world
+
+I'm just a country-mile behind
+The whole world
+Oh oh, oh...
+
+I'm just a country-mile behind
+The world
+
+I'm just a country-mile behind
+The whole world
+Oh oh, oh...
+
+Take me when you go
+Oh oh, oh...
+
+Take me when you go
+Oh oh, oh...
+
+I need advice, I need advice
+
+Upon the sand, upon the bay
+"There is a quick and easy way" you say
+Before you illustrate
+I'd rather state:
+"I'm not the man you think I am
+I'm not the man you think I am"
+
+And Sorrow's native son
+He will not smile for anyone
+
+And Pretty Girls Make Graves
+Oh...
+
+End of the pier, end of the bay
+You tug my arm, and say: "Give in to lust,
+Give up to lust, oh heaven knows we'll
+Soon be dust... "
+
+Oh, I'm not the man you think I am
+I'm not the man you think I am
+
+And Sorrow's native son
+He will not rise for anyone
+
+And Pretty Girls Make Graves
+Oh really?
+Oh...
+
+I could have been wild and I could have
+Been free
+But Nature played this trick on me
+
+She wants it Now
+And she will not wait
+But she's too rough
+And I'm too delicate
+
+Then, on the sand
+Another man, he takes her hand
+A smile lights up her stupid face
+(and well, it would)
+
+I lost my faith in Womanhood
+I lost my faith in Womanhood
+I lost my faith...
+Oh...
+
+Hand in glove...
+The sun shines out of our behinds...
+Oh...
+
+
+Please don't cry
+For the ghost and the storm outside
+Will not invade this sacred shrine
+Nor infiltrate your mind
+My life down I shall lie
+If the bogey-man should try
+To play tricks on your sacred mind
+To tease, torment, and tantalise
+Wavering shadows loom
+A piano plays in an empty room
+There'll be blood on the cleaver tonight
+And when darknesss lifts and the room is bright
+I'll still be by your side
+For you are all that matters
+And I'll love you to till the day I die
+There never need be longing in your eyes
+As long as the hand that rocks the cradle is mine
+Ceiling shadows shimmy by
+And when the wardrobe towers like a beast of prey
+There's sadness in your beautiful eyes
+Oh, your untouched, unsoiled, wonderous eyes
+My life down I shall lie
+Should restless spirits try
+To play tricks on your sacred mind
+I once had a child, and it saved my life
+And I never even asked his name
+I just looked into his wondrous eyes
+And said: "never never never again"
+And all too soon I did return
+Just like a moth to a flame
+So rattle my bones all over the stones
+I'm only a beggar-man whom nobody owns
+Oh, see how words as old as sin
+Fit me like a glove
+I'm here and here I'll stay
+Together we lie, together we pray
+There never need be longing in your eyes
+As long as the hand that rocks the cradle is mine
+As long as the hand that rocks the cradle is mine
+Mine
+Climb up on my knee, sonny boy
+Although you're only three, sonny boy
+You're - you're mine
+And your mother she just never knew
+Oh, your mother...
+As long... as long... as long
+I did my best for her
+I did my best for her
+As long... as long... as long as... as long
+I did my best for her
+I did my best for her
+Oh...
+
+I decree today that life is simply taking and not giving
+England is mine and it owes me a living
+ask me why and I'll spit in your eye
+ask me why and I'll spit in your eye
+
+But we cannot cling
+to the old dreams anymore
+no we cannot cling
+to those dreams
+
+Does the body rule the mind
+or does the mind rule the body?
+I dunno...
+
+Under the iron bridge we kissed
+and although I ended up with sore lips
+it just wasn't like
+the old days anymore
+no it wasn't like those days
+am I still ill?
+am I still ill?
+
+Does the body rule the mind
+or does the mind rule the body?
+I dunno...
+
+Ask me why and I'll die
+oh ask me why and I'll die
+and if you must go to work tomorrow
+well if I were you I wouldn't bother
+for there are brighter sides to life
+and I should know because I've seen them
+but not very often
+
+Under the iron bridge we kissed
+and although I ended up with sore lips
+it just wasn't like
+the old days anymore
+no it wasn't like those days
+am I still ill?
+am I still ill?
+
+
+Hand in glove
+the sun shines out of our behinds
+
+No it's NOT like any other love
+this one's different
+because it's us!
+
+Hand in glove
+we can go wherever we please
+and everything depends upon
+how near you stand to me
+
+And if the people stare
+then, the people stare
+oh I really don't know
+and I really don't care
+
+Hand in glove
+the Good People laugh
+
+Yes, we may be hidden by "rags"
+but we have something they'll never have
+
+Hand in glove
+the sun shines out of our behinds
+
+Yes, we may be hidden by "rags"
+but we have something they'll never have
+
+And if the people stare
+then, the people stare
+oh I really don't know
+and I really don't care
+
+So hand in glove I stake my claim
+I'll fight to the last breath
+
+If they dare touch a hair on your head
+I'll fight to the last breath
+
+The good life is out there somewhere
+so stay on my arm, you little charmer
+
+But I know my luck too well
+yes, I know my luck too well
+and I'll probably never see you again
+I'll probably never see you again
+I'll probably never see you again
+
+All men have secrets and here is mine so let it be known
+we have been through hell and high tide
+I can surely rely on you
+and yet you start to recoil
+heavy words are so lightly thrown
+but I'd still leap in front of a flying bullet for you
+
+So what difference does it make?
+so what difference does it make?
+it makes none, but now you have gone
+and you must be looking very old tonight
+
+The devil will find work for idle hands to do
+I stole and I lied, and why? because you asked me to
+but now you make me feel so ashamed
+because I've only got two hands
+well, I'm still fond of you
+
+So what difference does it make?
+so what difference does it make?
+it makes none, but now you have gone
+and your prejudice won't keep you warm tonight
+
+Oh the devil will find work for idle hands to do
+I stole and then I lied just because you asked me to
+but now you know the truth about me
+you won't see me anymore
+well, I'm still fond of you
+
+But no more apologies
+no more apologies
+I'm too tired, I'm so very tired
+and I'm feeling very sick and ill today
+but I'm still fond of you
+
+
+Bought on stolen wine
+A nod was the first step
+You knew very well
+What was coming next
+
+Bought on stolen wine
+A nod was the first step
+You knew very well
+What was coming next
+
+Did I really walk all this way
+Just to hear you say:
+"Oh, I don't want to go out tonight"?
+"Oh, I don't want to go out tonight"
+
+Oh, but you will
+For you must
+
+I don't owe you anything, no
+But you owe me something
+Repay me now
+
+You should never go to them
+Let them come to you
+Just like I do
+Just like I do
+
+You should not go to them
+Let them come to you
+Just like I do
+Just like I do
+
+Did I really walk all this way
+Just to hear you say:
+"Oh, I don't want to go out tonight"?
+"Oh, I don't want to go out tonight"
+
+But you will
+For you must
+
+I don't owe you anything, no
+But you owe me something
+Repay me now
+
+Too freely on your lips
+Words prematurely sad
+Oh, but I know what will make you smile tonight
+
+Life is never kind
+Life is never kind
+Oh, but I know what will make you smile tonight
+
+
+Over the moor, take me to the moor
+Dig a shallow grave
+And I'll lay me down
+
+Over the moor, take me to the moor
+Dig a shallow grave
+And I'll lay me down
+
+Lesley-Anne, with your pretty white beads
+Oh John, you'll never be a man
+And you'll never see your home again
+Oh Manchester, so much to answer for
+
+Edward, see those alluring lights?
+Tonight will be your very last night
+
+A woman said: "I know my son is dead
+I'll never rest my hands on his sacred head"
+
+Hindley wakes and Hindley says:
+Hindley wakes, Hindley wakes, Hindley wakes, and says:
+"Oh, wherever he has gone, I have gone"
+
+But fresh lilaced moorland fields
+Cannot hide the stolid stench of death
+Fresh lilaced moorland fields
+Cannot hide the stolid stench of death
+
+Hindley wakes and says:
+Hindley wakes, Hindley wakes, Hindley wakes, and says:
+"Oh, whatever he has done, I have done"
+
+But this is no easy ride
+For a child cries:
+
+"Oh, find me... find me, nothing more
+We are on a sullen misty moor
+We may be dead and we may be gone
+But we will be, we will be, we will be, right by your side
+Until the day you die
+This is no easy ride
+We will haunt you when you laugh
+Yes, you could say we're a team
+You might sleep
+You might sleep
+You might sleep
+BUT YOU WILL NEVER DREAM!
+Oh, you might sleep
+BUT YOU WILL NEVER DREAM!
+You might sleep
+BUT YOU WILL NEVER DREAM!"
+
+Oh Manchester, so much to answer for
+Oh Manchester, so much to answer for
+
+Oh, find me, find me!
+Find me!
+I'll haunt you when you laugh
+Oh, I'll haunt you when you laugh
+You might sleep
+BUT YOU WILL NEVER DREAM!
+Oh...
+Over the moors, I'm on the moor
+Oh, over the moor
+Oh, the child is on the moor

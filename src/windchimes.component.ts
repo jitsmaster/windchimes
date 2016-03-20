@@ -28,7 +28,8 @@ export class Windchimes {
       .map(() => ({
         x: random.nextInt(0, 1280),
         y: random.nextInt(0, 680),
-        note: noteSampler()
+        note: noteSampler(),
+        state: 'chiming'
       }))
       .windowTime(5000, 100)
       .flatMap(window => window.toArray());

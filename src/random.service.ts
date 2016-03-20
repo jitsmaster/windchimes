@@ -123,7 +123,7 @@ export class Random {
     return this.cosineInterpolate(v1, v2, xFraction);
   }
 
-  perlinNoise(initialDelay) {
+  perlinNoise(initialDelay, sleepTime = 200) {
     const persistence     = 1/2;
     const numberOfOctaves = 4;
     return Observable.create((observer) => {
@@ -144,7 +144,7 @@ export class Random {
           if (yes) {
             observer.next();
           }
-          await this.sleep(200);
+          await this.sleep(sleepTime);
           x += 0.2;
         }
       };
