@@ -8,18 +8,34 @@
   align-items: center;
   justify-content: center;
 
-  transition: all 0.1s ease-out;
+  transition: background-color 0.1s ease-out;
 
   font-family: 'Josefin Slab', cursive;
-  font-size: 7em;
+  font-size: 14em;
   text-align: center;
 
   color: white;
   -webkit-text-stroke: 1px #666;
 }
 
-:host(.C4) { background-color: #00A0B0; }
-:host(.G4) { background-color: #6A4A3C; }
-:host(.C5) { background-color: #CC333F; }
-:host(.D5) { background-color: #EB6841; }
-:host(.E5) { background-color: #EDC951; }
+:host(.longest) {
+  font-size: 12em;
+}
+:host(.longer) {
+  font-size: 16em;
+}
+:host(.long) {
+  font-size: 20em;
+}
+:host(.medium) {
+  font-size: 25em;
+}
+:host(.short) {
+  font-size: 30em;
+}
+
+:host(.C4) { background-color: #30261C; }
+:host(.G4) { background-color: #403831; }
+:host(.C5) { background-color: #36544F; }
+:host(.D5) { background-color: #1F5F61; }
+:host(.E5) { background-color: #0B8185; }

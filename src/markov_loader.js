@@ -10,26 +10,23 @@ function getSentences(str) {
 module.exports = function(source) {
   this.cacheable();
 
-  const stats = {
-    terminals: {},
-    startWords: [],
-    wordStats: {}
-  };
+  const wordStats = new Map();
 
   for (const sentence of getSentences(source)) {
     var words = sentence.split(/\s+/)
       .map(w => w.replace(/^\W+/, '').replace(/\W+$/, '').toLowerCase())
       .filter(w => w && w.length);
-    stats.terminals[words[words.length-1]] = true;
-    stats.startWords.push(words[0]);
-    for (let i = 0; i < words.length - 1; i++) {
-      if (stats.wordStats.hasOwnProperty(words[i])) {
-        stats.wordStats[words[i]].push(words[i+1]);
+    for (let i = 0; i < words.length - 2; i++) {
+      const key = [words[i], words[i + 1]];
+      const nxt = words[i + 2];
+
+      if (wordStats.has(key)) {
+        wordStats.get(key).push(nxt);
       } else {
-        stats.wordStats[words[i]] = [words[i+1]];
+        wordStats.set(key, [nxt]);
       }
     }
   }
 
-  return `module.exports = ${JSON.stringify(stats)};`
+  return `module.exports = ${JSON.stringify(Array.from(wordStats.entries()))};`
 }

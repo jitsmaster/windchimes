@@ -123,7 +123,7 @@ export class Random {
     return this.cosineInterpolate(v1, v2, xFraction);
   }
 
-  perlinNoise(initialDelay, sleepTime = 200) {
+  perlinNoise(initialDelay, sleepTime = 200, adjust = 5) {
     const persistence     = 1/2;
     const numberOfOctaves = 4;
     return Observable.create((observer) => {
@@ -139,7 +139,7 @@ export class Random {
             const amplitude = persistence ** i;
             total = total + this.interpolatedNoise(x * frequency) * amplitude;
           }
-          const probability = (total + 1) / 5;
+          const probability = (total + 1) / adjust;
           const yes = (Math.random() < probability);
           if (yes) {
             observer.next();

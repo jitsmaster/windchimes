@@ -4,27 +4,21 @@ import {Observable, Subscription} from 'rxjs';
 import {Random} from './random.service';
 import {Samples} from './samples.service';
 
-interface WordStats {
-  [word: string]: string[]
-}
-interface MarkovData {
-  wordStats: WordStats,
-  startWords: string[],
-  terminals: string[]
-}
 
-const markovData:MarkovData = require('./markov_loader!./markov-fodder.txt');
+
+const markovData = require('./markov_loader!./markov-fodder.txt');
 
 @Component({
   selector: 'markovchimes',
   template: `
-    {{ word }}
+    {{ word() }}
   `,
   styles: [require('./markovchimes.component.css').toString()]
 })
 export class Markovchimes implements OnDestroy {
   private lastChime;
-  private word:string;
+  private words;
+  private wordIdx:number;
   private sub:Subscription;
 
 
@@ -34,7 +28,7 @@ export class Markovchimes implements OnDestroy {
               @Inject('audioContext') audioCtx) {
 
     const noteSampler = random.sampler(notes);
-    this.sub = random.perlinNoise(0, 400)
+    this.sub = random.perlinNoise(0, 400, 2)
       .map(() => ({
         x: random.nextInt(0, 1280),
         y: random.nextInt(0, 680),
@@ -44,7 +38,7 @@ export class Markovchimes implements OnDestroy {
         this.lastChime = chime;
         this.nextWord();
 
-        samples.sampleCache[chime.note].first().subscribe(sample => {
+        samples.sampleCache.piano[chime.note].first().subscribe(sample => {
           const source = audioCtx.createBufferSource();
           source.buffer = sample;
           source.connect(audioCtx.destination);
@@ -59,20 +53,55 @@ export class Markovchimes implements OnDestroy {
   }
 
   @HostBinding('class')
-  get noteClass() {
-    return this.lastChime ? this.lastChime.note : ''
+  get hostClass() {
+    const noteClass = this.lastChime ? this.lastChime.note : '';
+    const length = this.word().length;
+    let lengthClass;
+    if (length <= 3) {
+      lengthClass = 'short';
+    } else if (length <= 6) {
+      lengthClass = 'medium';
+    } else if (length <= 8) {
+      lengthClass = 'long';
+    } else if (length <= 10) {
+      lengthClass = 'longer';
+    } else {
+      lengthClass = 'longest'
+    }
+    return `${noteClass} ${lengthClass}`;
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
-  nextWord() {
-    if (this.word && markovData.wordStats.hasOwnProperty(this.word)) {
-      this.word = this.random.element(markovData.wordStats[this.word]);
+  word() {
+    if (this.words) {
+      return this.words[this.wordIdx];
     } else {
-      this.word = this.random.element(markovData.startWords);
+      return '';
     }
+  }
+
+  nextWord() {
+    if (this.words && this.wordIdx === 0) {
+      this.wordIdx = 1;
+      console.log('second', this.word());
+      return;
+    } else if (this.words) {
+      const [k1, k2] = this.words;
+      for (const [[w1, w2], nexts] of markovData) {
+        if (k1 === w1 && k2 === w2) {
+          this.words.shift();
+          this.words.push(this.random.element(nexts));
+          console.log('found', k1, k2, this.word());
+          return;
+        }
+      }
+    }
+    this.words = this.random.element(markovData)[0].slice(0);
+    this.wordIdx = 0;
+    console.log('new', this.word());
   }
 
 }

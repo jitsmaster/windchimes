@@ -33,7 +33,7 @@ export class Chime implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.chime.state === 'chiming') {
-      this.samples.sampleCache[this.chime.note].first().subscribe(sample => {
+      this.samples.sampleCache.chimes[this.chime.note].first().subscribe(sample => {
         this.source = this.audioCtx.createBufferSource();
         this.source.buffer = sample;
 
