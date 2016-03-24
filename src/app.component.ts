@@ -15,6 +15,7 @@ import {Samples} from './samples.service';
       <router-outlet></router-outlet>
     </div>
   `,
+  styles: [''],
   directives: [ROUTER_DIRECTIVES],
   providers: [
     Remote,

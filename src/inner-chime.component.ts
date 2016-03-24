@@ -1,5 +1,5 @@
 import {Component, Input, ChangeDetectionStrategy} from 'angular2/core';
-import {style, animate} from 'angular2/src/animate/worker/animation_definition';
+import {animate, style} from 'angular2/animate';
 import {Samples} from './samples.service';
 
 @Component({
