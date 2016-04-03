@@ -7,6 +7,10 @@
   border-width: 200px;
   border-style: solid;
   border-radius: 300px;
+  opacity: 0;
+  backface-visibility: hidden;
+  perspective:1000;
+  transform: translateZ(0);
 }
 
 .C4 { border-color: #FF3D7F; }

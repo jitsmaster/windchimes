@@ -4,6 +4,7 @@ import {Windchimes} from './windchimes.component';
 import {WindchimesRemote} from './windchimes-remote.component';
 import {Markovchimes} from './markovchimes.component';
 import {Control} from './control.component';
+import {Tree} from './tree.component';
 import {Remote} from './remote.service';
 import {Random} from './random.service';
 import {Samples} from './samples.service';
@@ -30,7 +31,8 @@ import {Samples} from './samples.service';
   {path: '/local', name: 'LocalChimes', component: Windchimes},
   {path: '/remote', name: 'RemoteChimes', component: WindchimesRemote, useAsDefault: true},
   {path: '/markov', name: 'MarkovChimes', component: Markovchimes},
-  {path: '/ctrl', name: 'Control', component: Control}
+  {path: '/ctrl', name: 'Control', component: Control},
+  {path: '/tree', name: 'Tree', component: Tree}
 ])
 export class AppComponent {
   constructor(@Inject('size') private size) {

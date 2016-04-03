@@ -15,8 +15,8 @@ import {Samples} from './samples.service';
   styles: [require('./chime.component.css').toString()],
   animations: {
     ngEnter: [
-      style('.first'),
-      animate('.gone', '5s 0.1s cubic-bezier(0,.79,.13,.71)')
+      style({opacity: 1, transform: 'scale3d(0.015,0.015,0.015) translateZ(0)', 'filter': 'blur(0px)'}),
+      animate({opacity: 0, transform: 'scale3d(1,1,1) translateZ(0)', 'filter': 'blur(10px)'}, '5s 0.1s cubic-bezier(0,.79,.13,.71)')
     ]
   },
   changeDetection: ChangeDetectionStrategy.CheckOnce

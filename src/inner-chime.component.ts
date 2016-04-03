@@ -15,9 +15,9 @@ import {Samples} from './samples.service';
   styles: [require('./inner-chime.component.css').toString()],
   animations: {
     ngEnter: [
-      style('.first'),
-      animate('.expanded', '0.05s ease-in'),
-      animate('.gone', '1s ease-out')
+      style({opacity: 1, transform: 'scale3d(0.1,0.1,0.1) translateZ(0)'}),
+      animate({opacity: 1, transform: 'scale3d(1,1,1) translateZ(0)'}, '0.05s ease-in'),
+      animate({opacity: 0, transform: 'scale3d(0,0,0) translateZ(0)'}, '1s ease-out')
     ]
   },
   changeDetection: ChangeDetectionStrategy.CheckOnce
