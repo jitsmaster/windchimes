@@ -10,7 +10,7 @@ import {Random} from './random.service';
 import {Samples} from './samples.service';
 
 @Component({
-  selector: 'wind-chimes',
+  selector: 'wind-chimes-app',
   template: `
     <div (window:resize)="onWindowResize()">
       <router-outlet></router-outlet>

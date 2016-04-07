@@ -3,27 +3,24 @@ import {Observable, Subscription} from 'rxjs';
 import {ForAnyOrder} from './forAnyOrder.directive';
 import {AudioUnlock} from './audio-unlock.component';
 import {Chime} from './chime.component';
-import {InnerChime} from './inner-chime.component';
 import {ThankYou} from './thank-you.component';
 import {Random} from './random.service';
 
 @Component({
   selector: 'windchimes-remote',
   template: `
-    <div [style.display]="areChimesVisible() ? 'block': 'none'"
-         *forAnyOrder="#chime of chimes">
-      <chime [chime]="chime" [remote]=true>
-      </chime>
-      <inner-chime [chime]="chime" [remote]=true>
-      </inner-chime>
-    </div>
+    <chime [style.display]="areChimesVisible() ? 'block': 'none'"
+          *forAnyOrder="#chime of chimes"
+          [chime]="chime"
+          [remote]=true>
+    </chime>
     <audio-unlock *ngIf="!unlocked" (unlock)="onUnlocked()">
     </audio-unlock>
     <thank-you *ngIf="unlocked && isDone()">
     </thank-you>
   `,
   styles: [require('./windchimes.component.css').toString()],
-  directives: [Chime, AudioUnlock, InnerChime, ThankYou, ForAnyOrder]
+  directives: [Chime, AudioUnlock, ThankYou, ForAnyOrder]
 })
 export class WindchimesRemote implements OnDestroy {
   chimes:{x: number, y: number, note:string, state: string}[];

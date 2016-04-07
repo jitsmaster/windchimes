@@ -2,21 +2,17 @@ import {Component, Inject} from 'angular2/core';
 import {Observable, Subscription} from 'rxjs';
 import {ForAnyOrder} from './forAnyOrder.directive';
 import {Chime} from './chime.component';
-import {InnerChime} from './inner-chime.component';
 import {Random} from './random.service';
 
 @Component({
-  selector: 'windchimes',
+  selector: 'wind-chimes',
   template: `
-    <div *forAnyOrder="#chime of chimes | async">
-      <chime [chime]="chime">
-      </chime>
-      <inner-chime [chime]="chime">
-      </inner-chime>
-    </div>
+    <chime *forAnyOrder="#chime of chimes | async"
+           [chime]=chime>
+    </chime>
   `,
   styles: [require('./windchimes.component.css').toString()],
-  directives: [Chime, InnerChime, ForAnyOrder]
+  directives: [Chime, ForAnyOrder]
 })
 export class Windchimes {
   chimes:Observable<{x: number, y: number}[]>;

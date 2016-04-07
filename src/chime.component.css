@@ -1,11 +1,9 @@
-.chime {
+.ring, .flash {
   display: block;
   position: absolute;
   box-sizing: border-box;
   width: 600px;
   height: 600px;
-  border-width: 200px;
-  border-style: solid;
   border-radius: 300px;
   opacity: 0;
   backface-visibility: hidden;
@@ -13,18 +11,21 @@
   transform: translateZ(0);
 }
 
-.C4 { border-color: #FF3D7F; }
-.G4 { border-color: #FF9E9D; }
-.C5 { border-color: #DAD8A7; }
-.D5 { border-color: #7FC7AF; }
-.E5 { border-color: #3FB8AF; }
-.done { border: 0; }
-
-.first {
-  opacity: 1;
-  transform: scale3d(0.015, 0.015, 0.015);
+.ring {
+  border-width: 200px;
+  border-style: solid;
 }
-.gone {
-  opacity: 0;
-  transform: scale3d(1, 1, 1);
+.ring.C4 { border-color: #FF3D7F; }
+.ring.G4 { border-color: #FF9E9D; }
+.ring.C5 { border-color: #DAD8A7; }
+.ring.D5 { border-color: #7FC7AF; }
+.ring.E5 { border-color: #3FB8AF; }
+
+.flash {
+  background-image: radial-gradient(
+    circle farthest-side,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.1) 30%,
+    rgba(255, 255, 255, 0) 100%
+  );
 }
