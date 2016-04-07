@@ -56,19 +56,4 @@ export class Chime implements OnInit, OnDestroy {
     }
   }
 
-  getNoteFrequency() {
-    switch (this.chime.note) {
-      case 'C':
-        return 261.63;
-      case 'D':
-        return 293.66;
-      case 'E':
-        return 329.63;
-      case 'G':
-        return 392.00;
-      case 'A':
-        return 440.00;
-    };
-  }
-
 }

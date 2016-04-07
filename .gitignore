@@ -1,4 +1,5 @@
 dist/*.js
+dist/*.js.map
 dist/*.mp3
 node_modules
 typings

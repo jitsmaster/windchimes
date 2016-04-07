@@ -2,7 +2,7 @@ var autoprefixer = require('autoprefixer');
 var path = require('path');
 
 module.exports = {
-  entry: ['./src/polyfills.ts', './src/main.ts'],
+  entry: ['./src/polyfills.ts', './src/prod.ts', './src/main.ts'],
   resolve: {
     extensions: ['', '.ts', '.js'],
     root: [
