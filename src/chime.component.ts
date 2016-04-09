@@ -8,14 +8,14 @@ import {Samples} from './samples.service';
     <div class="ring {{chime.note}}"
          [class.remote]="remote"
          [class.expanding]="source"
-         [style.left]="(chime.x - 300) + 'px'"
-         [style.top]="(chime.y - 300) + 'px'">
+         [style.left.px]="chime.x - 300"
+         [style.top.px]="chime.y - 300">
     </div>
     <div class="flash"
          [class.remote]="remote"
          [class.flashing]="source"
-         [style.left]="(chime.x - 300) + 'px'"
-         [style.top]="(chime.y - 300) + 'px'">
+         [style.left.px]="chime.x - 300"
+         [style.top.px]="chime.y - 300">
     </div>
   `,
   styles: [require('./chime.component.css').toString()],
