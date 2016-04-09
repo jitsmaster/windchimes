@@ -1,52 +1,34 @@
-import {Observable, ReplaySubject} from 'rxjs';
 import {Injectable, Inject} from 'angular2/core';
-import {Http, ResponseBuffer} from 'angular2/http';
+var loader = require('webaudio-buffer-loader');
 
-const NOTES = {
+const NOTE_SAMPLES = {
   C4: require("file!./samples/n_C4.mp3"),
   G4: require("file!./samples/n_G4.mp3"),
   C5: require("file!./samples/n_C5.mp3"),
   D5: require("file!./samples/n_D5.mp3"),
   E5: require("file!./samples/n_E5.mp3")
 };
-const PIANO_NOTES = {
-  C4: require("file!./samples/piano_C4.mp3"),
-  G4: require("file!./samples/piano_G4.mp3"),
-  C5: require("file!./samples/piano_C5.mp3"),
-  D5: require("file!./samples/piano_D5.mp3"),
-  E5: require("file!./samples/piano_E5.mp3")
-};
 
 @Injectable()
 export class Samples {
-  sampleCache = {
-    chimes: {},
-    piano: {}
-  };
+  private sampleCache = {};
 
-  constructor(private http:Http, @Inject('audioContext') audioCtx) {
-    for (const note of Object.keys(NOTES)) {
-      const chimeSub = new ReplaySubject(1);
-      this.sampleCache.chimes[note] = chimeSub;
-      this.getSample(audioCtx, NOTES[note])
-        .subscribe(chimeSub);
-
-      const pianoSub = new ReplaySubject(1);
-      this.sampleCache.piano[note] = pianoSub;
-      this.getSample(audioCtx, PIANO_NOTES[note])
-        .subscribe(pianoSub);
-    }
+  constructor(@Inject('audioContext') private audioCtx) {
   }
 
-  getSample(audioCtx:AudioContext, path:string) {
-    return this.http.get(path, {
-      buffer: ResponseBuffer.ArrayBuffer
-    }).map((r) => r.arrayBuffer())
-      .flatMap(blob => {
-        return Observable.create(obs => {
-          audioCtx.decodeAudioData(blob, (data) => obs.next(data));
+  getSample(note:string) {
+    if (!this.sampleCache[note]) {
+      this.sampleCache[note] = new Promise((resolve, reject) => {
+        loader(NOTE_SAMPLES[note], this.audioCtx, (err, loadedBuffer) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(loadedBuffer);
+          }
         });
       });
+    }
+    return this.sampleCache[note];
   }
 
 }

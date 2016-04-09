@@ -37,6 +37,7 @@
     "socket.io-client": "1.4.5",
     "stereo-panner-node": "0.2.0",
     "web-animations-js": "2.2.0",
+    "webaudio-buffer-loader": "1.0.1",
     "zone.js": "0.6.6"
   }
 }

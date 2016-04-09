@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit, OnDestroy, ChangeDetectionStrategy} from 'angular2/core';
+import {Component, Inject, Input, OnInit, OnDestroy} from 'angular2/core';
 import {animate, style, group} from 'angular2/animate';
 import {Samples} from './samples.service';
 
@@ -32,8 +32,7 @@ import {Samples} from './samples.service';
       animate({opacity: 1, transform: 'scale3d(1,1,1) translateZ(0)'}, '0.05s ease-in'),
       animate({opacity: 0, transform: 'scale3d(0,0,0) translateZ(0)'}, '1s ease-out')
     ]
-  },
-  changeDetection: ChangeDetectionStrategy.CheckOnce
+  }
 })
 export class Chime implements OnInit, OnDestroy {
   @Input() chime:{x: number, y: number, note: string, state: string};
@@ -47,7 +46,7 @@ export class Chime implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.chime.state === 'chiming') {
-      this.samples.sampleCache.chimes[this.chime.note].first().subscribe(sample => {
+      this.samples.getSample(this.chime.note).then(sample => {
         this.source = this.audioCtx.createBufferSource();
         this.source.buffer = sample;
 
