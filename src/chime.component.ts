@@ -20,14 +20,14 @@ import {Samples} from './samples.service';
   `,
   styles: [require('./chime.component.css').toString()],
   animations: {
-    'addClass(.expanding)': [
+    'addClass(expanding)': [
       style({opacity: 1, transform: 'scale3d(0.015,0.015,0.015) translateZ(0)'}),
       group([
         animate({opacity: 0}, '5s 0 ease-out'),
-        animate({transform: 'scale3d(1,1,1) translateZ(0)'}, '5s 0.1s cubic-bezier(0,.79,.13,.71)')
+        animate({transform: 'scale3d(1,1,1) translateZ(0)'}, '4.9s 0.1s cubic-bezier(0,.79,.13,.71)')
       ])
     ],
-    'addClass(.flashing)': [
+    'addClass(flashing)': [
       style({opacity: 1, transform: 'scale3d(0.1,0.1,0.1) translateZ(0)'}),
       animate({opacity: 1, transform: 'scale3d(1,1,1) translateZ(0)'}, '0.05s ease-in'),
       animate({opacity: 0, transform: 'scale3d(0,0,0) translateZ(0)'}, '1s ease-out')
