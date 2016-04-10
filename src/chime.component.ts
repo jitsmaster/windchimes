@@ -6,13 +6,11 @@ import {Samples} from './samples.service';
   selector: 'chime',
   template: `
     <div class="ring {{chime.note}}"
-         [class.remote]="remote"
          [class.expanding]="source"
          [style.left.px]="chime.x - 300"
          [style.top.px]="chime.y - 300">
     </div>
     <div class="flash"
-         [class.remote]="remote"
          [class.flashing]="source"
          [style.left.px]="chime.x - 300"
          [style.top.px]="chime.y - 300">
@@ -36,7 +34,6 @@ import {Samples} from './samples.service';
 })
 export class Chime implements OnInit, OnDestroy {
   @Input() chime:{x: number, y: number, note: string, state: string};
-  @Input() remote:boolean;
   source:AudioBufferSourceNode;
   pan:StereoPannerNode;
 
