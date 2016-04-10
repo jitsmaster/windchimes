@@ -26,8 +26,8 @@ import {Samples} from './samples.service';
   ]
 })
 @RouteConfig([
+  {path: '/', name: 'RemoteChimes', component: WindchimesRemote, useAsDefault: true},
   {path: '/local', name: 'LocalChimes', component: Windchimes},
-  {path: '/remote', name: 'RemoteChimes', component: WindchimesRemote, useAsDefault: true},
   {path: '/ctrl', name: 'Control', component: Control}
 ])
 export class AppComponent {
