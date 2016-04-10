@@ -1,5 +1,5 @@
 import {Injectable, Inject} from 'angular2/core';
-var loader = require('webaudio-buffer-loader');
+const loader = require('webaudio-buffer-loader');
 
 const NOTE_SAMPLES = {
   C4: require("file!./samples/n_C4.mp3"),
