@@ -5,25 +5,18 @@ import {Remote, ControlState} from './remote.service';
 @Component({
   selector: 'control',
   template: `
-    <h1>
-      {{state?.state}}
-      <button *ngIf="isChiming()" (click)="done()">Done</button>
-      <button *ngIf="!isChiming()" (click)="start()">Start</button>
-    </h1>
-    <p>
-      Connected clients: {{state?.clientCount}}
-    </p>
-    <p>
-      Chime delay: {{state?.delay}}
-      <button (click)="adjustDelay(1)">+1</button>
-      <button (click)="adjustDelay(10)">+10</button>
-      <button (click)="adjustDelay(-1)">-1</button>
-      <button (click)="adjustDelay(-10)">-10</button>
-      <button (click)="resetDelay()">Reset</button>
-    </p>
-    <p>
-
-  `
+    <h1>{{state?.state}}</h1>
+    <div>Connected clients: {{state?.clientCount}}</div>
+    <div>Chime delay: {{state?.delay}}</div>
+    <button (click)="adjustDelay(1)">+1</button>
+    <button (click)="adjustDelay(10)">+10</button>
+    <button (click)="adjustDelay(-1)">-1</button>
+    <button (click)="adjustDelay(-10)">-10</button>
+    <button (click)="resetDelay()">Reset</button>
+    <button *ngIf="isChiming()" (click)="done()">Done</button>
+    <button *ngIf="!isChiming()" (click)="start()">Start</button>
+  `,
+  styles: [require('./control.component.css').toString()]
 })
 export class Control implements OnInit, OnDestroy {
   private sub:Subscription;
