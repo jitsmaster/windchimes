@@ -3,7 +3,11 @@ import {Component, Inject} from 'angular2/core';
 @Component({
   selector: 'thank-you',
   template: `
-    <div class="ty" [style.transform]="getTransform()">Thank you</div>
+    <div class="ty"
+         [style.transform]="getTransform()"
+         [style.webkitTransform]="getTransform()">
+      Thank you
+    </div>
   `,
   styles: [require('./thank-you.component.css').toString()]
 })

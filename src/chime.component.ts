@@ -53,14 +53,14 @@ export class Chime implements OnInit, OnDestroy {
         this.source.connect(this.pan);
         this.pan.connect(this.audioCtx.destination);
 
-        this.source.start();
+        this.source.start(0);
       });
     }
   }
 
   ngOnDestroy() {
     if (this.source) {
-      this.source.stop();
+      this.source.stop(0);
       this.source.disconnect();
       this.pan.disconnect();
     }

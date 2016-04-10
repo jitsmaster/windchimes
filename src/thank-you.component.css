@@ -5,7 +5,8 @@
   left: -250px;
   top: -160px;
   color: white;
-  font-size: 7em;
+  font-family: sans-serif;
+  font-size: 4em;
   text-align: center;
 }
 .ty:before,
