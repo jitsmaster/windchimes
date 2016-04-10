@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import * as io from 'socket.io-client';
 
 export interface ControlState {

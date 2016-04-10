@@ -6,4 +6,7 @@ import 'web-animations-js';
 import './webkit-audio-context-monkeypatch';
 require('stereo-panner-node').polyfill();
 
-require('rxjs/Rx');
+require('rxjs/add/operator/map');
+require('rxjs/add/operator/mergeMap');
+require('rxjs/add/operator/windowTime');
+require('rxjs/add/operator/toArray');
