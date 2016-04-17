@@ -14,7 +14,7 @@ export class Remote {
   private controlSocket:SocketIOClient.Socket;
 
   chimes() {
-    const socket = io.connect('http://chimes-eu.teropa.info/chimes');
+    const socket = io.connect('http://chimes-us.teropa.info/chimes');
     return Observable.create((observer) => {
       socket.on('chime', (chime) => observer.next(chime));
       return () => socket.close();
