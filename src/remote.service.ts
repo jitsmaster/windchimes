@@ -45,7 +45,7 @@ export class Remote {
 
   private getControlSocket() {
     if (!this.controlSocket) {
-      this.controlSocket = io.connect('http://chimes-eu.teropa.info/ctrl');
+      this.controlSocket = io.connect('http://chimes-us.teropa.info/ctrl');
     }
     return this.controlSocket;
   }

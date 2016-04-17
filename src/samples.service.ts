@@ -14,6 +14,9 @@ export class Samples {
   private sampleCache = {};
 
   constructor(@Inject('audioContext') private audioCtx) {
+    for (const note of Object.keys(NOTE_SAMPLES)) {
+      this.getSample(note);
+    }
   }
 
   getSample(note:string) {
