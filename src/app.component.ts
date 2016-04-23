@@ -1,6 +1,7 @@
 import {Component, Inject, provide} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {style, animate} from 'angular2/animate';
+import {NgIfDeferred} from './ngIfDeferred.directive';
 import {LoadingIndicator} from './loading-indicator.component';
 import {Windchimes} from './windchimes.component';
 import {WindchimesRemote} from './windchimes-remote.component';
@@ -14,8 +15,8 @@ import {Samples} from './samples.service';
   selector: 'wind-chimes-app',
   template: `
     <div (window:resize)="onWindowResize()">
-      <router-outlet *ngIf="!isLoading()"></router-outlet>
-      <loading-indicator *ngIf="isLoading()" [progress]="loadProgress"></loading-indicator>
+      <router-outlet *ngIfDeferred="!isLoading()"></router-outlet>
+      <loading-indicator *ngIfDeferred="isLoading()" [progress]="getLoadProgress()"></loading-indicator>
     </div>
   `,
   styles: [''],
@@ -26,7 +27,7 @@ import {Samples} from './samples.service';
       animate({opacity: 0, transform: 'perspective(100px) translateZ(101px)'}, '0.3s 0 ease-in')
     ]
   },
-  directives: [ROUTER_DIRECTIVES, LoadingIndicator],
+  directives: [ROUTER_DIRECTIVES, LoadingIndicator, NgIfDeferred],
   providers: [
     Remote,
     Random,
@@ -43,22 +44,17 @@ import {Samples} from './samples.service';
   {path: '/ctrl', name: 'Control', component: Control}
 ])
 export class AppComponent {
-  loadProgress = 0;
-
-  constructor(@Inject('size') private size) {
-    this.onWindowResize()
-    let intr = setInterval(() => {
-      this.loadProgress += 100/6;
-      if (!this.isLoading()) {
-        clearInterval(intr);
-      }
-    }, 600);
+  constructor(@Inject('size') private size, private samples:Samples) {
+    this.onWindowResize();
   }
   onWindowResize() {
     this.size.width = window.innerWidth;
     this.size.height = window.innerHeight;
   }
+  getLoadProgress() {
+    return 100 * (this.samples.loadedSampleCount + 1) / (this.samples.totalSampleCount + 1);
+  }
   isLoading() {
-    return Math.round(this.loadProgress) < 100;
+    return this.getLoadProgress() < 100;
   }
 }

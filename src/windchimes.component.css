@@ -6,3 +6,19 @@
   bottom: 0;
   background-color: #111;
 }
+
+.hint {
+  position: fixed;
+  top: calc(50% - 10px);
+  left: calc(50% - 60px);
+  color: #aaa;
+  font-style: italic;
+  text-align: center;
+}
+
+.touch-hint { display: none; }
+
+@media (pointer:coarse) {
+  .touch-hint { display: block; }
+  .click-hint { display: none; }
+}

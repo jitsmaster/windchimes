@@ -1,4 +1,4 @@
-import {Injectable, Inject} from 'angular2/core';
+import {Injectable, Inject, NgZone} from 'angular2/core';
 const loader = require('webaudio-buffer-loader');
 
 const NOTE_SAMPLES = {
@@ -11,27 +11,31 @@ const NOTE_SAMPLES = {
 
 @Injectable()
 export class Samples {
-  private sampleCache = {};
+  totalSampleCount = 0;
+  loadedSampleCount = 0;
+  private sampleCache = new Map();
 
-  constructor(@Inject('audioContext') private audioCtx) {
+  constructor(@Inject('audioContext') private audioCtx, private ngZone:NgZone) {
     for (const note of Object.keys(NOTE_SAMPLES)) {
       this.getSample(note);
     }
   }
 
   getSample(note:string) {
-    if (!this.sampleCache[note]) {
-      this.sampleCache[note] = new Promise((resolve, reject) => {
+    if (!this.sampleCache.has(note)) {
+      this.totalSampleCount++;
+      this.sampleCache.set(note, new Promise((resolve, reject) => {
         loader(NOTE_SAMPLES[note], this.audioCtx, (err, loadedBuffer) => {
           if (err) {
             reject(err);
           } else {
             resolve(loadedBuffer);
+            this.ngZone.run(() => this.loadedSampleCount++);
           }
         });
-      });
+      }));
     }
-    return this.sampleCache[note];
+    return this.sampleCache.get(note);
   }
 
 }
