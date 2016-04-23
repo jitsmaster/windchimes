@@ -29,7 +29,7 @@ import {Samples} from './samples.service';
 @RouteConfig([
   {path: '/', name: 'InteractiveChimes', component: WindchimesInteractive, useAsDefault: true},
   {path: '/remote', name: 'RemoteChimes', component: WindchimesRemote},
-  {path: '/local', name: 'LocalChimes', component: Windchimes},
+  {path: '/play', name: 'LocalChimes', component: Windchimes},
   {path: '/ctrl', name: 'Control', component: Control}
 ])
 export class AppComponent {
