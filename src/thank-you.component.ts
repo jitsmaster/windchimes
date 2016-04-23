@@ -6,7 +6,7 @@ import {Component, Inject} from 'angular2/core';
     <div class="ty"
          [style.transform]="getTransform()"
          [style.webkitTransform]="getTransform()">
-      Thank you
+      thank you <span class="heart">&lt;3</span>
     </div>
   `,
   styles: [require('./thank-you.component.css').toString()]
