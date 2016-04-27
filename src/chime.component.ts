@@ -6,12 +6,12 @@ import {Samples} from './samples.service';
   selector: 'chime',
   template: `
     <div class="ring {{chime.note}}"
-         [class.expanding]="source"
+         [class.expanding]="started"
          [style.left.px]="chime.x - 300"
          [style.top.px]="chime.y - 300">
     </div>
     <div class="flash"
-         [class.flashing]="source"
+         [class.flashing]="started"
          [style.left.px]="chime.x - 300"
          [style.top.px]="chime.y - 300">
     </div>
@@ -33,9 +33,10 @@ import {Samples} from './samples.service';
   }
 })
 export class Chime implements OnInit, OnDestroy {
-  @Input() chime:{x: number, y: number, note: string, state: string};
+  @Input() chime:{x: number, y: number, note: string, state: string, muted: boolean};
   source:AudioBufferSourceNode;
   pan:StereoPannerNode;
+  started:boolean;
 
   constructor(private samples:Samples,
               @Inject('audioContext') private audioCtx) {
@@ -43,18 +44,23 @@ export class Chime implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.chime.state === 'chiming') {
-      this.samples.getSample(this.chime.note).then(sample => {
-        this.source = this.audioCtx.createBufferSource();
-        this.source.buffer = sample;
+      if (this.chime.muted) {
+        setTimeout(() => this.started = true, 0);
+      } else {
+        this.samples.getSample(this.chime.note).then(sample => {
+          this.source = this.audioCtx.createBufferSource();
+          this.source.buffer = sample;
 
-        this.pan = this.audioCtx.createStereoPanner();
-        this.pan.pan.value = (this.chime.x / 1280) * 2 - 1;
+          this.pan = this.audioCtx.createStereoPanner();
+          this.pan.pan.value = (this.chime.x / 1280) * 2 - 1;
 
-        this.source.connect(this.pan);
-        this.pan.connect(this.audioCtx.destination);
+          this.source.connect(this.pan);
+          this.pan.connect(this.audioCtx.destination);
 
-        this.source.start(0);
-      });
+          this.source.start(0);
+          this.started = true;
+        });
+      }
     }
   }
 

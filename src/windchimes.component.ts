@@ -27,8 +27,7 @@ export class Windchimes {
         note: noteSampler(),
         state: 'chiming'
       }))
-      .windowTime(5000, 100)
-      .flatMap(window => window.toArray());
+      .bufferTime(5000, 10);
   }
 
 }

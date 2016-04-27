@@ -5,7 +5,8 @@ import * as io from 'socket.io-client';
 export interface ControlState {
   clientCount:number,
   delay:number,
-  state:string
+  state:string,
+  muted:boolean
 }
 
 @Injectable()
@@ -43,9 +44,17 @@ export class Remote {
     this.getControlSocket().emit('start');
   }
 
+  mute() {
+    this.getControlSocket().emit('mute');
+  }
+
+  unmute() {
+    this.getControlSocket().emit('unmute');
+  }
+
   private getControlSocket() {
     if (!this.controlSocket) {
-      this.controlSocket = io.connect('http://chimes-us.teropa.info/ctrl');
+      this.controlSocket = io.connect('http://10.0.1.2:8081/ctrl');
     }
     return this.controlSocket;
   }

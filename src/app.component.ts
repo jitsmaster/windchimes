@@ -15,7 +15,7 @@ import {Samples} from './samples.service';
   selector: 'wind-chimes-app',
   template: `
     <div (window:resize)="onWindowResize()">
-      <router-outlet *ngIfDeferred="!isLoading()"></router-outlet>
+      <router-outlet [hidden]="isLoading()"></router-outlet>
       <loading-indicator *ngIfDeferred="isLoading()" [progress]="getLoadProgress()"></loading-indicator>
     </div>
   `,

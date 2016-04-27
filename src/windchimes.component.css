@@ -7,6 +7,15 @@
   background-color: #111;
 }
 
+.muted-indicator {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  background-image: url(images/muted_icon.svg);
+  background-size: cover;
+}
 .hint {
   position: fixed;
   top: calc(50% - 10px);

@@ -8,6 +8,5 @@ require('stereo-panner-node').polyfill();
 
 require('rxjs/add/operator/map');
 require('rxjs/add/operator/mergeMap');
-require('rxjs/add/operator/windowTime');
-require('rxjs/add/operator/windowCount');
+require('rxjs/add/operator/bufferTime');
 require('rxjs/add/operator/toArray');

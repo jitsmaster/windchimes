@@ -15,6 +15,8 @@ import {Remote, ControlState} from './remote.service';
     <button (click)="resetDelay()">Reset</button>
     <button *ngIf="isChiming()" (click)="done()">Done</button>
     <button *ngIf="!isChiming()" (click)="start()">Start</button>
+    <button *ngIf="!state?.muted" (click)="mute()">Mute</button>
+    <button *ngIf="state?.muted" (click)="unmute()">Unmute</button>
   `,
   styles: [require('./control.component.css').toString()]
 })
@@ -44,6 +46,14 @@ export class Control implements OnInit, OnDestroy {
 
   start() {
     this.rmt.start();
+  }
+
+  mute() {
+    this.rmt.mute();
+  }
+
+  unmute() {
+    this.rmt.unmute();
   }
 
   adjustDelay(amt:number) {
