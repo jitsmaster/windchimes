@@ -1,6 +1,7 @@
 import {Component, Inject, Input, OnInit, OnDestroy} from 'angular2/core';
 import {animate, style, group} from 'angular2/animate';
 import {Samples} from './samples.service';
+import {Audio} from './audio.service';
 
 @Component({
   selector: 'chime',
@@ -34,12 +35,11 @@ import {Samples} from './samples.service';
 })
 export class Chime implements OnInit, OnDestroy {
   @Input() chime:{x: number, y: number, note: string, state: string, muted: boolean};
-  source:AudioBufferSourceNode;
-  pan:StereoPannerNode;
+  stopAudio:Function;
   started:boolean;
 
   constructor(private samples:Samples,
-              @Inject('audioContext') private audioCtx) {
+              private audio:Audio) {
   }
 
   ngOnInit() {
@@ -48,16 +48,7 @@ export class Chime implements OnInit, OnDestroy {
         setTimeout(() => this.started = true, 0);
       } else {
         this.samples.getSample(this.chime.note).then(sample => {
-          this.source = this.audioCtx.createBufferSource();
-          this.source.buffer = sample;
-
-          this.pan = this.audioCtx.createStereoPanner();
-          this.pan.pan.value = (this.chime.x / 1280) * 2 - 1;
-
-          this.source.connect(this.pan);
-          this.pan.connect(this.audioCtx.destination);
-
-          this.source.start(0);
+          this.stopAudio = this.audio.play(sample, (this.chime.x / 1280) * 2 - 1);
           this.started = true;
         });
       }
@@ -65,10 +56,8 @@ export class Chime implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.source) {
-      this.source.stop(0);
-      this.source.disconnect();
-      this.pan.disconnect();
+    if (this.stopAudio) {
+      this.stopAudio();
     }
   }
 
