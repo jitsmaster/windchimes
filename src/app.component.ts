@@ -44,15 +44,18 @@ import {Samples} from './samples.service';
   {path: '/ctrl', name: 'Control', component: Control}
 ])
 export class AppComponent {
+  bufferLoaded = false;
   constructor(@Inject('size') private size, private samples:Samples) {
     this.onWindowResize();
+    setTimeout(() => this.bufferLoaded = true, 4200); // 5 secs minus approx reaction time
   }
   onWindowResize() {
     this.size.width = window.innerWidth;
     this.size.height = window.innerHeight;
   }
   getLoadProgress() {
-    return 100 * (this.samples.loadedSampleCount + 1) / (this.samples.totalSampleCount + 1);
+    const bfrCount = this.bufferLoaded ? 1 : 0;
+    return 100 * (this.samples.loadedSampleCount + bfrCount) / (this.samples.totalSampleCount + 1);
   }
   isLoading() {
     return this.getLoadProgress() < 100;
