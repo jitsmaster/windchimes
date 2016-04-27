@@ -10,6 +10,7 @@ import {Control} from './control.component';
 import {Remote} from './remote.service';
 import {Random} from './random.service';
 import {Samples} from './samples.service';
+import {Audio} from './audio.service';
 
 @Component({
   selector: 'wind-chimes-app',
@@ -32,6 +33,7 @@ import {Samples} from './samples.service';
     Remote,
     Random,
     Samples,
+    Audio,
     provide('audioContext', {useValue: new (window['AudioContext'] || window['webkitAudioContext'])}),
     provide('size', {useValue: {width: 1280, height: 780}}),
     provide('notes', {useValue: ['C4', 'G4', 'C5', 'D5', 'E5']})
