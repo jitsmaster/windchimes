@@ -9,6 +9,10 @@ import {
   ViewRef
 } from 'angular2/core';
 
+class ForAnyOrderRow {
+  constructor(public $implicit: any) {}
+}
+
 @Directive({
   selector: '[forAnyOrder]',
   inputs: ['forAnyOrderOf']
@@ -20,7 +24,7 @@ export class ForAnyOrder implements DoCheck {
 
   constructor(private changeDetector:ChangeDetectorRef,
               private differs:IterableDiffers,
-              private template:TemplateRef,
+              private template:TemplateRef<ForAnyOrderRow>,
               private viewContainer:ViewContainerRef) {
   }
 
@@ -36,8 +40,7 @@ export class ForAnyOrder implements DoCheck {
       const changes = this.differ.diff(this.collection);
       if (changes) {
         changes.forEachAddedItem((change) => {
-          const view = this.viewContainer.createEmbeddedView(this.template);
-          view.setLocal('\$implicit', change.item);
+          const view = this.viewContainer.createEmbeddedView(this.template, new ForAnyOrderRow(change.item));
           this.viewMap.set(change.item, view);
         });
         changes.forEachRemovedItem((change) => {

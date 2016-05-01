@@ -1,11 +1,12 @@
 import {Component, Inject, provide} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
-import {style, animate} from 'angular2/animate';
+import {animation, state, transition, style, animate} from 'angular2/animate';
 import {NgIfDeferred} from './ngIfDeferred.directive';
 import {LoadingIndicator} from './loading-indicator.component';
 import {Windchimes} from './windchimes.component';
 import {WindchimesRemote} from './windchimes-remote.component';
 import {WindchimesInteractive} from './windchimes-interactive.component';
+import {HeroTeamBuilder} from './hero-team-builder.component';
 import {Control} from './control.component';
 import {Remote} from './remote.service';
 import {Random} from './random.service';
@@ -17,17 +18,19 @@ import {Audio} from './audio.service';
   template: `
     <div (window:resize)="onWindowResize()">
       <router-outlet [hidden]="isLoading()"></router-outlet>
-      <loading-indicator *ngIfDeferred="isLoading()" [progress]="getLoadProgress()"></loading-indicator>
+      <loading-indicator *ngIf="isLoading()" animate-flyOut="lol" [progress]="getLoadProgress()"></loading-indicator>
     </div>
   `,
   styles: [''],
-  animations: {
-    ngLeave: [
-      style({opacity: 1, transform:'perspective(100px) translateZ(0)'}),
-      animate({opacity: 1, transform: 'perspective(100px) translateZ(-20px)'}, '0.05s 0 ease-in-out'),
-      animate({opacity: 0, transform: 'perspective(100px) translateZ(101px)'}, '0.3s 0 ease-in')
-    ]
-  },
+  animations: [
+    animation('flyOut', [
+      //state('*', style({opacity: 1, transform:'perspective(100px) translateZ(0)'})),
+      transition('lol => void', [
+        style({"opacity": 1, "transform": 'perspective(100px) translateZ(-20px)'}),
+        animate(1000, style({"opacity": 0, "transform": 'perspective(100px) translateZ(101px)'}))
+      ])
+    ])
+  ],
   directives: [ROUTER_DIRECTIVES, LoadingIndicator, NgIfDeferred],
   providers: [
     Remote,
@@ -43,7 +46,8 @@ import {Audio} from './audio.service';
   {path: '/', name: 'InteractiveChimes', component: WindchimesInteractive, useAsDefault: true},
   {path: '/remote', name: 'RemoteChimes', component: WindchimesRemote},
   {path: '/play', name: 'LocalChimes', component: Windchimes},
-  {path: '/ctrl', name: 'Control', component: Control}
+  {path: '/ctrl', name: 'Control', component: Control},
+  {path: '/animations', name: 'HeroTeamBuilder', component: HeroTeamBuilder}
 ])
 export class AppComponent {
   bufferLoaded = false;
@@ -60,6 +64,7 @@ export class AppComponent {
     return 100 * (this.samples.loadedSampleCount + bfrCount) / (this.samples.totalSampleCount + 1);
   }
   isLoading() {
-    return this.getLoadProgress() < 100;
+    return false;
+    /*return this.getLoadProgress() < 100;*/
   }
 }

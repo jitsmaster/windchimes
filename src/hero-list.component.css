@@ -1,0 +1,17 @@
+.hero {
+  display: block;
+  width: 100px;
+  background-color: white;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.active {
+  background-color: white;
+  transform: scale(1);
+}
+.inactive {
+  background-color: lightblue;
+  transform: scale(1.1);
+}

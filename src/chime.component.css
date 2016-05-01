@@ -1,4 +1,4 @@
-.ring, .flash {
+.ring, .light {
   display: block;
   position: absolute;
   box-sizing: border-box;
@@ -21,7 +21,7 @@
 .ring.D5 { border-color: #7FC7AF; }
 .ring.E5 { border-color: #3FB8AF; }
 
-.flash {
+.light {
   background-image: radial-gradient(
     circle farthest-side,
     rgba(255, 255, 255, 1) 0%,
