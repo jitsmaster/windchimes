@@ -1,1 +1,1 @@
-Samples: https://www.freesound.org/people/angstrom/packs/583/
+Note: This project currently requires a weird-ass setup with a local Angular source clone to build (see `tsconfig.json` and `webpack.config.js`). This situation will resolve itself as soon as animations get properly released in Angular 2.
