@@ -1,0 +1,77 @@
+:host {
+  position: fixed;
+  display: flex;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  align-items: center;
+  justify-content: center;
+
+  transition: background-color 0.1s ease-out;
+
+  font-family: 'Josefin Slab', cursive;
+  font-size: 14em;
+  text-align: center;
+
+  color: white;
+  -webkit-text-stroke: 1px #666;
+}
+
+:host(.longest) {
+  font-size: 8em;
+}
+:host(.longer) {
+  font-size: 12em;
+}
+:host(.long) {
+  font-size: 16em;
+}
+:host(.medium) {
+  font-size: 21em;
+}
+:host(.short) {
+  font-size: 26em;
+}
+
+@media only screen and (min-width : 415px) and (max-width : 1024px) {
+  :host(.longest) {
+    font-size: 4em;
+  }
+  :host(.longer) {
+    font-size: 8em;
+  }
+  :host(.long) {
+    font-size: 12em;
+  }
+  :host(.medium) {
+    font-size: 17em;
+  }
+  :host(.short) {
+    font-size: 22em;
+  }
+}
+
+@media only screen and (max-width : 415px) {
+  :host(.longest) {
+    font-size: 2em;
+  }
+  :host(.longer) {
+    font-size: 4em;
+  }
+  :host(.long) {
+    font-size: 6em;
+  }
+  :host(.medium) {
+    font-size: 8em;
+  }
+  :host(.short) {
+    font-size: 10em;
+  }
+}
+
+:host(.C4) { background-color: #30261C; }
+:host(.G4) { background-color: #403831; }
+:host(.C5) { background-color: #36544F; }
+:host(.D5) { background-color: #1F5F61; }
+:host(.E5) { background-color: #0B8185; }

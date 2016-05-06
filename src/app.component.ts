@@ -5,6 +5,7 @@ import {Windchimes} from './windchimes.component';
 import {WindchimesRemote} from './windchimes-remote.component';
 import {WindchimesInteractive} from './windchimes-interactive.component';
 import {Control} from './control.component';
+import {MarkovChimes} from './markovchimes.component';
 import {Remote} from './remote.service';
 import {Random} from './random.service';
 import {Samples} from './samples.service';
@@ -34,6 +35,7 @@ import {Audio} from './audio.service';
   {path: '/', name: 'InteractiveChimes', component: WindchimesInteractive, useAsDefault: true},
   {path: '/remote', name: 'RemoteChimes', component: WindchimesRemote},
   {path: '/play', name: 'LocalChimes', component: Windchimes},
+  {path: '/markov', name: 'MarkovChimes', component: MarkovChimes},
   {path: '/ctrl', name: 'Control', component: Control}
 ])
 export class AppComponent {

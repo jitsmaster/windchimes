@@ -6,7 +6,12 @@ const NOTE_SAMPLES = {
   G4: require("file!./samples/n_G4.mp3"),
   C5: require("file!./samples/n_C5.mp3"),
   D5: require("file!./samples/n_D5.mp3"),
-  E5: require("file!./samples/n_E5.mp3")
+  E5: require("file!./samples/n_E5.mp3"),
+  PIANO_C4: require("file!./samples/piano_C4.mp3"),
+  PIANO_G4: require("file!./samples/piano_G4.mp3"),
+  PIANO_C5: require("file!./samples/piano_C5.mp3"),
+  PIANO_D5: require("file!./samples/piano_D5.mp3"),
+  PIANO_E5: require("file!./samples/piano_E5.mp3")
 };
 
 @Injectable()
