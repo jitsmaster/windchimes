@@ -11,7 +11,7 @@ import {Random} from './random.service';
   selector: 'windchimes-remote',
   template: `
     <chime [style.display]="areChimesVisible() ? 'block': 'none'"
-          *forAnyOrder="#chime of chimes"
+          *forAnyOrder="let chime of chimes"
           [chime]="chime">
     </chime>
     <audio-unlock *ngIf="!unlocked" (unlock)="onUnlocked()">

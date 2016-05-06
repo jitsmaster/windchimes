@@ -1,7 +1,5 @@
 import {Component, Inject, provide} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
-import {style, animate} from 'angular2/animate';
-import {NgIfDeferred} from './ngIfDeferred.directive';
 import {LoadingIndicator} from './loading-indicator.component';
 import {Windchimes} from './windchimes.component';
 import {WindchimesRemote} from './windchimes-remote.component';
@@ -17,18 +15,11 @@ import {Audio} from './audio.service';
   template: `
     <div (window:resize)="onWindowResize()">
       <router-outlet [hidden]="isLoading()"></router-outlet>
-      <loading-indicator *ngIfDeferred="isLoading()" [progress]="getLoadProgress()"></loading-indicator>
+      <loading-indicator *ngIf="isLoading()" [progress]="getLoadProgress()"></loading-indicator>
     </div>
   `,
   styles: [''],
-  animations: {
-    ngLeave: [
-      style({opacity: 1, transform:'perspective(100px) translateZ(0)'}),
-      animate({opacity: 1, transform: 'perspective(100px) translateZ(-20px)'}, '0.05s 0 ease-in-out'),
-      animate({opacity: 0, transform: 'perspective(100px) translateZ(101px)'}, '0.3s 0 ease-in')
-    ]
-  },
-  directives: [ROUTER_DIRECTIVES, LoadingIndicator, NgIfDeferred],
+  directives: [ROUTER_DIRECTIVES, LoadingIndicator],
   providers: [
     Remote,
     Random,

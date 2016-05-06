@@ -14,7 +14,7 @@ import {ForAnyOrder} from './forAnyOrder.directive';
     <div class="muted-indicator" *ngIf="muted"></div>
     <div class="hint click-hint" *ngIf="!clicked && !isDone()">click anywhere</div>
     <div class="hint touch-hint" *ngIf="!clicked && !isDone()">touch anywhere</div>
-    <chime *forAnyOrder="#chime of chimes | async"
+    <chime *forAnyOrder="let chime of chimes | async"
            [chime]=chime>
     </chime>
     <thank-you *ngIf="isDone()">

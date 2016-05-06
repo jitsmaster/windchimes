@@ -7,7 +7,7 @@ import {Random} from './random.service';
 @Component({
   selector: 'wind-chimes',
   template: `
-    <chime *forAnyOrder="#chime of chimes | async"
+    <chime *forAnyOrder="let chime of chimes | async"
            [chime]=chime>
     </chime>
   `,
