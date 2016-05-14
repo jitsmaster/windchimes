@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "typings install",
     "build": "webpack -p --config webpack.prod.config.js",
-    "start": "webpack-dev-server --inline --progress --colors --content-base dist/app --host 0.0.0.0",
+    "start": "webpack-dev-server --inline --hot --progress --colors --content-base dist/app --host 0.0.0.0",
     "typings": "typings"
   },
   "keywords": [

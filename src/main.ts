@@ -5,7 +5,27 @@ import {ROUTER_PROVIDERS} from 'angular2/router';
 
 import {AppComponent} from './app.component';
 
-bootstrap(AppComponent, [
-  ROUTER_PROVIDERS,
-  provide(LocationStrategy, {useClass: HashLocationStrategy})
-]);
+function main() {
+  bootstrap(AppComponent, [
+    ROUTER_PROVIDERS,
+    provide(LocationStrategy, {useClass: HashLocationStrategy})
+  ]);
+}
+
+function bootstrapDomReady() {
+  document.addEventListener('DOMContentLoaded', main);
+}
+
+if (module['hot']) {
+  console.log('hot');
+  if (document.readyState === 'complete') {
+    console.log('main');
+    main();
+  } else {
+    console.log('boot');
+    bootstrapDomReady();
+  }
+  module['hot']['accept']();
+} else {
+  bootstrapDomReady();
+}
