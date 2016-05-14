@@ -24,7 +24,7 @@ module.exports = {
     return [autoprefixer];
   },
   output: {
-    path: './dist',
+    path: './dist/app',
     filename: 'bundle.js'
   }
 };

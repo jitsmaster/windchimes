@@ -1,4 +1,5 @@
 import {Component, Inject, HostBinding, OnDestroy} from 'angular2/core';
+import {animation, transition, style, animate} from 'angular2/animate';
 import {Observable, Subscription} from 'rxjs';
 
 import {Random} from './random.service';
@@ -10,9 +11,19 @@ const markovData = require('./markov_loader!./data/markov-fodder.txt');
 @Component({
   selector: 'markovchimes',
   template: `
-    {{ word() }}
+    <span class="word" *ngFor="let word in getWords()" @flyOut="any">
+      {{ word }}
+    </span>
   `,
-  styles: [require('./markovchimes.component.css').toString()]
+  styles: [require('./markovchimes.component.css').toString()],
+  animations: [
+    animation('flyOut', [
+      transition('ANY => void', [
+        style({perspective: 300, transform: 'translateZ(0)'}),
+        animate('50ms ease-in', style({perspective: 300, transform: 'translateZ(-100)'}))
+      ])
+    ])
+  ]
 })
 export class MarkovChimes implements OnDestroy {
   private lastNote:string = '';
@@ -47,11 +58,11 @@ export class MarkovChimes implements OnDestroy {
     this.sub.unsubscribe();
   }
 
-  word() {
+  getWords() {
     if (this.words) {
-      return this.words[this.wordIdx];
+      return [this.words[this.wordIdx]];
     } else {
-      return '';
+      return [];
     }
   }
 
@@ -74,7 +85,7 @@ export class MarkovChimes implements OnDestroy {
   }
 
   getLengthClass() {
-    const len = this.word().length;
+    const len = this.getWords().length ? this.words()[0].length : 0;
     if (len <= 3) {
       return 'short';
     } else if (len <= 6) {

@@ -15,17 +15,17 @@ import {Random} from './random.service';
   directives: [Chime, ForAnyOrder]
 })
 export class Windchimes {
-  chimes:Observable<{x: number, y: number}[]>;
+  chimes:Observable<{x: number, y: number, note: string}[]>;
 
   constructor(random:Random,
-              @Inject('notes') notes) {
+              @Inject('notes') notes,
+              @Inject('size') size) {
     const noteSampler = random.sampler(notes);
     this.chimes = random.perlinNoise(5000)
       .map(() => ({
-        x: random.nextInt(0, 1280),
-        y: random.nextInt(0, 680),
-        note: noteSampler(),
-        state: 'chiming'
+        x: random.nextInt(0, size.width),
+        y: random.nextInt(0, size.height),
+        note: noteSampler()
       }))
       .bufferTime(5000, 10);
   }

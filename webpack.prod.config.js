@@ -28,7 +28,7 @@ module.exports = {
     configFileName: 'tsconfig.prod.json'
   },
   output: {
-    path: './dist',
+    path: './dist/app',
     filename: 'bundle.js'
   },
   devtool: 'cheap-source-map'

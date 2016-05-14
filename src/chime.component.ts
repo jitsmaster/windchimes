@@ -42,9 +42,8 @@ import {Audio} from './audio.service';
   ]
 })
 export class Chime implements OnInit, OnDestroy {
-  @Input() chime:{x: number, y: number, note: string, muted: boolean};
+  @Input() chime:{x: number, y: number, note: string};
   stopAudio:Function;
-  started:boolean;
 
   constructor(private samples:Samples,
               private audio:Audio) {
@@ -53,7 +52,6 @@ export class Chime implements OnInit, OnDestroy {
   ngOnInit() {
     this.samples.getSample(this.chime.note).then(sample => {
       this.stopAudio = this.audio.play(sample, (this.chime.x / 1280) * 2 - 1);
-      this.started = true;
     });
   }
 
