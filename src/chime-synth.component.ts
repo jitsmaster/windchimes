@@ -4,27 +4,28 @@ import {Samples} from './samples.service';
 import {Audio} from './audio.service';
 
 @Component({
-  selector: 'chime',
+  selector: 'chime-synth',
   template: `
-    <div class="ring {{chime.note}}" @expand="any"
-         [style.left.px]="chime.x - 300"
-         [style.top.px]="chime.y - 300">
+    <div class="ring s{{chime.note}}" @expand="any"
+         [class.blur]="stopAudio"
+         [style.left.px]="chime.x - 400"
+         [style.top.px]="chime.y - 400">
     </div>
     <div class="light" @flash="any"
-         [style.left.px]="chime.x - 300"
-         [style.top.px]="chime.y - 300">
+         [style.left.px]="chime.x - 400"
+         [style.top.px]="chime.y - 400">
     </div>
   `,
-  styles: [require('./chime.component.css').toString()],
+  styles: [require('./chime-synth.component.css').toString()],
   animations: [
     animation('expand', [
       transition('void => ANY', [
         style({opacity: 1, transform: 'scale3d(.1,.1,.1) translateZ(0)'}),
         group([
-          animate('5s',
+          animate('10s ease-out',
             style({opacity: 0})),
-          animate('5s cubic-bezier(0,.79,.13,.71)',
-            style({transform: 'scale3d(1,1,1) translateZ(0)'}))
+          animate('10s cubic-bezier(0,.79,.13,.71)',
+            style({transform: 'scale3d(1.1,1.1,1.1) translateZ(0)'}))
         ])
       ])
     ]),
@@ -41,7 +42,7 @@ import {Audio} from './audio.service';
     ])
   ]
 })
-export class Chime implements OnInit, OnDestroy {
+export class ChimeSynth implements OnInit, OnDestroy {
   @Input() chime:{x: number, y: number, note: string};
   stopAudio:Function;
 
@@ -51,7 +52,7 @@ export class Chime implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.samples.getSample(this.chime.note).then(sample => {
+    this.samples.getSample(`SUN_${this.chime.note}`).then(sample => {
       this.stopAudio = this.audio.play(sample, (this.chime.x / this.size.width) * 2 - 1);
     });
   }

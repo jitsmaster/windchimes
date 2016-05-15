@@ -11,7 +11,7 @@ const markovData = require('./markov_loader!./data/markov-fodder.txt');
 @Component({
   selector: 'markovchimes',
   template: `
-    <span class="word" *ngFor="let word in getWords()" @flyOut="any">
+    <span class="word" *ngFor="let word of getWords()" @flyOut="any">
       {{ word }}
     </span>
   `,
@@ -85,7 +85,7 @@ export class MarkovChimes implements OnDestroy {
   }
 
   getLengthClass() {
-    const len = this.getWords().length ? this.words()[0].length : 0;
+    const len = this.getWords().length ? this.getWords()[0].length : 0;
     if (len <= 3) {
       return 'short';
     } else if (len <= 6) {

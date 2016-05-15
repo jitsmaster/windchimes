@@ -11,7 +11,16 @@ const NOTE_SAMPLES = {
   PIANO_G4: require("file!./samples/piano_G4.mp3"),
   PIANO_C5: require("file!./samples/piano_C5.mp3"),
   PIANO_D5: require("file!./samples/piano_D5.mp3"),
-  PIANO_E5: require("file!./samples/piano_E5.mp3")
+  PIANO_E5: require("file!./samples/piano_E5.mp3"),
+  SUN_1: require("file!./samples/antarctic_sun_1.mp3"),
+  SUN_2: require("file!./samples/antarctic_sun_2.mp3"),
+  SUN_3: require("file!./samples/antarctic_sun_3.mp3"),
+  SUN_4: require("file!./samples/antarctic_sun_4.mp3"),
+  SUN_5: require("file!./samples/antarctic_sun_5.mp3"),
+  SUN_6: require("file!./samples/antarctic_sun_6.mp3"),
+  SUN_7: require("file!./samples/antarctic_sun_7.mp3"),
+  SUN_8: require("file!./samples/antarctic_sun_8.mp3")
+
 };
 
 @Injectable()

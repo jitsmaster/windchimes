@@ -153,6 +153,12 @@ export class Random {
     });
   }
 
+  simpleCurve(samplesPerStep = 10) {
+    return Observable.interval(100)
+      .map(i => i / samplesPerStep)
+      .map(step => this.interpolatedNoise(step))
+  }
+
   remote() {
     return this.rmt.chimes();
   }

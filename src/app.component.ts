@@ -4,6 +4,7 @@ import {LoadingIndicator} from './loading-indicator.component';
 import {Windchimes} from './windchimes.component';
 import {WindchimesRemote} from './windchimes-remote.component';
 import {WindchimesInteractive} from './windchimes-interactive.component';
+import {WindchimesSynth} from './windchimes-synth.component';
 import {Control} from './control.component';
 import {MarkovChimes} from './markovchimes.component';
 import {Remote} from './remote.service';
@@ -35,6 +36,7 @@ import {Audio} from './audio.service';
   {path: '/', name: 'InteractiveChimes', component: WindchimesInteractive, useAsDefault: true},
   {path: '/remote', name: 'RemoteChimes', component: WindchimesRemote},
   {path: '/play', name: 'LocalChimes', component: Windchimes},
+  {path: '/synth', name: 'SynthChimes', component: WindchimesSynth},
   {path: '/markov', name: 'MarkovChimes', component: MarkovChimes},
   {path: '/ctrl', name: 'Control', component: Control}
 ])
@@ -42,7 +44,7 @@ export class AppComponent {
   bufferLoaded = false;
   constructor(@Inject('size') private size, private samples:Samples) {
     this.onWindowResize();
-    setTimeout(() => this.bufferLoaded = true, 4200); // 5 secs minus approx reaction time
+    setTimeout(() => this.bufferLoaded = true, 4200);
   }
   onWindowResize() {
     this.size.width = window.innerWidth;
