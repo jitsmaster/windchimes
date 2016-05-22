@@ -1,4 +1,4 @@
-import {Component, Inject, provide, OnInit, OnDestroy, HostBinding} from 'angular2/core';
+import {Component, Inject, provide, OnInit, OnDestroy, HostBinding} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {ForAnyOrder} from './forAnyOrder.directive';
 import {ChimeSynth} from './chime-synth.component';

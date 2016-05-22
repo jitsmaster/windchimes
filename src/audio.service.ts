@@ -1,4 +1,4 @@
-import {Injectable, Inject} from 'angular2/core';
+import {Injectable, Inject} from '@angular/core';
 
 @Injectable()
 export class Audio {
@@ -78,7 +78,7 @@ export class Audio {
   gainFor(node) {
     var gain = this.audioCtx.createGain();
     node.connect(gain);
-    return gain;  
+    return gain;
   }
 
   startNode(node) {

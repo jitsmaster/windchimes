@@ -7,7 +7,7 @@ import {
   TemplateRef,
   ViewContainerRef,
   ViewRef
-} from 'angular2/core';
+} from '@angular/core';
 
 class NgForRow {
   constructor(public $implicit: any) {}

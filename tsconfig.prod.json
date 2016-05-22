@@ -7,7 +7,7 @@
     "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
-      "angular2/*": ["../angular/dist/js/cjs/angular2/*"]
+      "@angular/*": ["../angular/dist/all/@angular/*"]
     }
   },
   "exclude": [

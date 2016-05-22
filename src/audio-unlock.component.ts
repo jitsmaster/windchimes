@@ -1,4 +1,4 @@
-import {Component, Inject, Output, EventEmitter} from 'angular2/core';
+import {Component, Inject, Output, EventEmitter} from '@angular/core';
 
 
 @Component({

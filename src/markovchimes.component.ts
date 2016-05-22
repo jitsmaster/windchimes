@@ -1,5 +1,4 @@
-import {Component, Inject, HostBinding, OnDestroy} from 'angular2/core';
-import {animation, transition, style, animate} from 'angular2/animate';
+import {Component, Inject, HostBinding, OnDestroy, animation, state, transition, style, animate} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 
 import {Random} from './random.service';
@@ -11,16 +10,20 @@ const markovData = require('./markov_loader!./data/markov-fodder.txt');
 @Component({
   selector: 'markovchimes',
   template: `
-    <span class="word" *ngFor="let word of getWords()" @flyOut="any">
+    <div class="word" *ngFor="let word of getWords()" @flyOut="'in'">
       {{ word }}
-    </span>
+    </div>
   `,
   styles: [require('./markovchimes.component.css').toString()],
   animations: [
     animation('flyOut', [
-      transition('ANY => void', [
-        style({perspective: 300, transform: 'translateZ(0)'}),
-        animate('50ms ease-in', style({perspective: 300, transform: 'translateZ(-100)'}))
+      state('in', style({transform: 'translate3d(0,0,0)', opacity: 1})),
+      transition('void => in', [
+        style({transform: 'translate3d(0,300px,-100px)', opacity: 0}),
+        animate('200ms 100ms')
+      ]),
+      transition('in => void', [
+        animate('200ms', style({transform: 'translate3d(0, -300px, -100px)', opacity: 0}))
       ])
     ])
   ]

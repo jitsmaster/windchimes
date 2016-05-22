@@ -6,7 +6,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.ts', '.js'],
     root: [
-      path.resolve('../angular/dist/js/cjs'),
+      path.resolve('../angular/dist/all'),
       path.join(__dirname, "node_modules")
     ]
   },

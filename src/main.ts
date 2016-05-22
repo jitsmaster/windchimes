@@ -1,7 +1,7 @@
-import {provide} from 'angular2/core';
-import {LocationStrategy, HashLocationStrategy} from 'angular2/platform/common';
-import {bootstrap} from 'angular2/platform/browser';
-import {ROUTER_PROVIDERS} from 'angular2/router';
+import {provide} from '@angular/core';
+import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import {bootstrap} from '@angular/platform-browser-dynamic';
+import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
 
 import {AppComponent} from './app.component';
 

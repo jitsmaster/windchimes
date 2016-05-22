@@ -1,4 +1,4 @@
-import {Injectable, Inject, NgZone} from 'angular2/core';
+import {Injectable, Inject, NgZone} from '@angular/core';
 const loader = require('webaudio-buffer-loader');
 
 const NOTE_SAMPLES = {

@@ -1,72 +1,85 @@
 :host {
   position: fixed;
-  display: flex;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  align-items: center;
-  justify-content: center;
+
+  perspective: 100px;
 
   transition: background-color 0.1s ease-out;
 
   font-family: 'Josefin Slab', cursive;
-  font-size: 14em;
   text-align: center;
 
   color: white;
   -webkit-text-stroke: 1px #666;
 }
 
-:host(.longest) {
-  font-size: 8em;
+:host(.longest) .word {
+  font-size: 8rem;
+  margin-top: -4rem;
 }
-:host(.longer) {
-  font-size: 12em;
+:host(.longer) .word {
+  font-size: 12rem;
+  margin-top: -6rem;
 }
-:host(.long) {
-  font-size: 16em;
+:host(.long) .word {
+  font-size: 16rem;
+  margin-top: -8rem;
 }
-:host(.medium) {
-  font-size: 21em;
+:host(.medium) .word {
+  font-size: 21rem;
+  margin-top: -10.5rem;
 }
-:host(.short) {
-  font-size: 26em;
+:host(.short) .word {
+  font-size: 26rem;
+  margin-top: -13rem;
 }
 
 @media only screen and (min-width : 415px) and (max-width : 1024px) {
-  :host(.longest) {
-    font-size: 4em;
+  :host(.longest) .word {
+    font-size: 4rem;
+    margin-top: -2rem;
   }
-  :host(.longer) {
-    font-size: 8em;
+  :host(.longer) .word {
+    font-size: 8rem;
+    margin-top: -4rem;
   }
-  :host(.long) {
-    font-size: 12em;
+  :host(.long) .word {
+    font-size: 12rem;
+    margin-top: -6rem;
   }
-  :host(.medium) {
-    font-size: 17em;
+  :host(.medium) .word {
+    font-size: 17rem;
+    margin-top: -8.5rem;
   }
-  :host(.short) {
-    font-size: 22em;
+  :host(.short) .word {
+    font-size: 22rem;
+    margin-top: -11rem;
   }
 }
 
 @media only screen and (max-width : 415px) {
-  :host(.longest) {
-    font-size: 2em;
+  :host(.longest) .word {
+    font-size: 2rem;
+    margin-top: -1rem;
   }
-  :host(.longer) {
-    font-size: 4em;
+  :host(.longer) .word {
+    font-size: 4rem;
+    margin-top: -2rem;
   }
-  :host(.long) {
-    font-size: 6em;
+  :host(.long) .word {
+    font-size: 6rem;
+    margin-top: -3rem;
   }
-  :host(.medium) {
-    font-size: 8em;
+  :host(.medium) .word {
+    font-size: 8rem;
+    margin-top: -4rem;
   }
-  :host(.short) {
-    font-size: 10em;
+  :host(.short) .word {
+    font-size: 10rem;
+    margin-top: -5rem;
   }
 }
 
@@ -75,3 +88,12 @@
 :host(.C5) { background-color: #36544F; }
 :host(.D5) { background-color: #1F5F61; }
 :host(.E5) { background-color: #0B8185; }
+
+.word {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateX(2000px);
+  text-align: center;
+}

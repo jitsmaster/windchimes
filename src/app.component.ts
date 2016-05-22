@@ -1,5 +1,5 @@
-import {Component, Inject, provide} from 'angular2/core';
-import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
+import {Component, Inject, provide} from '@angular/core';
+import {RouteConfig, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import {LoadingIndicator} from './loading-indicator.component';
 import {Windchimes} from './windchimes.component';
 import {WindchimesRemote} from './windchimes-remote.component';

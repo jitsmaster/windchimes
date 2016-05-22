@@ -1,4 +1,4 @@
-import {Component, Inject} from 'angular2/core';
+import {Component, Inject} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {ForAnyOrder} from './forAnyOrder.directive';
 import {Chime} from './chime.component';

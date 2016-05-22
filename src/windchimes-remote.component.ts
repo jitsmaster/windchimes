@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnDestroy} from 'angular2/core';
+import {Component, Inject, Input, OnDestroy} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {ForAnyOrder} from './forAnyOrder.directive';

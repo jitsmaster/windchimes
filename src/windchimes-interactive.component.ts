@@ -1,4 +1,4 @@
-import {Component, Inject, HostListener, EventEmitter} from 'angular2/core';
+import {Component, Inject, HostListener, EventEmitter} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {Random} from './random.service';
