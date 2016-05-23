@@ -1,0 +1,21 @@
+.hero {
+  display: block;
+  width: 120px;
+  line-height: 50px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  background-color: blue;
+  color: white;
+  margin: 10px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.active {
+  background-color: blue;
+  transform: scale(1);
+}
+.inactive {
+  background-color: lightblue;
+  transform: scale(1.1);
+}

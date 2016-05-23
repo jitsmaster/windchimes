@@ -7,6 +7,7 @@ import {WindchimesInteractive} from './windchimes-interactive.component';
 import {WindchimesSynth} from './windchimes-synth.component';
 import {Control} from './control.component';
 import {MarkovChimes} from './markovchimes.component';
+import {HeroTeamBuilderComponent} from './guide/hero-team-builder.component';
 import {Remote} from './remote.service';
 import {Random} from './random.service';
 import {Samples} from './samples.service';
@@ -38,7 +39,8 @@ import {Audio} from './audio.service';
   {path: '/play', name: 'LocalChimes', component: Windchimes},
   {path: '/synth', name: 'SynthChimes', component: WindchimesSynth},
   {path: '/markov', name: 'MarkovChimes', component: MarkovChimes},
-  {path: '/ctrl', name: 'Control', component: Control}
+  {path: '/ctrl', name: 'Control', component: Control},
+  {path: '/guide', name: 'HeroTeamBuilder', component: HeroTeamBuilderComponent}
 ])
 export class AppComponent {
   bufferLoaded = false;
