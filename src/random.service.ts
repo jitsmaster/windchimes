@@ -8,7 +8,7 @@ export class Random {
 
   constructor(private rmt:Remote) { }
 
-  nextInt(min, max) {
+  nextInt(min: number, max: number) {
     return min + Math.floor(Math.random() * (max - min));
   }
 

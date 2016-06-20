@@ -1,13 +1,13 @@
-import {provide} from '@angular/core';
-import {LocationStrategy, HashLocationStrategy} from '@angular/common';
-import {bootstrap} from '@angular/platform-browser-dynamic';
-import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
+import { provide } from '@angular/core';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { APP_ROUTER_PROVIDERS } from './app.routes';
 
 import {AppComponent} from './app.component';
 
 function main() {
   bootstrap(AppComponent, [
-    ROUTER_PROVIDERS,
+    APP_ROUTER_PROVIDERS,
     provide(LocationStrategy, {useClass: HashLocationStrategy})
   ]);
 }

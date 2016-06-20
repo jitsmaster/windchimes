@@ -1,5 +1,5 @@
 import {Component, Inject, provide} from '@angular/core';
-import {RouteConfig, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
+import {ROUTER_DIRECTIVES} from '@angular/router';
 import {LoadingIndicator} from './loading-indicator.component';
 import {Windchimes} from './windchimes.component';
 import {WindchimesRemote} from './windchimes-remote.component';
@@ -32,14 +32,6 @@ import {Audio} from './audio.service';
     provide('notes', {useValue: ['C4', 'G4', 'C5', 'D5', 'E5']})
   ]
 })
-@RouteConfig([
-  {path: '/', name: 'InteractiveChimes', component: WindchimesInteractive, useAsDefault: true},
-  {path: '/remote', name: 'RemoteChimes', component: WindchimesRemote},
-  {path: '/play', name: 'LocalChimes', component: Windchimes},
-  {path: '/synth', name: 'SynthChimes', component: WindchimesSynth},
-  {path: '/markov', name: 'MarkovChimes', component: MarkovChimes},
-  {path: '/ctrl', name: 'Control', component: Control}
-])
 export class AppComponent {
   bufferLoaded = false;
   constructor(@Inject('size') private size, private samples:Samples) {

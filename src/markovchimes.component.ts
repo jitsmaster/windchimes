@@ -1,4 +1,4 @@
-import {Component, Inject, HostBinding, OnDestroy, animation, state, transition, style, animate} from '@angular/core';
+import {Component, Inject, HostBinding, OnDestroy, trigger, state, transition, style, animate} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 
 import {Random} from './random.service';
@@ -16,7 +16,7 @@ const markovData = require('./markov_loader!./data/markov-fodder.txt');
   `,
   styles: [require('./markovchimes.component.css').toString()],
   animations: [
-    animation('flyOut', [
+    trigger('flyOut', [
       state('in', style({transform: 'translate3d(0,0,0)', opacity: 1})),
       transition('void => in', [
         style({transform: 'translate3d(0,300px,-100px)', opacity: 0}),

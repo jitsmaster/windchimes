@@ -4,16 +4,10 @@
     "moduleResolution": "node",
     "sourceMap": false,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "baseUrl": ".",
-    "paths": {
-      "@angular/*": ["../angular/dist/all/@angular/*"]
-    }
+    "experimentalDecorators": true
   },
   "exclude": [
-    "node_modules",
-    "typings/main.d.ts",
-    "typings/main"
+    "node_modules"
   ],
   "compileOnSave": false
 }

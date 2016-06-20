@@ -1,9 +1,9 @@
-import {Component, Inject, provide, OnInit, OnDestroy, HostBinding} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {ForAnyOrder} from './forAnyOrder.directive';
-import {ChimeSynth} from './chime-synth.component';
-import {Audio} from './audio.service';
-import {Random} from './random.service';
+import { Component, Inject, provide, OnInit, OnDestroy, HostBinding } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { ForAnyOrder } from './forAnyOrder.directive';
+import { ChimeSynth } from './chime-synth.component';
+import { Audio } from './audio.service';
+import { Random } from './random.service';
 
 @Component({
   selector: 'wind-chimes-synth',
@@ -17,13 +17,13 @@ import {Random} from './random.service';
   providers: [provide('notes', {useValue: ['1', '2', '3', '4', '5', '6', '7', '8']})]
 })
 export class WindchimesSynth implements OnInit, OnDestroy {
-  chimes:Observable<{x: number, y: number, note: string}[]>;
+  chimes: Observable<{x: number, y: number, note: string}[]>;
   windNoise;
   windVolume;
 
-  constructor(random:Random,
-              private audio:Audio,
-              @Inject('notes') notes,
+  constructor(random: Random,
+              private audio: Audio,
+              @Inject('notes') notes: string[],
               @Inject('size') size) {
     const noteSampler = random.sampler(notes);
     this.chimes = random.simpleCurve(20)

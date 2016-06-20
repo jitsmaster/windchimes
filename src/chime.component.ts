@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit, OnDestroy, animation, transition, animate, style, group} from '@angular/core';
+import {Component, Inject, Input, OnInit, OnDestroy, trigger, transition, animate, style, group} from '@angular/core';
 import {Samples} from './samples.service';
 import {Audio} from './audio.service';
 
@@ -16,7 +16,7 @@ import {Audio} from './audio.service';
   `,
   styles: [require('./chime.component.css').toString()],
   animations: [
-    animation('expand', [
+    trigger('expand', [
       transition('void => *', [
         style({opacity: 1, transform: 'scale3d(.1,.1,.1) translateZ(0)'}),
         group([
@@ -27,7 +27,7 @@ import {Audio} from './audio.service';
         ])
       ])
     ]),
-    animation('flash', [
+    trigger('flash', [
       transition('void => *', [
         style({opacity: 1, transform: 'scale3d(.1,.1,.1) translateZ(0)'}),
         animate('0.05s ease-in',
