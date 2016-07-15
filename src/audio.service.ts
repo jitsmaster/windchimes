@@ -67,7 +67,7 @@ export class Audio {
       var output = e.outputBuffer.getChannelData(0);
       for (var i = 0; i < 4096; i++) {
           var white = Math.random() * 2 - 1;
-          output[i] = (lastOut + (0.02 * white)) / 1.02;
+          output[i] = (lastOut + (0.02 * white)) / 1.12;
           lastOut = output[i];
           output[i] *= 3.5; // (roughly) compensate for gain
       }

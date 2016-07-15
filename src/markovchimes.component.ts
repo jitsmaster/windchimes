@@ -5,7 +5,7 @@ import {Random} from './random.service';
 import {Samples} from './samples.service';
 import {Audio} from './audio.service';
 
-const markovData = require('./markov_loader!./data/markov-fodder.txt');
+// const markovData = require('./markov_loader!./data/markov-fodder.txt');
 
 @Component({
   selector: 'markovchimes',
@@ -70,20 +70,20 @@ export class MarkovChimes implements OnDestroy {
   }
 
   nextWord() {
-    if (this.words && this.wordIdx === 0) {
-      this.wordIdx = 1;
-      return;
-    } else if (this.words) {
-      const [k1, k2] = this.words;
-      for (const [[w1, w2], nexts] of markovData) {
-        if (k1 === w1 && k2 === w2 && Math.random() < 0.9) {
-          this.words.shift();
-          this.words.push(this.random.element(nexts));
-          return;
-        }
-      }
-    }
-    this.words = this.random.element(markovData)[0].slice(0);
+    // if (this.words && this.wordIdx === 0) {
+    //   this.wordIdx = 1;
+    //   return;
+    // } else if (this.words) {
+    //   const [k1, k2] = this.words;
+    //   for (const [[w1, w2], nexts] of markovData) {
+    //     if (k1 === w1 && k2 === w2 && Math.random() < 0.9) {
+    //       this.words.shift();
+    //       this.words.push(this.random.element(nexts));
+    //       return;
+    //     }
+    //   }
+    // }
+    this.words = []
     this.wordIdx = 0;
   }
 

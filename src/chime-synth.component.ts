@@ -19,35 +19,38 @@ import {Audio} from './audio.service';
   animations: [
     trigger('expand', [
       transition('void => *', [
-        style({opacity: 1, transform: 'scale3d(.1,.1,.1) translateZ(0)'}),
+        style({ opacity: 1, transform: 'scale3d(.1,.1,.1) translateZ(0)' }),
         group([
           animate('10s ease-out',
-            style({opacity: 0})),
+            style({ opacity: 0 })),
           animate('10s cubic-bezier(0,.79,.13,.71)',
-            style({transform: 'scale3d(1.1,1.1,1.1) translateZ(0)'}))
+            style({
+              transform: 'scale3d(1.1,1.1,1.1) translateZ(0)',
+              border: "10px"
+            }))
         ])
       ])
     ]),
     trigger('flash', [
       transition('void => *', [
-        style({opacity: 1, transform: 'scale3d(.1,.1,.1) translateZ(0)'}),
+        style({ opacity: 1, transform: 'scale3d(.1,.1,.1) translateZ(0)' }),
         animate('0.05s ease-in',
-          style({opacity: 1, transform: 'scale3d(1,1,1) translateZ(0)'})
+          style({ opacity: 1, transform: 'scale3d(1,1,1) translateZ(0)' })
         ),
         animate('1s ease-out',
-          style({opacity: 0, transform: 'scale3d(0,0,0) translateZ(0)'})
+          style({ opacity: 0, transform: 'scale3d(0,0,0) translateZ(0)' })
         )
       ])
     ])
   ]
 })
 export class ChimeSynth implements OnInit, OnDestroy {
-  @Input() chime:{x: number, y: number, note: string};
-  stopAudio:Function;
+  @Input() chime: { x: number, y: number, note: string };
+  stopAudio: Function;
 
-  constructor(private samples:Samples,
-              private audio:Audio,
-              @Inject('size') private size) {
+  constructor(private samples: Samples,
+    private audio: Audio,
+    @Inject('size') private size) {
   }
 
   ngOnInit() {

@@ -4,21 +4,23 @@
 
 function getSentences(str) {
   return str.split(/(\n\n)|\.|\?/g)
-    .filter(s => s && s.match(/\w+/))
+    .filter(function (s) { return s && s.match(/\w+/); });
 }
 
-module.exports = function(source) {
+module.exports = function (source) {
   this.cacheable();
 
-  const wordStats = new Map();
+  var wordStats = new Map();
 
-  for (const sentence of getSentences(source)) {
+  for (sentence of getSentences(source)) {
     var words = sentence.split(/\s+/)
-      .map(w => w.replace(/^\W+/, '').replace(/\W+$/, '').toLowerCase())
-      .filter(w => w && w.length);
-    for (let i = 0; i < words.length - 2; i++) {
-      const key = [words[i], words[i + 1]];
-      const nxt = words[i + 2];
+      .map(function (w) {
+        return w.replace(/^\W+/, '').replace(/\W+$/, '').toLowerCase();
+      })
+      .filter(function (w) { return w && w.length; });
+    for (var i = 0; i < words.length - 2; i++) {
+      var key = [words[i], words[i + 1]];
+      var nxt = words[i + 2];
 
       if (wordStats.has(key)) {
         wordStats.get(key).push(nxt);
@@ -28,5 +30,9 @@ module.exports = function(source) {
     }
   }
 
-  return `module.exports = ${JSON.stringify(Array.from(wordStats.entries()))};`
+  var output = "module.exports = ${" + JSON.stringify(Array.from(wordStats.entries())) + "}";
+
+  console.write(output);
+
+  return output;
 }

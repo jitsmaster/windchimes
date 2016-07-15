@@ -18,8 +18,7 @@ import { Random } from './random.service';
 })
 export class WindchimesSynth implements OnInit, OnDestroy {
   chimes: Observable<{x: number, y: number, note: string}[]>;
-  windNoise;
-  windVolume;
+
 
   constructor(random: Random,
               private audio: Audio,
@@ -38,12 +37,13 @@ export class WindchimesSynth implements OnInit, OnDestroy {
       .bufferTime(10000, 10);
   }
 
-  @HostBinding('style.backgroundColor')
+  @HostBinding('style.borderColor')
   get bgColor() {
     const val = Math.floor(this.windVolume.gain.value * 255);
     return `rgb(${val}, ${val}, ${val})`
   }
-
+  windNoise;
+  windVolume;
   ngOnInit() {
     this.windNoise = this.audio.brownNoiseNode();
     this.windVolume = this.audio.gainFor(this.windNoise);

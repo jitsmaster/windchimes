@@ -6,12 +6,12 @@ import {Audio} from './audio.service';
   selector: 'chime',
   template: `
     <div class="ring {{chime.note}}" @expand="any"
-         [style.left.px]="chime.x - 300"
-         [style.top.px]="chime.y - 300">
+         [style.left.px]="chime.x - 150"
+         [style.top.px]="chime.y - 250">
     </div>
     <div class="light" @flash="any"
-         [style.left.px]="chime.x - 300"
-         [style.top.px]="chime.y - 300">
+         [style.left.px]="chime.x - 150"
+         [style.top.px]="chime.y - 250">
     </div>
   `,
   styles: [require('./chime.component.css').toString()],
@@ -20,8 +20,10 @@ import {Audio} from './audio.service';
       transition('void => *', [
         style({opacity: 1, transform: 'scale3d(.1,.1,.1) translateZ(0)'}),
         group([
-          animate('5s',
+          animate('3s',
             style({opacity: 0})),
+          animate('3s',
+            style({borderWidth: "10px"})),
           animate('5s cubic-bezier(0,.79,.13,.71)',
             style({transform: 'scale3d(1,1,1) translateZ(0)'}))
         ])
@@ -29,7 +31,7 @@ import {Audio} from './audio.service';
     ]),
     trigger('flash', [
       transition('void => *', [
-        style({opacity: 1, transform: 'scale3d(.1,.1,.1) translateZ(0)'}),
+        style({opacity: 0, transform: 'scale3d(.2,.2,.2) translateZ(0)'}),
         animate('0.05s ease-in',
           style({opacity: 1, transform: 'scale3d(1,1,1) translateZ(0)'})
         ),
@@ -51,7 +53,7 @@ export class Chime implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.samples.getSample(this.chime.note).then(sample => {
-      this.stopAudio = this.audio.play(sample, (this.chime.x / this.size.width) * 2 - 1);
+      this.stopAudio = this.audio.play(sample, (this.chime.x / this.size.width) * 3 - 1);
     });
   }
 
@@ -60,5 +62,4 @@ export class Chime implements OnInit, OnDestroy {
       this.stopAudio();
     }
   }
-
 }

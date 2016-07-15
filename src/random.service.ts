@@ -6,18 +6,18 @@ import {Remote} from './remote.service';
 @Injectable()
 export class Random {
 
-  constructor(private rmt:Remote) { }
+  constructor(private rmt: Remote) { }
 
   nextInt(min: number, max: number) {
     return min + Math.floor(Math.random() * (max - min));
   }
 
-  element<T>(array:T[]) {
+  element<T>(array: T[]) {
     return array[this.nextInt(0, array.length)];
   }
 
-  sampler<T>(array:T[]) {
-    let previous:T;
+  sampler<T>(array: T[]) {
+    let previous: T;
     return () => {
       const options = array.slice(0).filter((x) => x !== previous)
       return previous = this.element(options);
@@ -75,15 +75,15 @@ export class Random {
 
   randomWalkInterp(min, max, stepsPerInterval) {
     return Observable.create((observer) => {
-      let running     = true;
-      let current     = this.nextInt(min, max);
-      let next        = this.nextInt(min, max);
-      let step        = 0;
+      let running = true;
+      let current = this.nextInt(min, max);
+      let next = this.nextInt(min, max);
+      let step = 0;
       (async () => {
         while (running) {
-          const diff         = next - current;
+          const diff = next - current;
           const stepFraction = step / stepsPerInterval;
-          const val          = current + stepFraction * diff;
+          const val = current + stepFraction * diff;
 
           observer.next();
           await this.sleep(val);
@@ -124,7 +124,7 @@ export class Random {
   }
 
   perlinNoise(initialDelay, sleepTime = 200, adjust = 5) {
-    const persistence     = 1/2;
+    const persistence = 1 / 2;
     const numberOfOctaves = 4;
     return Observable.create((observer) => {
       let running = true;
@@ -134,7 +134,7 @@ export class Random {
         await this.sleep(initialDelay);
         while (running) {
           let total = 0;
-          for (let i=0 ; i < numberOfOctaves - 1 ; i++) {
+          for (let i = 0; i < numberOfOctaves - 1; i++) {
             const frequency = 2 ** i;
             const amplitude = persistence ** i;
             total = total + this.interpolatedNoise(x * frequency) * amplitude;
@@ -145,6 +145,36 @@ export class Random {
             observer.next();
           }
           await this.sleep(sleepTime);
+          x += 0.2;
+        }
+      };
+      nextNoise();
+      return () => running = false;
+    });
+  }
+
+  dynaNoise(initialDelay, getSleepTime: () => number, adjust = 5) {
+    const persistence = 1 / 2;
+    const numberOfOctaves = 4;
+    return Observable.create((observer) => {
+      let running = true;
+
+      let x = Math.random();
+      let nextNoise = async () => {
+        await this.sleep(initialDelay);
+        while (running) {
+          let total = 0;
+          for (let i = 0; i < numberOfOctaves - 1; i++) {
+            const frequency = 3 ** i;
+            const amplitude = persistence ** i;
+            total = total + this.interpolatedNoise(x * frequency) * amplitude;
+          }
+          const probability = (total + 1) / adjust;
+          const yes = (Math.random() < probability);
+          if (yes) {
+            observer.next();
+          }
+          await this.sleep(getSleepTime());
           x += 0.2;
         }
       };

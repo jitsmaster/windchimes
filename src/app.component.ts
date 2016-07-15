@@ -10,7 +10,9 @@ import {MarkovChimes} from './markovchimes.component';
 import {Remote} from './remote.service';
 import {Random} from './random.service';
 import {Samples} from './samples.service';
+import { Spacial } from './spacial.service';
 import {Audio} from './audio.service';
+
 
 @Component({
   selector: 'wind-chimes-app',
@@ -25,16 +27,17 @@ import {Audio} from './audio.service';
   providers: [
     Remote,
     Random,
+    Spacial,
     Samples,
     Audio,
-    provide('audioContext', {useValue: new (window['AudioContext'] || window['webkitAudioContext'])}),
-    provide('size', {useValue: {width: 1280, height: 780}}),
-    provide('notes', {useValue: ['C4', 'G4', 'C5', 'D5', 'E5']})
+    provide('audioContext', { useValue: new (window['AudioContext'] ||  window['webkitAudioContext']) }),
+    provide('size', { useValue: { width: 1280, height: 780 } }),
+    provide('notes', { useValue: ['C4', 'G4', 'C5', 'D5', 'E5'] })
   ]
 })
 export class AppComponent {
   bufferLoaded = false;
-  constructor(@Inject('size') private size, private samples:Samples) {
+  constructor( @Inject('size') private size, private samples: Samples) {
     this.onWindowResize();
     setTimeout(() => this.bufferLoaded = true, 4200);
   }

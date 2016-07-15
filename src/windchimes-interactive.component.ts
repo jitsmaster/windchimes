@@ -2,11 +2,13 @@ import {Component, Inject, HostListener, EventEmitter} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {Random} from './random.service';
+import {Spacial} from './spacial.service';
 import {Remote} from './remote.service';
 import {Samples} from './samples.service';
 import {Chime} from './chime.component';
 import {ThankYou} from './thank-you.component';
 import {ForAnyOrder} from './forAnyOrder.directive';
+import { Audio } from './audio.service';
 
 @Component({
   selector: 'windchimes-interactive',
@@ -24,25 +26,31 @@ import {ForAnyOrder} from './forAnyOrder.directive';
   directives: [Chime, ForAnyOrder, ThankYou]
 })
 export class WindchimesInteractive {
-  clicks = new Subject<{x: number, y: number}>();
-  noteSampler = this.random.sampler(this.notes);
-  chimes = this.clicks.map(({x, y}) => ({
-      x,
-      y,
-      note: this.noteSampler(),
-      state: 'chiming',
-      muted: this.muted
-    })).bufferTime(5000, 10);
+  clicks = new Subject<{
+    x: number, y: number,
+    screenHeight: number
+  }>();
+  noteSampler = this.spacial.sampler(this.notes, true);
+  chimes = this.clicks.map(({x, y, screenHeight}) => ({
+    x,
+    y,
+    note: this.noteSampler(y, screenHeight),
+    state: 'chiming',
+    muted: this.muted
+  }))
+    .bufferTime(5000, 10);
 
   clicked = false;
-  state:string;
-  muted:boolean;
+  state: string;
+  muted: boolean;
 
-  constructor(private random:Random,
-              private remote: Remote,
-              private samples:Samples,
-              @Inject('notes') private notes,
-              @Inject('audioContext') private audioCtx) {
+  constructor(private random: Random,
+    private audio: Audio,
+    private spacial: Spacial,
+    private remote: Remote,
+    private samples: Samples,
+    @Inject('notes') private notes,
+    @Inject('audioContext') private audioCtx) {
     remote.controlEvents().subscribe(state => {
       this.state = state.state;
       this.muted = state.muted;
@@ -50,7 +58,7 @@ export class WindchimesInteractive {
   }
 
   @HostListener('click', ['$event'])
-  onClick(event:MouseEvent) {
+  onClick(event: MouseEvent) {
     if (!this.clicked) {
       // unlock audio on ios
       const src = this.audioCtx.createBufferSource();
@@ -60,7 +68,9 @@ export class WindchimesInteractive {
     }
     this.clicked = true;
     if (!this.isDone()) {
-      this.clicks.next({x: event.clientX, y: event.clientY});
+      this.clicks.next({
+        x: event.clientX, y: event.screenY, screenHeight: window.screen.availHeight
+      });
     }
   }
 
