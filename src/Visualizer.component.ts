@@ -39,6 +39,8 @@ export class Visualizer {
 		if (!!this.playHandler)
 			this.playHandler();
 
+		this.playing = false;
+
 		this.audio.startTime = 0;
 		this.audio.startOffset = 0;
 
