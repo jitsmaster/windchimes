@@ -6,6 +6,11 @@ import { Samples } from './samples.service';
 @Component({
 	selector: 'visualizer',
 	template: `
+	<select (change)="select($event)"
+		style="display:block">
+		<option>[Select a song to play]</option>
+		<option *ngFor="let name of sampleNames">{{name}}</option>
+	</select>
 	<button (click)="control()" style="display:block">Play/Pause</button>
     <canvas #can style="position:absolute;bottom:100"></canvas>
   `,
@@ -18,13 +23,32 @@ export class Visualizer {
 
 	playing = false;
 
+	sampleNames = ["AMERICA", "SUN_8", "SUN_7"];
+
+
 	constructor(private audio: Audio,
 		private samples: Samples,
 		private ele: ElementRef) {
 	}
 
+	_name: string = "AMERICA";
+
+	select(evt: Event) {
+		this._name = evt.currentTarget["value"];
+
+		if (!!this.playHandler)
+			this.playHandler();
+
+		this.audio.startTime = 0;
+		this.audio.startOffset = 0;
+
+		this._play();
+	}
+
 	_play() {
-		this.samples.getSample("AMERICA").then(sample => {
+		if (!this._name)
+			return;
+		this.samples.getSample(this._name).then(sample => {
 			this.playHandler = this.audio.playWithData(sample);
 		});
 	}
@@ -43,7 +67,7 @@ export class Visualizer {
 	control() {
 		if (this.playing)
 			this.audio.pause();
-		else 
+		else
 			this._play();
 
 		this.playing = !this.playing;
