@@ -12,6 +12,7 @@ import {Random} from './random.service';
 import {Samples} from './samples.service';
 import { Spacial } from './spacial.service';
 import {Audio} from './audio.service';
+import { Text } from './text.service';
 
 
 @Component({
@@ -30,6 +31,7 @@ import {Audio} from './audio.service';
     Spacial,
     Samples,
     Audio,
+    Text,
     provide('audioContext', { useValue: new (window['AudioContext'] ||  window['webkitAudioContext']) }),
     provide('size', { useValue: { width: 1280, height: 780 } }),
     provide('notes', { useValue: ['C4', 'G4', 'C5', 'D5', 'E5'] })

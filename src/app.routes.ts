@@ -5,12 +5,14 @@ import { WindchimesInteractive } from './windchimes-interactive.component';
 import { WindchimesSynth } from './windchimes-synth.component';
 import { Control } from './control.component';
 import { MarkovChimes } from './markovchimes.component';
+import { Visualizer } from './visualizer.component';
 
 export const routes: RouterConfig = [
   {path: '', component: WindchimesInteractive},
   {path: 'remote', component: WindchimesRemote},
   {path: 'play', component: Windchimes},
   {path: 'synth', component: WindchimesSynth},
+  {path: 'visual', component: Visualizer},
   {path: 'markov', component: MarkovChimes},
   {path: 'ctrl', component: Control}
 ];

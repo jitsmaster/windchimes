@@ -19,8 +19,9 @@ const NOTE_SAMPLES = {
   SUN_5: require("file!./samples/antarctic_sun_5.mp3"),
   SUN_6: require("file!./samples/antarctic_sun_6.mp3"),
   SUN_7: require("file!./samples/antarctic_sun_7.mp3"),
-  SUN_8: require("file!./samples/antarctic_sun_8.mp3")
-
+  SUN_8: require("file!./samples/antarctic_sun_8.mp3"),
+  WIND: require("file!./samples/windhowl.mp3"),
+  AMERICA: require("file!./samples/america.mp3"),
 };
 
 @Injectable()
@@ -29,13 +30,13 @@ export class Samples {
   loadedSampleCount = 0;
   private sampleCache = new Map();
 
-  constructor(@Inject('audioContext') private audioCtx, private ngZone:NgZone) {
+  constructor( @Inject('audioContext') private audioCtx, private ngZone: NgZone)  {
     for (const note of Object.keys(NOTE_SAMPLES)) {
       this.getSample(note);
     }
   }
 
-  getSample(note:string) {
+  getSample(note: string) {
     if (!this.sampleCache.has(note)) {
       this.totalSampleCount++;
       this.sampleCache.set(note, new Promise((resolve, reject) => {

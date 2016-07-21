@@ -5,6 +5,7 @@ import {Chime} from './chime.component';
 import {Random} from './random.service';
 import {Spacial} from './spacial.service';
 import { Audio } from './audio.service';
+import { Samples } from './samples.service';
 
 @Component({
   selector: 'wind-chimes',
@@ -27,6 +28,7 @@ export class Windchimes {
   constructor(private random: Random,
     private spacial: Spacial,
     private audio: Audio,
+    private samples: Samples,
     @Inject('notes') notes,
     @Inject('size') size) {
     this.size = size;
@@ -47,23 +49,38 @@ export class Windchimes {
   onClick(event: MouseEvent) {
     var i = this.spaceSampler(event.screenY, window.screen.availHeight);
     this.pos = 210 / i;
-    this.windVolume.gain.value = i / 14 + 0.1;
+    this.gain.gain.value = Math.pow(10, ((i-1)/10))
     console.log(this.pos);
   }
-
-  windNoise;
-  windVolume;
+  source;
+  gain;
+  // windNoise;
+  // windVolume;
+  stopAudio: () => void;
   ngOnInit() {
     setTimeout(() => {
-      this.windNoise = this.audio.brownNoiseNode();
-      this.windVolume = this.audio.gainFor(this.windNoise);
-      this.windVolume.gain.value = this.pos / 1000;
-      this.audio.startNode(this.windVolume);
+      this.samples.getSample("WIND").then(sample => {
+        this.source = this.audio.audioCtx.createBufferSource();
+        this.source.buffer = sample;
+        this.source.loop = true;
+        this.gain = this.audio.gainFor(this.source);
+        this.gain.gain.value = 0.2;
+        this.gain.connect(this.audio.createCompressor(0));
+
+        this.source.start(0);
+      });
+
+      // this.windNoise = this.audio.brownNoiseNode();
+      // this.windVolume = this.audio.this.gainFor(this.windNoise);
+      // this.windVolume.this.gain.value = this.pos / 1000;
+      // this.audio.startNode(this.windVolume);
     }, 2000);
   }
 
   ngOnDestroy() {
-    this.audio.stopNode(this.windVolume);
-    this.audio.stopNode(this.windNoise);
+    // this.audio.stopNode(this.windVolume);
+    // this.audio.stopNode(this.windNoise);
+    this.audio.stopNode(this.source);
+    this.audio.stopNode(this.gain);
   }
 }
